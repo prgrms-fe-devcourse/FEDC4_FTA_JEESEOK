@@ -1,0 +1,22 @@
+name: Close associated issue
+
+on:
+  pull_request:
+    branches:
+      - dev
+    types:
+      - closed
+
+jobs:
+  close-issue:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Close associated issue
+      run: |
+        PR_NUMBER=${{ github.event.pull_request.number }}
+        COMMENTS_URL="https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments"
+        ISSUE_NUMBER=$(curl -s -H "Authorization: token ${{ secrets.ACTION_TOKEN }}" $COMMENTS_URL | jq '.[] | select(.body | contains("close #")) | .body' | grep -oE "#[0-9]+" | tr -d '#')
+        if [[ ! -z "$ISSUE_NUMBER" ]]; then
+          curl -s -H "Authorization: token ${{ secrets.ACTION_TOKEN }}" -X PATCH "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER" -d '{"state": "closed"}'
+        fi
+      shell: bash
