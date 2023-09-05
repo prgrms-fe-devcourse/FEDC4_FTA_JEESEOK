@@ -14,8 +14,12 @@ jobs:
     - name: Close associated issue
       run: |
         PR_NUMBER=${{ github.event.pull_request.number }}
-        COMMENTS_URL="https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments"
-        ISSUE_NUMBER=$(curl -s -H "Authorization: token ${{ secrets.ACTION_TOKEN }}" $COMMENTS_URL | jq '.[] | select(.body | contains("close #")) | .body' | grep -oE "#[0-9]+" | tr -d '#')
+        PR_URL="https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER"
+        echo "PR_URL: $PR_URL"
+        PR_BODY=$(curl -s -H "Authorization: token ***" $PR_URL | jq -r '.body')
+        echo "PR_BODY: $PR_BODY"
+        ISSUE_NUMBER=$(echo $PR_BODY | grep -oE "close #[0-9]+" | tr -d 'close #')
+        echo "ISSUE_NUMBER: $ISSUE_NUMBER"
         if [[ ! -z "$ISSUE_NUMBER" ]]; then
           curl -s -H "Authorization: token ${{ secrets.ACTION_TOKEN }}" -X PATCH "https://api.github.com/repos/${{ github.repository }}/issues/$ISSUE_NUMBER" -d '{"state": "closed"}'
         fi
