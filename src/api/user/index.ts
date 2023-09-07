@@ -13,14 +13,14 @@ interface Message {
 
 interface Like {
   _id: string;
-  user: string; // 사용자 id
-  post: string; // 포스트 id
+  user: string;
+  post: string;
   createdAt: string;
   updatedAt: string;
 }
 
 interface Channel {
-  authRequired: boolean; // 사용되지 않음
+  authRequired: boolean;
   posts: string[];
   _id: string;
   name: string;
@@ -34,10 +34,10 @@ interface Notification {
   _id: string;
   author: User;
   user: User | string;
-  post: string | null; // 포스트 id
-  follow?: string; // 사용자 id
+  post: string | null;
+  follow?: string;
   comment?: Comment;
-  message?: string; // 메시지 id
+  message?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -46,7 +46,7 @@ interface Comment {
   _id: string;
   comment: string;
   author: User;
-  post: string; // 포스트 id
+  post: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -115,11 +115,6 @@ export const getUser: GetUser = async (userId) => {
 
   return result;
 };
-
-// interface Image {
-//   isCover: boolean;
-//   image: string;
-// }
 
 interface PostUserImage {
   (jwt: string, imgae: string): Promise<AxiosResponse<User>>;
