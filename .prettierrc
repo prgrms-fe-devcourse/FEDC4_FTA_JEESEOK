@@ -8,13 +8,6 @@
 	"importOrder": [
 		"^react(.*)",
 		"<THIRD_PARTY_MODULES>",
-    "^~/routes/(.*)$",
-		"^~/pages/(.*)$",
-		"^~/components/(.*)$",
-		"^~/api/(.*)$",
-		"^~/hooks/(.*)$",
-		"^~/types/(.*)$",
-		"^~/constants/(.*)$",
 		"^[./]"
 	],
 	"importOrderSortSpecifiers": true
