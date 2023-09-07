@@ -8,4 +8,10 @@ const request = axios.create({
     },
 });
 
+const AUTH_TOKEN = localStorage.getItem('AUTH_TOKEN')
+
+if(AUTH_TOKEN) {
+    request.defaults.headers.common['Authorization'] = AUTH_TOKEN
+}
+
 export default request
