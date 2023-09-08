@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
-import request from '../index';
+import request from '~/api';
+import { Post } from '~/types';
 
 interface getChannelPost {
   (
@@ -27,86 +28,6 @@ interface writePost {
 
 interface readPost {
   (postId: string): Promise<AxiosResponse<Post> | undefined>;
-}
-/* reponse 모델 설정 */
-interface Post {
-  likes: Like[];
-  comments: Comment[];
-  _id: string;
-  image?: string;
-  imagePublicId?: string;
-  title: string;
-  channel: Channel;
-  author: User;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface User {
-  coverImage: string;
-  image: string;
-  role: string;
-  emailVerified: boolean;
-  banned: boolean;
-  isOnline: boolean;
-  posts: Post[];
-  likes: Like[];
-  comments: string[];
-  followers: [];
-  following: [
-    {
-      _id: string;
-      user: string;
-      follower: string;
-      createdAt: string;
-      updatedAt: string;
-      __v: number;
-    },
-  ];
-  notifications: Notification[];
-  messages: Message[];
-  _id: string;
-  fullName: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Like {
-  _id: string;
-  user: string;
-  post: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Comment {
-  _id: string;
-  comment: string;
-  author: User;
-  post: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Channel {
-  authRequired: boolean;
-  posts: string[];
-  _id: string;
-  name: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Message {
-  _id: string;
-  message: string;
-  sender: User;
-  receiver: User;
-  seen: boolean;
-  createdAt: string;
-  updatedAt: string;
 }
 
 // 특정 채널의 포스트 목록 불러오기
