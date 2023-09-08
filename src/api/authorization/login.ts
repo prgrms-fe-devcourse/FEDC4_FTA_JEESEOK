@@ -1,8 +1,8 @@
 import request from '..';
-import { USER } from './type';
+import { User } from '../../types';
 
 interface ResponseUser {
-  user: USER;
+  user: User;
   token: string;
 }
 
