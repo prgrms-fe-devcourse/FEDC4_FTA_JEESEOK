@@ -25,7 +25,6 @@ const postSignupApi = async (
       username,
       password,
     });
-    console.log(data);
     return data;
   } catch (error) {
     console.error('postSignupApi', error);
