@@ -52,7 +52,7 @@ interface User {
   notifications: [];
   messages: Message[];
   _id: string;
-  fullName: string;
+  fullName: { mbti: string; intro: string };
   email: string;
   password: string;
   createdAt: string;
