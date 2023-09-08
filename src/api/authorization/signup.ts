@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import request from '~/api';
 import { User } from '~/types';
 
@@ -15,21 +16,16 @@ interface SignupRequest {
 
 const postSignupApi = async (
   signupInformation: SignupRequest
-): Promise<ResponseUser | false> => {
-  try {
-    const { email, fullName, username, password } = signupInformation;
+): Promise<AxiosResponse<ResponseUser | false>> => {
+  const { email, fullName, username, password } = signupInformation;
 
-    const { data } = await request.post<ResponseUser>('/signup', {
-      email,
-      fullName: JSON.stringify(fullName),
-      username,
-      password,
-    });
-    return data;
-  } catch (error) {
-    console.error('postSignupApi', error);
-    return false;
-  }
+  const data = await request.post<ResponseUser>('/signup', {
+    email,
+    fullName: JSON.stringify(fullName),
+    username,
+    password,
+  });
+  return data;
 };
 
 export default postSignupApi;

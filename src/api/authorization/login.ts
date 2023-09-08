@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import request from '~/api';
 import { User } from '~/types';
 
@@ -13,9 +14,9 @@ interface LoginRequest {
 
 const postLoginApi = async (
   loginInformation: LoginRequest
-): Promise<ResponseUser | false> => {
+): Promise<AxiosResponse<ResponseUser | false>> => {
   const { password, id } = loginInformation;
-  const { data } = await request.post<ResponseUser>('/login', {
+  const data = await request.post<ResponseUser>('/login', {
     email: id,
     password,
   });
