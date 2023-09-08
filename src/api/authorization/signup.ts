@@ -8,20 +8,25 @@ interface ResponseUser {
 
 interface SignupRequest {
   email: string;
-  fullName: string;
+  fullName: { mbti: string; intro: string };
+  username: string;
   password: string;
 }
 
 const postSignupApi = async (
   signupInformation: SignupRequest
-): Promise<ResponseUser | boolean> => {
+): Promise<ResponseUser | false> => {
   try {
-    const response = await request.post<ResponseUser>('/signup', {
-      email: signupInformation.email,
-      fullName: signupInformation.fullName,
-      password: signupInformation.password,
+    const { email, fullName, username, password } = signupInformation;
+
+    const { data } = await request.post<ResponseUser>('/signup', {
+      email,
+      fullName: JSON.stringify(fullName),
+      username,
+      password,
     });
-    return response.data;
+    console.log(data);
+    return data;
   } catch (error) {
     console.error('postSignupApi', error);
     return false;

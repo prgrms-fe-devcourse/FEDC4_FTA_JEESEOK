@@ -13,13 +13,15 @@ interface LoginRequest {
 
 const postLoginApi = async (
   loginInformation: LoginRequest
-): Promise<ResponseUser | boolean> => {
+): Promise<ResponseUser | false> => {
   try {
-    const response = await request.post<ResponseUser>('/login', {
+    const { password } = loginInformation;
+
+    const { data } = await request.post<ResponseUser>('/login', {
       email: loginInformation.id,
-      password: loginInformation.password,
+      password,
     });
-    return response.data;
+    return data;
   } catch (error) {
     console.error('postLoginApi', error);
     return false;

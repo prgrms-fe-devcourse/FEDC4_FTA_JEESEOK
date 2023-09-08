@@ -1,9 +1,9 @@
 import request from '..';
 
-const postLogoutApi = async (): Promise<string | boolean> => {
+const postLogoutApi = async (): Promise<string | false> => {
   try {
-    const response = await request.post('/logout');
-    return response.data;
+    const { data } = await request.post<string>('/logout');
+    return data;
   } catch (error) {
     console.error('postLogoutApi', error);
     return false;
