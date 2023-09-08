@@ -2,7 +2,7 @@ import request from '~/api';
 import { User } from '~/types';
 
 interface GetUsers {
-  (offset: number, limit: number): Promise<User[] | null>;
+  (offset: number, limit: number): Promise<User[] | false>;
 }
 
 export const getUsers: GetUsers = async (offset = 0, limit = 10) => {
@@ -17,12 +17,12 @@ export const getUsers: GetUsers = async (offset = 0, limit = 10) => {
     return data;
   } catch (e) {
     console.error('getUsers', e);
-    return null;
+    return false;
   }
 };
 
 interface GetUser {
-  (userId: string): Promise<User | null>;
+  (userId: string): Promise<User | false>;
 }
 
 export const getUser: GetUser = async (userId) => {
@@ -32,61 +32,25 @@ export const getUser: GetUser = async (userId) => {
     return data;
   } catch (e) {
     console.error('getUser', e);
-    return null;
+    return false;
   }
 };
 
 interface PostUserImage {
-  (jwt: string, image: Blob): Promise<User | null>;
+  (image: File): Promise<User | false>;
 }
 
-export const postUserImage: PostUserImage = async (jwt, image) => {
+export const postUserImage: PostUserImage = async (image) => {
   try {
-    const { data } = await request.post<User>(
-      '/users/upload-photo',
-      {
-        isCover: false,
-        image,
-      },
-      {
-        headers: {
-          Authorization: `bearer ${jwt}`,
-        },
-      }
-    );
+    const formData = new FormData();
+    formData.append('isCover', 'false');
+    formData.append('image', image);
+
+    const { data } = await request.post<User>('/users/upload-photo', formData);
 
     return data;
   } catch (e) {
     console.error('postUserImage', e);
-    return null;
-  }
-};
-
-interface PostUserIntroduction {
-  (jwt: string, image: string): Promise<User | null>;
-}
-
-export const postUserIntroduction: PostUserIntroduction = async (
-  jwt,
-  image
-) => {
-  try {
-    const { data } = await request.post<User>(
-      '/users/upload-photo',
-      {
-        isCover: true,
-        image,
-      },
-      {
-        headers: {
-          Authorization: `bearer ${jwt}`,
-        },
-      }
-    );
-
-    return data;
-  } catch (e) {
-    console.error('postUserIntroduction', e);
-    return null;
+    return false;
   }
 };
