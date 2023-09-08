@@ -1,5 +1,5 @@
-import request from '..';
-import { User } from '../../types';
+import request from '~/api';
+import { User } from '~/types';
 
 interface ResponseUser {
   user: User;
