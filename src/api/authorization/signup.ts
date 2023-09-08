@@ -14,9 +14,13 @@ interface SignupRequest {
   password: string;
 }
 
-const postSignupApi = async (
-  signupInformation: SignupRequest
-): Promise<AxiosResponse<ResponseUser | false>> => {
+interface postSignupApi {
+  (
+    signupInformation: SignupRequest
+  ): Promise<AxiosResponse<ResponseUser | false>>;
+}
+
+const postSignupApi: postSignupApi = async (signupInformation) => {
   const { email, fullName, username, password } = signupInformation;
 
   const data = await request.post<ResponseUser>('/signup', {

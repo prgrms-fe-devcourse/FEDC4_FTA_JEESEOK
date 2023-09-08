@@ -2,9 +2,11 @@ import { AxiosResponse } from 'axios';
 import request from '~/api';
 import { User } from '~/types';
 
-const getAuthorizationCheckApi = async (): Promise<
-  AxiosResponse<User | false>
-> => {
+interface getAuthorizationCheck {
+  (): Promise<AxiosResponse<User | false>>;
+}
+
+const getAuthorizationCheckApi: getAuthorizationCheck = async () => {
   const data = await request.get<User>('/auth-user');
   return data;
 };
