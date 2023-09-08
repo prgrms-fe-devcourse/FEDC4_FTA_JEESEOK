@@ -5,7 +5,10 @@ export const searchUser = async (
   query: string
 ): Promise<User[] | undefined> => {
   try {
-    return await request.get(`/search/users/${query}`);
+    const { data } = await request.get<User[] | undefined>(
+      `/search/users/${query}`
+    );
+    return data;
   } catch (error) {
     console.error(error);
   }
@@ -15,7 +18,10 @@ export const searchAll = async (
   query: string
 ): Promise<(User | Post)[] | undefined> => {
   try {
-    return await request.get(`/search/all/${query}`);
+    const { data } = await request.get<(User | Post)[] | undefined>(
+      `/search/all/${query}`
+    );
+    return data;
   } catch (error) {
     console.error(error);
   }
