@@ -6,14 +6,18 @@ interface ResponseUser {
   token: string;
 }
 
+interface LoginRequest {
+  id: string;
+  password: string;
+}
+
 const postLoginApi = async (
-  id: string,
-  password: string
+  loginInformation: LoginRequest
 ): Promise<ResponseUser | boolean> => {
   try {
     const response = await request.post<ResponseUser>('/login', {
-      email: id,
-      password: password,
+      email: loginInformation.id,
+      password: loginInformation.password,
     });
     return response.data;
   } catch (error) {

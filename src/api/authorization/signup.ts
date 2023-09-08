@@ -6,16 +6,20 @@ interface ResponseUser {
   token: string;
 }
 
+interface SignupRequest {
+  email: string;
+  fullName: string;
+  password: string;
+}
+
 const postSignupApi = async (
-  email: string,
-  fullName: string,
-  password: string
+  signupInformation: SignupRequest
 ): Promise<ResponseUser | boolean> => {
   try {
     const response = await request.post<ResponseUser>('/signup', {
-      email: email,
-      fullName: fullName,
-      password: password,
+      email: signupInformation.email,
+      fullName: signupInformation.fullName,
+      password: signupInformation.password,
     });
     return response.data;
   } catch (error) {
