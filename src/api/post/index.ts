@@ -3,42 +3,33 @@ import request from '..';
 interface EditPost {
   postId: string;
   title: string;
-  image?: undefined | null;
   channelId: string;
-}
-
-interface DeletePost {
-  id: string;
 }
 
 export const editPost = async ({
   postId,
   title,
-  image,
   channelId,
-}: EditPost) => {
+}: EditPost): Promise<false | void> => {
   try {
-    await request.put('/posts/update', {
-      data: {
-        postId,
-        title,
-        image,
-        channelId,
-      },
-    });
+    const formData = new FormData();
+
+    formData.append('postId', postId);
+    formData.append('title', title);
+    formData.append('channelId', channelId);
+
+    await request.put('/posts/update', formData);
   } catch (error) {
     console.error(error);
+    return false;
   }
 };
 
-export const deletePost = async (id: DeletePost) => {
+export const deletePost = async (id: string): Promise<false | void> => {
   try {
-    await request.delete(`/posts/delete`, {
-      data: {
-        id,
-      },
-    });
+    await request.delete(`/posts/delete`, { data: { id } });
   } catch (error) {
     console.error(error);
+    return false;
   }
 };
