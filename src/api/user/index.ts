@@ -1,162 +1,92 @@
-import { AxiosResponse } from 'axios';
 import request from '~/api';
-
-interface Message {
-  _id: string;
-  message: string;
-  sender: User;
-  receiver: User;
-  seen: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Like {
-  _id: string;
-  user: string;
-  post: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Channel {
-  authRequired: boolean;
-  posts: string[];
-  _id: string;
-  name: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Notification {
-  seen: boolean;
-  _id: string;
-  author: User;
-  user: User | string;
-  post: string | null;
-  follow?: string;
-  comment?: Comment;
-  message?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Comment {
-  _id: string;
-  comment: string;
-  author: User;
-  post: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Post {
-  likes: Like[];
-  comments: Comment[];
-  _id: string;
-  image?: string;
-  imagePublicId?: string;
-  title: string;
-  channel: Channel;
-  author: User;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface User {
-  coverImage: string;
-  image: string;
-  role: string;
-  emailVerified: boolean;
-  banned: boolean;
-  isOnline: boolean;
-  posts: Post[];
-  likes: Like[];
-  comments: string[];
-  followers: [];
-  following: [
-    {
-      _id: string;
-      user: string;
-      follower: string;
-      createdAt: string;
-      updatedAt: string;
-      __v: number;
-    },
-  ];
-  notifications: Notification[];
-  messages: Message[];
-  _id: string;
-  fullName: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { User } from '~/types';
 
 interface GetUsers {
-  (offset: number, limit: number): Promise<AxiosResponse<User[]>>;
+  (offset: number, limit: number): Promise<User[] | null>;
 }
 
 export const getUsers: GetUsers = async (offset = 0, limit = 10) => {
-  const result = await request.get<User[]>(
-    `/users/get-users?offset=${offset}&limit=${limit}`
-  );
+  try {
+    const { data } = await request.get<User[]>('/users/get-users', {
+      params: {
+        offset,
+        limit,
+      },
+    });
 
-  return result;
+    return data;
+  } catch (e) {
+    console.error('getUsers', e);
+    return null;
+  }
 };
 
 interface GetUser {
-  (userId: string): Promise<AxiosResponse<User>>;
+  (userId: string): Promise<User | null>;
 }
 
 export const getUser: GetUser = async (userId) => {
-  const result = await request.get<User>(`/users/${userId}`);
+  try {
+    const { data } = await request.get<User>(`/users/${userId}`);
 
-  return result;
+    return data;
+  } catch (e) {
+    console.error('getUser', e);
+    return null;
+  }
 };
 
 interface PostUserImage {
-  (jwt: string, imgae: string): Promise<AxiosResponse<User>>;
+  (jwt: string, image: Blob): Promise<User | null>;
 }
 
 export const postUserImage: PostUserImage = async (jwt, image) => {
-  const result = await request.post<User>(
-    '/users/upload-photo',
-    {
-      isCover: false,
-      image,
-    },
-    {
-      headers: {
-        Authorization: `bearer ${jwt}`,
+  try {
+    const { data } = await request.post<User>(
+      '/users/upload-photo',
+      {
+        isCover: false,
+        image,
       },
-    }
-  );
+      {
+        headers: {
+          Authorization: `bearer ${jwt}`,
+        },
+      }
+    );
 
-  return result;
+    return data;
+  } catch (e) {
+    console.error('postUserImage', e);
+    return null;
+  }
 };
 
 interface PostUserIntroduction {
-  (jwt: string, image: string): Promise<AxiosResponse<User>>;
+  (jwt: string, image: string): Promise<User | null>;
 }
 
 export const postUserIntroduction: PostUserIntroduction = async (
   jwt,
   image
 ) => {
-  const result = await request.post<User>(
-    '/users/upload-photo',
-    {
-      isCover: true,
-      image,
-    },
-    {
-      headers: {
-        Authorization: `bearer ${jwt}`,
+  try {
+    const { data } = await request.post<User>(
+      '/users/upload-photo',
+      {
+        isCover: true,
+        image,
       },
-    }
-  );
+      {
+        headers: {
+          Authorization: `bearer ${jwt}`,
+        },
+      }
+    );
 
-  return result;
+    return data;
+  } catch (e) {
+    console.error('postUserIntroduction', e);
+    return null;
+  }
 };
