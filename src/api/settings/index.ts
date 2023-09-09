@@ -1,36 +1,29 @@
+import { AxiosResponse } from 'axios';
 import request from '~/api';
 import { User } from '~/types';
 
 interface PutMyInformation {
-  (fullName: string, username: string): Promise<User | false>;
+  (fullName: string, username: string): Promise<AxiosResponse<User | false>>;
 }
 
 export const putMyInformation: PutMyInformation = async (
   fullName,
   username
 ) => {
-  try {
-    const { data } = await request.put<User>('/settings/update-user', {
-      fullName,
-      username,
-    });
+  const data = await request.put<User>('/settings/update-user', {
+    fullName,
+    username,
+  });
 
-    return data;
-  } catch (e) {
-    console.error('putMyInformation', e);
-    return false;
-  }
+  return data;
 };
 
 interface PutPassword {
-  (password: string): Promise<void | false>;
+  (password: string): Promise<AxiosResponse<void | false>>;
 }
 
 export const putPassword: PutPassword = async (password) => {
-  try {
-    await request.put('/settings/update-password', { password });
-  } catch (e) {
-    console.error('putPassword', e);
-    return false;
-  }
+  const data = await request.put('/settings/update-password', { password });
+
+  return data;
 };
