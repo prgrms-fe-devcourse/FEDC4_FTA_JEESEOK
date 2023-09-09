@@ -1,35 +1,34 @@
+import { AxiosResponse } from 'axios';
 import request from '..';
 
-interface EditPost {
+interface EditPostRequest {
   postId: string;
   title: string;
   channelId: string;
 }
 
-export const editPost = async ({
-  postId,
-  title,
-  channelId,
-}: EditPost): Promise<false | void> => {
-  try {
-    const formData = new FormData();
+interface EditPost {
+  (editPostRequest: EditPostRequest): Promise<AxiosResponse<false | void>>;
+}
 
-    formData.append('postId', postId);
-    formData.append('title', title);
-    formData.append('channelId', channelId);
+export const editPost: EditPost = async (editPostRequest) => {
+  const { postId, title, channelId } = editPostRequest;
+  const formData = new FormData();
 
-    await request.put('/posts/update', formData);
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
+  formData.append('postId', postId);
+  formData.append('title', title);
+  formData.append('channelId', channelId);
+
+  const data = await request.put('/posts/update', formData);
+  return data;
 };
 
-export const deletePost = async (id: string): Promise<false | void> => {
-  try {
-    await request.delete(`/posts/delete`, { data: { id } });
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
+interface DeletePost {
+  (id: string): Promise<AxiosResponse<false | void>>;
+}
+
+export const deletePost: DeletePost = async (id) => {
+  const data = await request.delete(`/posts/delete`, { data: { id } });
+
+  return data;
 };

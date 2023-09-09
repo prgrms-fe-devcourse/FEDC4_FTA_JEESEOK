@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import request from '~/api';
 
-interface postLogoutApi {
+interface PostLogoutApi {
   (): Promise<AxiosResponse<string | false>>;
 }
 
-const postLogoutApi: postLogoutApi = async () => {
+const postLogoutApi: PostLogoutApi = async () => {
   const data = await request.post<string>('/logout');
   return data;
 };

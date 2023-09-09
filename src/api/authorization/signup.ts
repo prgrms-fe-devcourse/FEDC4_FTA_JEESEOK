@@ -14,13 +14,13 @@ interface SignupRequest {
   password: string;
 }
 
-interface postSignupApi {
+interface PostSignupApi {
   (
     signupInformation: SignupRequest
   ): Promise<AxiosResponse<ResponseUser | false>>;
 }
 
-const postSignupApi: postSignupApi = async (signupInformation) => {
+const postSignupApi: PostSignupApi = async (signupInformation) => {
   const { email, fullName, username, password } = signupInformation;
 
   const data = await request.post<ResponseUser>('/signup', {

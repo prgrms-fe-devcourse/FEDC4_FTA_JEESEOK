@@ -12,13 +12,13 @@ interface LoginRequest {
   password: string;
 }
 
-interface postLoginApi {
+interface PostLoginApi {
   (
     loginInformation: LoginRequest
   ): Promise<AxiosResponse<ResponseUser | false>>;
 }
 
-const postLoginApi: postLoginApi = async (loginInformation) => {
+const postLoginApi: PostLoginApi = async (loginInformation) => {
   const { password, id } = loginInformation;
   const data = await request.post<ResponseUser>('/login', {
     email: id,

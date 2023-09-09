@@ -15,25 +15,32 @@ interface postNotificationRequest {
   postId: string | null;
 }
 
-export const getNotification = async (): Promise<
-  AxiosResponse<Notification[]>
-> => {
+interface GetNotification {
+  (): Promise<AxiosResponse<Notification[]>>;
+}
+
+export const getNotification: GetNotification = async () => {
   const data = await request.get<Notification[]>('notifications');
+
   return data;
 };
 
-export const readNotification = async (): Promise<
-  AxiosResponse<readNotificationResponse>
-> => {
+interface ReadNotification {
+  (): Promise<AxiosResponse<readNotificationResponse>>;
+}
+
+export const readNotification: ReadNotification = async () => {
   const data = await request.put<readNotificationResponse>(
     '/notifications/seen'
   );
+
   return data;
 };
 
-export const postNotification = async (
-  notification: postNotificationRequest
-): Promise<AxiosResponse<Notification>> => {
+interface PostNotification {
+  (notification: postNotificationRequest): Promise<AxiosResponse<Notification>>;
+}
+export const postNotification: PostNotification = async (notification) => {
   const data = await request.post<Notification>(
     '/notifications/create',
     notification
