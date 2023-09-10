@@ -1,22 +1,16 @@
-import Footer from '~/components/common/Footer/index';
-import { FooterProps } from '~/types/footer';
+import type { Meta, StoryObj } from '@storybook/react';
+import Footer from '~/components/common/Footer';
 
-export default {
+const meta: Meta<typeof Footer> = {
   title: 'Component/Footer',
   component: Footer,
-  argTypes: {
-    content: {
-      defaultValue: [],
-      control: { type: 'array' },
-    },
+};
+
+export default meta;
+type Story = StoryObj<typeof Footer>;
+
+export const Default: Story = {
+  args: {
+    content: [''],
   },
-};
-
-export const Default = (args: FooterProps) => {
-  const { content } = args;
-  return <Footer content={content} />;
-};
-
-Default.args = {
-  content: ['추가 할 버튼의 컨텐츠를 입력해 주세요'],
 };
