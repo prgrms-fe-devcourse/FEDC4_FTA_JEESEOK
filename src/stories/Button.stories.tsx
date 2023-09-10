@@ -6,10 +6,26 @@ const meta = {
   component: Button,
   args: {
     disabled: false,
+    fontSize: '14px',
+    fontWeight: '400',
+    width: '40px',
+    height: '20px',
   },
   argTypes: {
     disabled: {
       control: 'boolean',
+    },
+    fontSize: {
+      control: 'number',
+    },
+    fontWeight: {
+      control: 'number',
+    },
+    width: {
+      control: 'number',
+    },
+    height: {
+      control: 'number',
     },
   },
 } satisfies Meta<typeof Button>;
