@@ -1,12 +1,12 @@
-import { LogoContainer, LogoImg } from '~/components/common/Logo/LogoStyle';
+import { LogoImg, LogoImgContainer } from '~/components/common/Logo/LogoStyle';
 import LogoSvg from '~/components/common/Logo/logo.svg';
 import { LogoProps } from '~/types/logo';
 
 const Logo = ({ width }: LogoProps) => {
   return (
-    <LogoContainer width={width}>
+    <LogoImgContainer width={width}>
       <LogoImg src={LogoSvg} alt="logo_icon" />
-    </LogoContainer>
+    </LogoImgContainer>
   );
 };
 

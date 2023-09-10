@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { LogoProps } from '~/types/logo';
 
-export const LogoContainer = styled.i<LogoProps>`
+export const LogoImgContainer = styled.i<LogoProps>`
   width: ${(prop) => prop.width}px;
   cursor: pointer;
   display: inline-block;
