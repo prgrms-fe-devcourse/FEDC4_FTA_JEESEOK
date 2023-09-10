@@ -1,25 +1,44 @@
 import { Post } from '~/types';
-import { Container, Count, DateUserArea, Title, TitleCountArea } from './style';
+import {
+  Comment,
+  CountContainer,
+  CreatedDate,
+  DateUserArea,
+  Like,
+  PostCardContainer,
+  Title,
+  TitleCountArea,
+  UserName,
+} from './style';
 
-interface PostCardProps {
-  post: Post;
-}
+type PostCardProps = Pick<
+  Post,
+  '_id' | 'title' | 'comments' | 'likes' | 'channel' | 'author' | 'createdAt'
+>;
 
-const PostCard = ({ post }: PostCardProps) => {
+const PostCard = ({
+  _id,
+  title,
+  comments,
+  likes,
+  channel,
+  author,
+  createdAt,
+}: PostCardProps) => {
   return (
-    <Container>
+    <PostCardContainer>
       <TitleCountArea>
-        <Title>{post?.title}</Title>
-        <Count>
-          <div>공감 {post?.likes.length}</div>
-          <div>댓글 {post?.comments.length}</div>
-        </Count>
+        <Title>{title}</Title>
+        <CountContainer>
+          <Like>공감 {likes.length}</Like>
+          <Comment>댓글 {comments.length}</Comment>
+        </CountContainer>
       </TitleCountArea>
       <DateUserArea>
-        <div>{post?.createdAt}</div>
-        <div>{post?.author.fullName} mbti</div>
+        <CreatedDate>{createdAt}</CreatedDate>
+        <UserName>{author.fullName} mbti</UserName>
       </DateUserArea>
-    </Container>
+    </PostCardContainer>
   );
 };
 

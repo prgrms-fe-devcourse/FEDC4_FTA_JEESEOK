@@ -1,29 +1,37 @@
 import { Comment } from '~/types';
 import {
-  Container,
+  CommentContainer,
   Content,
+  CreatedDate,
   Text,
   UserImage,
   UserName,
   UserNameDateArea,
 } from './style';
 
-interface CommentCardProps {
-  comment: Comment;
-}
+type CommentCardProps = Pick<
+  Comment,
+  '_id' | 'comment' | 'author' | 'post' | 'createdAt'
+>;
 
-const CommentCard = ({ comment }: CommentCardProps) => {
+const CommentCard = ({
+  _id,
+  comment,
+  author,
+  post,
+  createdAt,
+}: CommentCardProps) => {
   return (
-    <Container>
-      <UserImage>{comment.author.image}</UserImage>
+    <CommentContainer>
+      <UserImage>{author.image}</UserImage>
       <Content>
         <UserNameDateArea>
-          <UserName>{comment.author.fullName}</UserName>
-          <div>{comment.createdAt}</div>
+          <UserName>{author.fullName}</UserName>
+          <CreatedDate>{createdAt}</CreatedDate>
         </UserNameDateArea>
-        <Text>{comment.comment}</Text>
+        <Text>{comment}</Text>
       </Content>
-    </Container>
+    </CommentContainer>
   );
 };
 

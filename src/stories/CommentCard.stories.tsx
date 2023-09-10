@@ -9,18 +9,27 @@ const meta = {
 export default meta;
 type Story = StoryFn<typeof meta>;
 
-const comment = {
+const commentData = {
   _id: 'id',
-  comment: 'commentcommentcommmentcommentcommentcommmentcommentcommentcommment',
+  comment:
+    'comment comment commment comment comment commment comment comment commment',
   author: {
-    image: 'image',
-    fullName: 'fullNmae',
+    image: '',
+    fullName: 'fullName',
   },
   post: 'postId',
-  createdAt: '2022-2-22',
-  updatedAt: '2022-2-22',
+  createdAt: '2022-02-22',
 };
 
 export const Default: Story = () => {
-  return <CommentCard comment={comment} />;
+  const { _id, comment, author, post, createdAt } = commentData;
+  return (
+    <CommentCard
+      _id={_id}
+      comment={comment}
+      author={author}
+      post={post}
+      createdAt={createdAt}
+    />
+  );
 };
