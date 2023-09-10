@@ -6,7 +6,6 @@ const meta: Meta<typeof Logo> = {
   component: Logo,
   argTypes: {
     width: {
-      defaultValue: 80,
       control: {
         type: 'range',
         min: 40,
