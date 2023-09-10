@@ -51,7 +51,7 @@ export const Lazy: Story = {
   render: (args) => (
     <div>
       {Array.from(new Array(20), (_, k) => k).map((i) => (
-        <Image {...args} block src={`${args.src}?${i}`} key={i} />
+        <Image {...args} src={`${args.src}?${i}`} key={i} />
       ))}
     </div>
   ),

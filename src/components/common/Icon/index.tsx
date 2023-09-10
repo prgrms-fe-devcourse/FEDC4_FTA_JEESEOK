@@ -21,7 +21,7 @@ const Icon = ({
   color = '#222',
   ...props
 }: IconProps) => {
-  const shapeStyle = {
+  const wrapperStyle = {
     width: size,
     height: size,
     transform: rotate ? `rotate(${rotate}deg)` : undefined,
@@ -37,7 +37,7 @@ const Icon = ({
   const base64 = btoa(svg);
 
   return (
-    <IconWrapper {...props} style={shapeStyle}>
+    <IconWrapper {...props} style={wrapperStyle}>
       <img src={`data:image/svg+xml;base64, ${base64}`} alt={name} />
     </IconWrapper>
   );

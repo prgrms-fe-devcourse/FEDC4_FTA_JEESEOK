@@ -2,6 +2,7 @@ import { CSSProperties } from 'react';
 import styled from '@emotion/styled';
 
 type shapeType = 'circle' | 'round' | 'square';
+export type modeType = 'cover' | 'fill' | 'contain';
 
 interface ShapeToCssValueType {
   circle: string;
@@ -16,7 +17,7 @@ interface ImageProps {
   alt?: string;
   width?: number;
   height?: number;
-  mode: 'cover' | 'fill' | 'contain';
+  mode?: modeType;
   style?: CSSProperties;
 }
 
@@ -28,11 +29,8 @@ const ShapeToCssValue: ShapeToCssValueType = {
 
 const ImageWrapper = styled.div<{ shape: shapeType }>`
   position: relative;
-  display: inline-block;
-  border: 1px solid #dadada;
   border-radius: ${({ shape }) => ShapeToCssValue[shape]};
   overflow: hidden;
-  background-color: #eee;
 `;
 
 const Image = ({
@@ -45,6 +43,11 @@ const Image = ({
   mode = 'contain',
   ...props
 }: ImageProps) => {
+  const wrapperStyle = {
+    display: block ? 'block' : 'inline-block',
+    width,
+    height,
+  };
   const imageStyle = {
     display: block ? 'block' : 'undefined',
     width,
@@ -53,7 +56,7 @@ const Image = ({
   };
 
   return (
-    <ImageWrapper shape={shape}>
+    <ImageWrapper shape={shape} style={wrapperStyle}>
       <img src={src} alt={alt} style={{ ...props.style, ...imageStyle }} />
     </ImageWrapper>
   );
