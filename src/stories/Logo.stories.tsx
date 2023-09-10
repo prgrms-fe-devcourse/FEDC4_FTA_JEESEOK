@@ -1,14 +1,27 @@
-import Logo from '~/components/common/Logo/index';
-import { LogoProps } from '~/types/logo';
+import type { Meta, StoryObj } from '@storybook/react';
+import Logo from '~/components/common/Logo';
 
-export default {
+const meta: Meta<typeof Logo> = {
   title: 'Component/Logo',
   component: Logo,
   argTypes: {
-    width: { defaultValue: 80, control: { type: 'range', min: 40, max: 120 } },
+    width: {
+      defaultValue: 80,
+      control: {
+        type: 'range',
+        min: 40,
+        max: 120,
+        step: 1,
+      },
+    },
   },
 };
 
-export const Default = (args: LogoProps) => {
-  return <Logo {...args} />;
+export default meta;
+type Story = StoryObj<typeof Logo>;
+
+export const Default: Story = {
+  args: {
+    width: 80,
+  },
 };
