@@ -46,13 +46,3 @@ type Story = StoryObj<typeof Image>;
 export const Default: Story = {
   render: (args) => <Image {...args} />,
 };
-
-export const Lazy: Story = {
-  render: (args) => (
-    <div>
-      {Array.from(new Array(20), (_, k) => k).map((i) => (
-        <Image {...args} src={`${args.src}?${i}`} key={i} />
-      ))}
-    </div>
-  ),
-};
