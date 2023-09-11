@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { Post, User } from '~/types';
 import request from '..';
 
@@ -22,30 +23,24 @@ interface SearchUserResponse {
   username: string;
 }
 
-export const searchUser = async (
-  query: string
-): Promise<SearchUserResponse[] | false> => {
-  try {
-    const { data } = await request.get<SearchUserResponse[] | false>(
-      `/search/users/${query}`
-    );
-    return data;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
+interface SearchUser {
+  (query: string): Promise<AxiosResponse<SearchUserResponse[] | false>>;
+}
+
+export const searchUser: SearchUser = async (query) => {
+  const data = await request.get<SearchUserResponse[] | false>(
+    `/search/users/${query}`
+  );
+  return data;
 };
 
-export const searchAll = async (
-  query: string
-): Promise<(User | Post)[] | false> => {
-  try {
-    const { data } = await request.get<(User | Post)[] | false>(
-      `/search/all/${query}`
-    );
-    return data;
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
+interface SearchAll {
+  (query: string): Promise<(User | Post)[] | false>;
+}
+
+export const searchAll: SearchAll = async (query) => {
+  const { data } = await request.get<(User | Post)[] | false>(
+    `/search/all/${query}`
+  );
+  return data;
 };
