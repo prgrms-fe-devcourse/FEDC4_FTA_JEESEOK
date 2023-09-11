@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import request from '~/api';
 import { Comment } from '~/types';
 
@@ -10,29 +11,24 @@ interface deleteCommentRequest {
   commentId: string;
 }
 
-export const postComment = async (
-  commentRequest: postCommentRequest
-): Promise<Comment | undefined> => {
-  try {
-    const result = await request.post<Comment>(
-      '/comments/create',
-      commentRequest
-    );
-    return result.data;
-  } catch (error: unknown) {
-    return undefined;
-  }
+interface PostComment {
+  (commentRequest: postCommentRequest): Promise<AxiosResponse<Comment | false>>;
+}
+
+export const postComment: PostComment = async (commentRequest) => {
+  const data = await request.post<Comment>('/comments/create', commentRequest);
+
+  return data;
 };
 
-export const deleteComment = async (
-  commentId: deleteCommentRequest
-): Promise<Comment | undefined> => {
-  try {
-    const result = await request.delete<Comment>('/comments/delete', {
-      data: commentId,
-    });
-    return result.data;
-  } catch (error: unknown) {
-    return undefined;
-  }
+interface DeleteComment {
+  (commentId: deleteCommentRequest): Promise<AxiosResponse<Comment | false>>;
+}
+
+export const deleteComment: DeleteComment = async (commentId) => {
+  const result = await request.delete<Comment>('/comments/delete', {
+    data: commentId,
+  });
+
+  return result;
 };

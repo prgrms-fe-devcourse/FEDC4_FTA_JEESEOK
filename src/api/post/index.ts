@@ -1,35 +1,110 @@
+import { AxiosResponse } from 'axios';
+import { Post } from '~/types';
 import request from '..';
 
-interface EditPost {
+interface EditPostRequest {
   postId: string;
   title: string;
   channelId: string;
 }
 
-export const editPost = async ({
-  postId,
-  title,
-  channelId,
-}: EditPost): Promise<false | void> => {
-  try {
-    const formData = new FormData();
+interface EditPost {
+  (editPostRequest: EditPostRequest): Promise<AxiosResponse<false | void>>;
+}
 
-    formData.append('postId', postId);
-    formData.append('title', title);
-    formData.append('channelId', channelId);
+export const editPost: EditPost = async (editPostRequest) => {
+  const { postId, title, channelId } = editPostRequest;
+  const formData = new FormData();
 
-    await request.put('/posts/update', formData);
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
+  formData.append('postId', postId);
+  formData.append('title', title);
+  formData.append('channelId', channelId);
+
+  const data = await request.put('/posts/update', formData);
+  return data;
 };
 
-export const deletePost = async (id: string): Promise<false | void> => {
-  try {
-    await request.delete(`/posts/delete`, { data: { id } });
-  } catch (error) {
-    console.error(error);
-    return false;
-  }
+interface DeletePost {
+  (id: string): Promise<AxiosResponse<false | void>>;
+}
+
+export const deletePost: DeletePost = async (id) => {
+  const data = await request.delete(`/posts/delete`, { data: { id } });
+
+  return data;
+};
+
+interface getChannelPost {
+  (
+    channelId: string,
+    offset: number,
+    limit: number
+  ): Promise<AxiosResponse<Post[]> | undefined>;
+}
+
+interface getUserPost {
+  (
+    authorId: string,
+    offset: number,
+    limit: number
+  ): Promise<AxiosResponse<Post[]> | undefined>;
+}
+
+interface writePost {
+  (
+    title: string,
+    image: File,
+    channelId: string
+  ): Promise<AxiosResponse<void> | undefined>;
+}
+
+interface readPost {
+  (postId: string): Promise<AxiosResponse<Post> | undefined>;
+}
+
+// 특정 채널의 포스트 목록 불러오기
+export const getChannelPost: getChannelPost = async (
+  channelId,
+  offset,
+  limit
+) => {
+  const res = await request.get(`/posts/channel/${channelId}`, {
+    params: {
+      offset,
+      limit,
+    },
+  });
+
+  return res;
+};
+
+// 특정 사용자의 포스트 목록 불러오기
+export const getUserPost: getUserPost = async (authorId, offset, limit) => {
+  const res = await request.get(`/posts/author/${authorId}`, {
+    params: {
+      offset,
+      limit,
+    },
+  });
+
+  return res;
+};
+
+// 특정 채널에 포스트 작성하기
+export const writePost: writePost = async (title, image, channelId) => {
+  const formData = new FormData();
+  formData.append('title', title);
+  formData.append('image', image);
+  formData.append('channelId', channelId);
+
+  const res = await request.post('/posts/create', formData);
+
+  return res;
+};
+
+// 특정 포스트 상세 보기
+export const readPost: readPost = async (postId) => {
+  const res = await request.get(`/posts/${postId}`);
+
+  return res;
 };
