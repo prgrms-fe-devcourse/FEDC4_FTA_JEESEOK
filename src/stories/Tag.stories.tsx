@@ -11,7 +11,7 @@ type Story = StoryObj<typeof Tag>;
 
 export const Primary: Story = {
   args: {
-    text: 'TAG',
+    children: <p>Tag</p>,
     width: '100px',
     height: '100px',
     fontColor: '000000',

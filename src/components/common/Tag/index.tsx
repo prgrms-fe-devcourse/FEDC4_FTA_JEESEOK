@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, ReactNode } from 'react';
 import styled from '@emotion/styled';
 
 interface EmotionProps {
@@ -13,7 +13,7 @@ interface EmotionProps {
 }
 
 interface Props extends HTMLAttributes<HTMLButtonElement>, EmotionProps {
-  text: string;
+  children: ReactNode;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   disabled: boolean;
   isLoading: boolean;
@@ -31,7 +31,7 @@ const TagComponent = styled('button')<EmotionProps>`
 `;
 
 const Tag = ({
-  text,
+  children,
   onClick,
   disabled = false,
   isLoading = false,
@@ -60,7 +60,7 @@ const Tag = ({
       borderWidth={borderWidth}
       fontSize={fontSize}
     >
-      {text}
+      {children}
     </TagComponent>
   );
 };
