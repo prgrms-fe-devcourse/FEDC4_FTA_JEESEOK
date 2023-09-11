@@ -4,12 +4,13 @@ import Image, { modeType } from '../Image';
 import UserCardGroup from './UserCardGroup';
 import { CardWrapper, MbtiTag, Text } from './style';
 
-interface UserCardProp {
+export interface UserCardProp {
   src: string;
   alt?: string;
   imageSize?: number;
   nickname: string;
   mbti: string;
+  style?: React.CSSProperties;
 }
 
 const UserCard = ({

@@ -1,4 +1,5 @@
 import React from 'react';
+import { UserCardProp } from '.';
 import { UserCardGroupWrapper } from './style';
 
 interface GroupProps {
@@ -14,7 +15,7 @@ const UserCardGroup = ({
   ...props
 }: GroupProps) => {
   const userCards = React.Children.toArray(children)
-    .filter((element) => {
+    .filter((element): element is React.ReactElement<UserCardProp> => {
       if (
         React.isValidElement(element) &&
         element.props.__TYPE === 'UserCard'
@@ -27,13 +28,16 @@ const UserCardGroup = ({
     })
     .map((userCard) => {
       if (React.isValidElement(userCard)) {
-        return React.cloneElement(userCard, {
-          ...userCard.props,
-          imageSize,
-          style: {
-            ...userCard.props.style,
-          },
-        });
+        return React.cloneElement(
+          userCard as React.ReactElement<UserCardProp>,
+          {
+            ...userCard.props,
+            imageSize,
+            style: {
+              ...userCard.props.style,
+            },
+          }
+        );
       }
     });
   return (

@@ -7,6 +7,7 @@ interface IconProps {
   rotate?: number;
   strokeWidth?: number;
   color?: string;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
 }
 
 const IconWrapper = styled.i`
@@ -19,6 +20,7 @@ const Icon = ({
   strokeWidth = 2,
   rotate,
   color = '#222',
+  onClick,
   ...props
 }: IconProps) => {
   const wrapperStyle = {
@@ -37,7 +39,7 @@ const Icon = ({
   const base64 = btoa(svg);
 
   return (
-    <IconWrapper {...props} style={wrapperStyle}>
+    <IconWrapper {...props} style={wrapperStyle} onClick={onClick}>
       <img src={`data:image/svg+xml;base64, ${base64}`} alt={name} />
     </IconWrapper>
   );
