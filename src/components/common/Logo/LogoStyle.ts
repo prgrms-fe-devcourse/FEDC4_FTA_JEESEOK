@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
-import { LogoProps } from '~/types/logo';
+
+interface LogoProps {
+  width: number;
+}
 
 export const LogoImgContainer = styled.i<LogoProps>`
   width: ${(prop) => prop.width}px;

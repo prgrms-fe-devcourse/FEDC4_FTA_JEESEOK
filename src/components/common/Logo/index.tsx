@@ -1,6 +1,9 @@
 import { LogoImg, LogoImgContainer } from '~/components/common/Logo/LogoStyle';
 import LogoSvg from '~/components/common/Logo/logo.svg';
-import { LogoProps } from '~/types/logo';
+
+interface LogoProps {
+  width: number;
+}
 
 const Logo = ({ width }: LogoProps) => {
   return (
