@@ -6,14 +6,18 @@ import {
 
 interface FooterProps {
   content: string[];
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const Footer = ({ content, onClick }: FooterProps) => {
+const Footer = ({ content }: FooterProps) => {
+  /* 페이지 이동 */
+  const movePage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(`${e.currentTarget.textContent} 페이지로 이동`);
+  };
+
   return (
     <FooterContainer>
       {content.map((item, index) => (
-        <FooterButton key={index} onClick={onClick}>
+        <FooterButton key={index} onClick={movePage}>
           {item}
         </FooterButton>
       ))}
