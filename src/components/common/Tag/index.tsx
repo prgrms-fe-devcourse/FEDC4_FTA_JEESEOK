@@ -14,9 +14,13 @@ interface EmotionProps {
 
 interface Props extends HTMLAttributes<HTMLButtonElement>, EmotionProps {
   text: string;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  disabled: boolean;
+  isLoading: boolean;
 }
 
 const TagComponent = styled('button')<EmotionProps>`
+  cursor: pointer;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   color: ${(props) => props.fontColor};
@@ -28,6 +32,9 @@ const TagComponent = styled('button')<EmotionProps>`
 
 const Tag = ({
   text,
+  onClick,
+  disabled = false,
+  isLoading = false,
   width,
   height,
   fontColor,
@@ -38,9 +45,12 @@ const Tag = ({
   fontSize,
   ...props
 }: Props) => {
+  const preventOnClick = disabled || isLoading;
+
   return (
     <TagComponent
       {...props}
+      onClick={preventOnClick ? undefined : onClick}
       width={width}
       height={height}
       fontColor={fontColor}
@@ -49,7 +59,6 @@ const Tag = ({
       borderColor={borderColor}
       borderWidth={borderWidth}
       fontSize={fontSize}
-      onClick={() => alert(text)}
     >
       {text}
     </TagComponent>

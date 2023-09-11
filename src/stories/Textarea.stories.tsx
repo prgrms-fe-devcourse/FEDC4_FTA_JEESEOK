@@ -12,9 +12,11 @@ type Story = StoryObj<typeof Textarea>;
 export const Primary: Story = {
   args: {
     text: 'hi',
-    width: '100px',
-    height: '100px',
-    borderRadius: '10px',
+    width: '425px',
+    height: '425px',
+    borderRadius: '5px',
     fontSize: '16px',
+    scrollBarWidth: 1,
+    scrollBarThumbColor: 'gray',
   },
 };

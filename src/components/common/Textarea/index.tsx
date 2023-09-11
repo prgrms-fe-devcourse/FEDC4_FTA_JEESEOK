@@ -6,6 +6,8 @@ interface EmotionProps {
   height: string;
   borderRadius: string;
   fontSize: string;
+  scrollBarWidth: number;
+  scrollBarThumbColor: string;
 }
 
 interface Props extends HTMLAttributes<HTMLTextAreaElement>, EmotionProps {
@@ -18,6 +20,14 @@ const TextareaComponent = styled('textarea')<EmotionProps>`
   &:focus {
     outline: none;
   }
+
+  ::-webkit-scrollbar {
+    width: ${(props) => props.scrollBarWidth}px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: ${(props) => props.scrollBarThumbColor};
+  }
+
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   border-radius: ${(props) => props.borderRadius};
@@ -30,6 +40,8 @@ const Textarea = ({
   height,
   borderRadius,
   fontSize,
+  scrollBarWidth = 1,
+  scrollBarThumbColor = 'gray',
   ...props
 }: Props) => {
   return (
@@ -39,6 +51,8 @@ const Textarea = ({
       height={height}
       borderRadius={borderRadius}
       fontSize={fontSize}
+      scrollBarWidth={scrollBarWidth}
+      scrollBarThumbColor={scrollBarThumbColor}
     >
       {text}
     </TextareaComponent>

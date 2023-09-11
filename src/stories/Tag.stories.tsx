@@ -11,7 +11,7 @@ type Story = StoryObj<typeof Tag>;
 
 export const Primary: Story = {
   args: {
-    text: 'hi',
+    text: 'TAG',
     width: '100px',
     height: '100px',
     fontColor: '000000',
@@ -20,5 +20,7 @@ export const Primary: Story = {
     borderWidth: '10px',
     borderColor: '000000',
     fontSize: '16px',
+    disabled: false,
+    isLoading: false,
   },
 };
