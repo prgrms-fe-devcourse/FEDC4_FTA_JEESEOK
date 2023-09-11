@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react';
 import styled from '@emotion/styled';
 
-interface EmotionProps {
+interface TextareaStyleProps {
   width: string;
   height: string;
   borderRadius: string;
@@ -10,11 +10,13 @@ interface EmotionProps {
   scrollBarThumbColor: string;
 }
 
-interface Props extends HTMLAttributes<HTMLTextAreaElement>, EmotionProps {
+interface TextareaProps
+  extends HTMLAttributes<HTMLTextAreaElement>,
+    TextareaStyleProps {
   text: string;
 }
 
-const TextareaComponent = styled('textarea')<EmotionProps>`
+const TextareaComponent = styled('textarea')<TextareaStyleProps>`
   resize: none;
   overflow: scroll;
   &:focus {
@@ -22,16 +24,16 @@ const TextareaComponent = styled('textarea')<EmotionProps>`
   }
 
   ::-webkit-scrollbar {
-    width: ${(props) => props.scrollBarWidth}px;
+    width: ${({ scrollBarWidth }) => scrollBarWidth}px;
   }
   ::-webkit-scrollbar-thumb {
-    background: ${(props) => props.scrollBarThumbColor};
+    background: ${({ scrollBarThumbColor }) => scrollBarThumbColor};
   }
 
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  border-radius: ${(props) => props.borderRadius};
-  font-size: ${(props) => props.fontSize};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  border-radius: ${({ borderRadius }) => borderRadius};
+  font-size: ${({ fontSize }) => fontSize};
 `;
 
 const Textarea = ({
@@ -43,7 +45,7 @@ const Textarea = ({
   scrollBarWidth = 1,
   scrollBarThumbColor = 'gray',
   ...props
-}: Props) => {
+}: TextareaProps) => {
   return (
     <TextareaComponent
       {...props}

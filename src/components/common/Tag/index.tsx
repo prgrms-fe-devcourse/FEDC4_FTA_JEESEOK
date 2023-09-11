@@ -1,7 +1,7 @@
 import { HTMLAttributes, ReactNode } from 'react';
 import styled from '@emotion/styled';
 
-interface EmotionProps {
+interface TagStyleProps {
   width: string;
   height: string;
   fontColor: string;
@@ -12,22 +12,23 @@ interface EmotionProps {
   fontSize: string;
 }
 
-interface Props extends HTMLAttributes<HTMLButtonElement>, EmotionProps {
+interface TagProps extends HTMLAttributes<HTMLButtonElement>, TagStyleProps {
   children: ReactNode;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   disabled: boolean;
   isLoading: boolean;
 }
 
-const TagComponent = styled('button')<EmotionProps>`
+const TagComponent = styled('button')<TagStyleProps>`
   cursor: pointer;
-  width: ${(props) => props.width};
-  height: ${(props) => props.height};
-  color: ${(props) => props.fontColor};
-  background-color: ${(props) => props.backgroundColor};
-  border-radius: ${(props) => props.borderRadius};
-  border: ${(props) => props.borderWidth} solid ${(props) => props.borderColor};
-  font-size: ${(props) => props.fontSize};
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  color: ${({ fontColor }) => fontColor};
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  border-radius: ${({ borderRadius }) => borderRadius};
+  border: ${({ borderWidth }) => borderWidth} solid
+    ${({ borderColor }) => borderColor};
+  font-size: ${({ fontSize }) => fontSize};
 `;
 
 const Tag = ({
@@ -44,7 +45,7 @@ const Tag = ({
   borderWidth,
   fontSize,
   ...props
-}: Props) => {
+}: TagProps) => {
   const preventOnClick = disabled || isLoading;
 
   return (
