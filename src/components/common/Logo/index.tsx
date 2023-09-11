@@ -1,5 +1,5 @@
+import LogoSvg from '~/assets/logo.svg';
 import { LogoImg, LogoImgContainer } from '~/components/common/Logo/LogoStyle';
-import LogoSvg from '~/components/common/Logo/logo.svg';
 
 interface LogoProps {
   width: number;
