@@ -6,10 +6,6 @@ export const InputContainer = styled.div`
   flex-direction: column;
 `;
 
-export const Title = styled.label`
-  margin: 0px 0px 4px;
-`;
-
 export const InputStyle = styled.input`
   /* Input 스타일 설정 */
 `;
