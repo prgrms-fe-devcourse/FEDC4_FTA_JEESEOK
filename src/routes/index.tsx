@@ -6,13 +6,13 @@ import {
   PostDetailPage,
   PostEditPage,
   PostPage,
-  RegisterPage,
   RootPage,
   SearchPage,
+  SignupPage,
   UserEditPage,
   UserPage,
+  UserPasswordPage,
 } from '~/pages';
-import UserPasswordPage from '~/pages/UserPasswordPage';
 
 export const router = createBrowserRouter([
   {
@@ -46,8 +46,8 @@ export const router = createBrowserRouter([
     element: <LoginPage />,
   },
   {
-    path: '/register',
-    element: <RegisterPage />,
+    path: '/signup',
+    element: <SignupPage />,
   },
   {
     path: '/post/:postId',
