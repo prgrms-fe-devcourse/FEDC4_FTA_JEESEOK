@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import cancelBtnImg from '~/assets/cancel_button.svg';
 import {
   CancelIcon,
