@@ -90,11 +90,13 @@ const CountContainer = styled.div`
 `;
 
 const Like = styled.div`
+  flex-shrink: 0;
   border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.1);
 `;
 
 const Comment = styled.div`
+  flex-shrink: 0;
   border-radius: 20px;
   background-color: rgba(0, 0, 0, 0.1);
 `;
