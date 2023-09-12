@@ -51,8 +51,8 @@ const UserPage = () => {
       <Image
         src={UserPhoto}
         shape={'circle'}
-        width={200}
-        height={200}
+        width={150}
+        height={150}
         mode={'cover'}
         style={{ backgroundColor: '#DFE7FF' }}
       />
