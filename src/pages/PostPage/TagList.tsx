@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import Tag from './Tag';
 
 const tags = [
@@ -13,14 +14,27 @@ interface TagListProps {
 
 const TagList = ({ onClick }: TagListProps) => {
   return (
-    <div>
+    <TagListContainer>
       {tags.map(([key, value]) => (
-        <Tag key={key} onClick={() => onClick(key)}>
+        <Tag
+          key={key}
+          backgroundColor={'white'}
+          borderWidth={'1px'}
+          borderRadius={'15px'}
+          fontSize={'16px'}
+          onClick={() => onClick(key)}
+        >
           {value}
         </Tag>
       ))}
-    </div>
+    </TagListContainer>
   );
 };
 
 export default TagList;
+
+const TagListContainer = styled.div`
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+`;
