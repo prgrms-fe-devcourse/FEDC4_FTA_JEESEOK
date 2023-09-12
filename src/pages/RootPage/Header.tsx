@@ -61,8 +61,9 @@ const Header = ({ isLogo = true, isSearch = false, title }: HeaderProps) => {
 
   return (
     <HeaderContainer>
-      {isLogo && <LogoIcon src={logoImg} onClick={handleLogoClick} />}
-      {!isLogo && (
+      {isLogo ? (
+        <LogoIcon src={logoImg} onClick={handleLogoClick} />
+      ) : (
         <BackIcon src={backButtonImg} onClick={handleBackButtonClick} />
       )}
       <span>{title}</span>
@@ -70,7 +71,7 @@ const Header = ({ isLogo = true, isSearch = false, title }: HeaderProps) => {
         isHidden={isSearch}
         src={search}
         onClick={handleSearchButtonClick}
-      ></SearchIcon>
+      />
     </HeaderContainer>
   );
 };
