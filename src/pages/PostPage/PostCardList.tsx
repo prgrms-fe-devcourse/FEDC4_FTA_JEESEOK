@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { Post, User } from '~/types';
 import PostCard from './PostCard';
 
@@ -13,7 +14,7 @@ interface PostCardListProps {
 
 const PostCardList = ({ posts }: PostCardListProps) => {
   return (
-    <div>
+    <PostCardListContainer>
       {posts.map(
         ({ _id, title, comments, likes, channel, author, createdAt }) => (
           <PostCard
@@ -29,8 +30,14 @@ const PostCardList = ({ posts }: PostCardListProps) => {
           />
         )
       )}
-    </div>
+    </PostCardListContainer>
   );
 };
 
 export default PostCardList;
+
+const PostCardListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+`;
