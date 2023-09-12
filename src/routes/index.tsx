@@ -20,6 +20,10 @@ export const router = createBrowserRouter([
     element: <RootPage />,
     children: [
       {
+        path: '',
+        element: <PostPage />,
+      },
+      {
         path: '/post',
         element: <PostPage />,
       },
