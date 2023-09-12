@@ -6,6 +6,9 @@ export const HeaderContainer = styled.header`
   align-items: center;
   border-bottom: 1px solid black;
   justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  background: white;
 `;
 
 export const LogoIcon = styled.img`
