@@ -23,6 +23,7 @@ const RootPage = () => {
   return (
     <div>
       <Header title="" isLogo={true} isSearch={true} />
+      <div style={{ height: '51px' }}></div>
       <Outlet />
       <Footer userId={userId} />
     </div>
