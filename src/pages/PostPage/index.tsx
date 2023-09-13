@@ -23,15 +23,32 @@ const PostPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const getCP = async () => {
+    const getPosts = async () => {
       const tag = searchParams.get('tag') as
+        | 'all'
         | 'love'
         | 'relationship'
         | 'job'
         | 'money'
         | null;
 
-      if (!tag) return;
+      if (!tag || tag === 'all') {
+        const data = (
+          await Promise.all(
+            Object.values(CHANNEL_ID).map((id) => getChannelPost(id, 0, 10))
+          )
+        ).flat() as unknown as Posts | undefined;
+
+        if (data) {
+          setPosts(
+            data.sort(
+              (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)
+            )
+          );
+        }
+
+        return;
+      }
 
       const data = (await getChannelPost(CHANNEL_ID[tag], 0, 20)) as unknown as
         | Posts
@@ -40,7 +57,7 @@ const PostPage = () => {
       if (data) setPosts(data);
     };
 
-    getCP();
+    getPosts();
   }, [searchParams]);
 
   const handleTagClick = (tag: string) => {

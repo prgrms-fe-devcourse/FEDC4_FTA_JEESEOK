@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import Tag from './Tag';
 
 const tags = [
+  ['all', '전체'],
   ['love', '연애'],
   ['relationship', '인간관계'],
   ['job', '취업'],
