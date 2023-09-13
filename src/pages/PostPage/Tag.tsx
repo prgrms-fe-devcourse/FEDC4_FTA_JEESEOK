@@ -20,7 +20,6 @@ interface TagProps extends HTMLAttributes<HTMLButtonElement>, TagStyleProps {
 }
 
 const TagComponent = styled.button<TagStyleProps>`
-  cursor: pointer;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   color: ${({ fontColor }) => fontColor};
@@ -29,6 +28,8 @@ const TagComponent = styled.button<TagStyleProps>`
   border: ${({ borderWidth }) => borderWidth} solid
     ${({ borderColor }) => borderColor};
   font-size: ${({ fontSize }) => fontSize};
+  white-space: nowrap;
+  cursor: pointer;
 `;
 
 const Tag = ({
