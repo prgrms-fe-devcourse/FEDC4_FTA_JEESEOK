@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '~/components/common/Button';
@@ -44,8 +44,14 @@ interface LoginStateType {
 
 const LoginPage = () => {
   const [loginState, setLoginState] = useState(InitLoginState);
-  const [, setAuthState] = useLocalStorage('location', InitAuthState);
+  const [authState, setAuthState] = useLocalStorage('location', InitAuthState);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authState.token.length > 0) {
+      navigate('/');
+    }
+  }, []);
 
   const handleSignUpStateChange = useCallback(
     (properties: keyof LoginStateType, value: string | boolean) => {
