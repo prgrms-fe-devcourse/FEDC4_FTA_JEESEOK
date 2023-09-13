@@ -20,19 +20,23 @@ export const router = createBrowserRouter([
     element: <RootPage />,
     children: [
       {
-        path: '/post',
+        path: '',
         element: <PostPage />,
       },
       {
-        path: '/search',
+        path: 'post',
+        element: <PostPage />,
+      },
+      {
+        path: 'search',
         element: <SearchPage />,
       },
       {
-        path: '/user/:userId',
+        path: 'user/:userId',
         element: <UserPage />,
       },
       {
-        path: '/notification',
+        path: 'notification',
         element: <NotificationPage />,
       },
       {
@@ -48,6 +52,10 @@ export const router = createBrowserRouter([
   {
     path: '/signup',
     element: <SignupPage />,
+  },
+  {
+    path: '/post/create',
+    element: <PostEditPage />,
   },
   {
     path: '/post/:postId',
