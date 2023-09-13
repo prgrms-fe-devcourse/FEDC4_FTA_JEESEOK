@@ -14,6 +14,7 @@ const UserPage = () => {
   const [userInfo, setUserInfo] = useState({
     mbti: '',
     introduce: '',
+    image: '',
   });
 
   useEffect(() => {
@@ -22,10 +23,10 @@ const UserPage = () => {
         const data = await getUser(userId);
 
         if (data && 'fullName' in data) {
-          const { fullName } = data;
+          const { fullName, image } = data;
           const { mbti, introduce } = JSON.parse(fullName as string);
 
-          setUserInfo({ mbti, introduce });
+          setUserInfo({ mbti, introduce, image });
         }
       }
     };
@@ -33,7 +34,7 @@ const UserPage = () => {
     getUserInfo();
   }, [userId]);
 
-  const { mbti, introduce } = userInfo;
+  const { mbti, introduce, image } = userInfo;
 
   const tagProps = {
     width: '80px',
@@ -49,7 +50,7 @@ const UserPage = () => {
   return (
     <MainContainer>
       <Image
-        src={UserPhoto}
+        src={image ? image : UserPhoto}
         shape={'circle'}
         width={150}
         height={150}
