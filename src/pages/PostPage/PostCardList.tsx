@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Post, User } from '~/types';
+import { getKoreaTimeFromNow } from '~/utils';
 import PostCard from './PostCard';
 
 interface UserAddUsername extends User {
@@ -26,7 +27,7 @@ const PostCardList = ({ posts }: PostCardListProps) => {
             commentsNumber={comments.length}
             username={author.username}
             mbti={JSON.parse(author.fullName).mbti}
-            createdAt={createdAt.split('T')[0]}
+            createdAt={getKoreaTimeFromNow(createdAt)}
           />
         )
       )}
