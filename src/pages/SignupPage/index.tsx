@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { searchAll, searchUser } from '~/api/search';
 import Button from '~/components/common/Button';
 import Header from '~/components/common/Header';
 import MbtiButton from '~/components/signup/MbtiButton';
 import SignUpForm from '~/components/signup/SignUpForm';
-import { InitSignUpState, TITLE } from '~/constants/loginConstants.ts';
+import { InitSignUpState, TITLE } from '~/constants/signUpConstants.ts';
 import { SignUpStateType } from '~/types/signUpTypes.ts';
 import postSignupApi from '../../api/authorization/signup.ts';
 
@@ -27,7 +26,7 @@ const SignUpBody = styled.div`
 `;
 
 type ValidationObj = {
-  [key: string]: boolean;
+  [key: string]: boolean | undefined;
 };
 
 const SignupPage = () => {
@@ -64,7 +63,6 @@ const SignupPage = () => {
       { length: pw.length, obj: { isPwError: true } },
       { length: pwCheck.length, obj: { isPwCheckError: true } },
       { length: nickName.length, obj: { isNickNameError: true } },
-      // 추가적인 검증이 필요한 다른 입력 필드도 이 배열에 추가할 수 있습니다.
     ].some(({ length, obj }) => validationCheck(length, obj));
 
     if (hasError) return;

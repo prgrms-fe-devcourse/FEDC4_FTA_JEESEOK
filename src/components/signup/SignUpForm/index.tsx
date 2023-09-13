@@ -10,7 +10,7 @@ import {
   PASSWORD_VALIDATION,
   USER_ID,
   USER_ID_VALIDATION,
-} from '~/constants/loginConstants.ts';
+} from '~/constants/signUpConstants.ts';
 import { SignUpStateType, inputType } from '~/types/signUpTypes.ts';
 
 interface MbtiButtonProps {
