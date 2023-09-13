@@ -3,11 +3,12 @@ import { useParams } from 'react-router-dom';
 import { getUser } from '~/api/user';
 import UserPhoto from '~/assets/user.svg';
 import Image from '~/components/common/Image';
-import Tag from '~/components/common/Tag';
 import {
   IntroduceArea,
   MainContainer,
 } from '~/components/common/UserMainPage/style';
+import Tag from '~/pages/UserPage/Tag';
+import { User } from '~/types';
 
 const UserPage = () => {
   const { userId } = useParams();
@@ -20,7 +21,7 @@ const UserPage = () => {
   useEffect(() => {
     const getUserInfo = async () => {
       if (userId) {
-        const data = await getUser(userId);
+        const data = (await getUser(userId)) as unknown as User | false;
 
         if (data && 'fullName' in data) {
           const { fullName, image } = data;
