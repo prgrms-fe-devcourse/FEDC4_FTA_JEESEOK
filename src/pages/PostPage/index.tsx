@@ -68,7 +68,7 @@ const PostPage = () => {
   return (
     <div>
       <TagList onClick={handleTagClick} />
-      <div style={{ height: '27px' }}></div>
+      <div style={{ height: '32px' }}></div>
       <PostCardList posts={posts} />
     </div>
   );

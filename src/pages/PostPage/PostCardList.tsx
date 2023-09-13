@@ -41,4 +41,5 @@ const PostCardListContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3px;
+  margin-bottom: 70px;
 `;

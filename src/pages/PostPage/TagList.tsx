@@ -38,4 +38,6 @@ const TagListContainer = styled.div`
   display: flex;
   gap: 5px;
   position: fixed;
+  margin-left: 5px;
+  margin-top: 5px;
 `;
