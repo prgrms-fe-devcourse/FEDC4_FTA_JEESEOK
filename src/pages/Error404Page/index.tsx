@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '~/components/common/Button';
-import Footer from '~/components/common/Footer';
 import Header from '~/components/common/Header';
 
 const PageWrapper = styled.div`
@@ -9,11 +8,14 @@ const PageWrapper = styled.div`
   flex-direction: column;
   height: 100vh;
 `;
-const HeaderWrapper = styled.div`
-  height: 80px;
+const HeaderStyled = styled(Header)`
+  position: absolute;
+  top: 0;
+  max-width: 425px;
+  box-sizing: border-box;
 `;
 const ContentWrapper = styled.div`
-  flex-grow: 1;
+  height: calc(100% - 8vh);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -44,33 +46,14 @@ const ButtonStyled = styled(Button)`
 
 const Error404Page = () => {
   const navigate = useNavigate();
-  const content = ['게시판', '알림', '마이페이지'];
-
-  const handleBottomNav = (e: MouseEvent) => {
-    const nav = (e.target as HTMLButtonElement).textContent;
-    if (nav === '게시판') {
-      navigate('/');
-    } else if (nav === '로그인') {
-      navigate('/login');
-    } else if (nav === '알림') {
-      navigate('/notification');
-    } else if (nav === '마이페이지') {
-      navigate('/user/post');
-    } else {
-      navigate('noPage');
-    }
-  };
 
   return (
     <PageWrapper>
-      <HeaderWrapper>
-        <Header isLogo isSearch={false} title="" />
-      </HeaderWrapper>
+      <HeaderStyled isLogo isSearch={false} title="" />
       <ContentWrapper>
         <ContentText>404</ContentText>
-        <ButtonStyled>게시판 가기</ButtonStyled>
+        <ButtonStyled onClick={() => navigate('/')}>게시판 가기</ButtonStyled>
       </ContentWrapper>
-      <Footer content={content} onClick={handleBottomNav} />
     </PageWrapper>
   );
 };

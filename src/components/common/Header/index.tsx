@@ -15,7 +15,12 @@ interface HeaderProps {
   title: string;
 }
 
-const Header = ({ isLogo = true, isSearch = false, title }: HeaderProps) => {
+const Header = ({
+  isLogo = true,
+  isSearch = false,
+  title,
+  ...props
+}: HeaderProps) => {
   const navigate = useNavigate();
 
   const handleLogoClick = () => {
@@ -30,7 +35,7 @@ const Header = ({ isLogo = true, isSearch = false, title }: HeaderProps) => {
     navigate('/search');
   };
   return (
-    <HeaderContainer>
+    <HeaderContainer {...props}>
       {isLogo && <LogoIcon src={logoImg} onClick={handleLogoClick} />}
       {!isLogo && (
         <BackIcon src={backButtonImg} onClick={handleBackButtonClick} />
