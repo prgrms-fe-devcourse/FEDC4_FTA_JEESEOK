@@ -3,11 +3,8 @@ import { useParams } from 'react-router-dom';
 import { getUser } from '~/api/user';
 import UserPhoto from '~/assets/user.svg';
 import Image from '~/components/common/Image';
-import {
-  IntroduceArea,
-  MainContainer,
-} from '~/components/common/UserMainPage/style';
 import Tag from '~/pages/UserPage/Tag';
+import { IntroduceArea, MainContainer } from '~/pages/UserPage/style';
 import { User } from '~/types';
 
 const UserPage = () => {
