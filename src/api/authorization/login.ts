@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import request from '~/api';
 import { User } from '~/types';
 
-interface ResponseUser {
+export interface ResponseUser {
   user: User;
   token: string;
 }

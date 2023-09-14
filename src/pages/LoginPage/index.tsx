@@ -13,7 +13,7 @@ import {
 } from '~/constants/loginConstants.ts';
 import { PASSWORD, USER_ID } from '~/constants/signUpConstants.ts';
 import useLocalStorage from '~/hooks/useLocalStorage.ts';
-import postLoginApi from '../../api/authorization/login.ts';
+import postLoginApi, { ResponseUser } from '../../api/authorization/login.ts';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -44,7 +44,10 @@ interface LoginStateType {
 
 const LoginPage = () => {
   const [loginState, setLoginState] = useState(InitLoginState);
-  const [authState, setAuthState] = useLocalStorage('location', InitAuthState);
+  const [authState, setAuthState] = useLocalStorage(
+    'AUTH_TOKEN',
+    InitAuthState
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -74,10 +77,10 @@ const LoginPage = () => {
       return;
     }
 
-    const loginApiResult = await postLoginApi({
+    const loginApiResult = (await postLoginApi({
       id: loginState.id,
       password: loginState.pw,
-    });
+    })) as unknown as ResponseUser;
     if (loginApiResult) {
       setAuthState(loginApiResult);
       alert('로그인 되었습니다');
