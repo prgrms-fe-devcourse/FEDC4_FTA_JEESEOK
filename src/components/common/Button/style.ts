@@ -17,4 +17,5 @@ export const BaseButton = styled.button<BaseButtonStyleType>`
   height: ${({ height }) =>
     typeof height === 'number' ? `${height}px` : height};
   cursor: pointer;
+  justify-content: center;
 `;
