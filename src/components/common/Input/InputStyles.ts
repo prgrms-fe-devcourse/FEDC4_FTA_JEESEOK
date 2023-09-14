@@ -2,20 +2,19 @@
 import styled from '@emotion/styled';
 import { InputProps } from '~/components/common/Input/index.tsx';
 
-type InputStylesProps = Pick<InputProps, 'width' | 'height'>;
+type InputStylesProps = Pick<InputProps, 'width'>;
+type InputGroupContainerProps = Pick<InputProps, 'height'>;
 
 export const InputContainer = styled.div<InputStylesProps>`
   display: flex;
   flex-direction: column;
   justify-items: center;
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
-  height: ${({ height }) =>
-    typeof height === 'number' ? `${height}px` : height};
   margin-bottom: 10px;
   margin-top: 5px;
 `;
 
-export const InputGroupContainer = styled.div`
+export const InputGroupContainer = styled.div<InputGroupContainerProps>`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -26,7 +25,8 @@ export const InputGroupContainer = styled.div`
     border: 1px solid #0c151c;
   }
   width: 100%;
-  height: 100%;
+  height: ${({ height }) =>
+    typeof height === 'number' ? `${height}px` : height};
 `;
 
 export const InputStyle = styled.input`

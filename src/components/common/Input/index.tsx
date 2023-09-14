@@ -38,8 +38,8 @@ const Input = ({
   onClick,
 }: InputProps) => {
   return (
-    <InputContainer id={id} width={width} height={height}>
-      <InputGroupContainer>
+    <InputContainer id={id} width={width}>
+      <InputGroupContainer height={height}>
         <InputStyle
           placeholder={placeHolder}
           type={type}
