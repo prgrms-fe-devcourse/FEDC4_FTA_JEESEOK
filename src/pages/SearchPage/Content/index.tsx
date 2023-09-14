@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { searchAll } from '~/api/search';
-import Footer from '~/components/common/Footer';
 import PostCard from '~/components/common/PostCard';
-import UserCard from '~/components/common/UserCard';
 import { Post, User } from '~/types';
+import Footer from '../Footer';
+import { searchAll } from '../SearchAPI';
+import UserCard from '../UserCardStyle';
 
 interface ContentProps {
   word: string;

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import Footer from '~/components/common/Footer';
+import Footer from '../Footer';
 
 const NavWrapper = styled.div`
   width: 100%;
@@ -14,15 +14,6 @@ const FooterStyled = styled(Footer)`
   left: 50%;
   transform: translateX(-50%);
 `;
-// const FooterStyled = styled(Footer)`
-//   ${FooterContainer} {
-//     position: fixed;
-//     left: 0;
-//     bottom: 0;
-//     left: 50%;
-//     transform: translateX(-50%);
-//   }
-// `;
 
 const Nav = () => {
   const navigate = useNavigate();
