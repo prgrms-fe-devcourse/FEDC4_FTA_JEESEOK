@@ -20,9 +20,9 @@ const UserPage = () => {
       if (userId) {
         const data = (await getUser(userId)) as unknown as User | false;
 
-        if (data && 'fullName' in data) {
+        if (data) {
           const { fullName, image } = data;
-          const { mbti, introduce } = JSON.parse(fullName as string);
+          const { mbti, introduce } = JSON.parse(fullName);
 
           setUserInfo({ mbti, introduce, image });
         }
