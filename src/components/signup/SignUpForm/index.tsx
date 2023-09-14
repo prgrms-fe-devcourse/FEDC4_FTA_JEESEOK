@@ -59,13 +59,15 @@ const SignUpForm = ({ signUpState, setSignUpState }: MbtiButtonProps) => {
 
   const validationCheck = (properties: inputType, value: string) => {
     if (properties === 'pwCheck') {
-      validationFormat[properties] !== value
-        ? handleSignUpStateChange('isPwCheckError', true)
-        : handleSignUpStateChange('isPwCheckError', false);
+      handleSignUpStateChange(
+        'isPwCheckError',
+        validationFormat[properties] !== value
+      );
     } else {
-      validationFormat[properties].test(value)
-        ? handleSignUpStateChange(errorFormat[properties], false)
-        : handleSignUpStateChange(errorFormat[properties], true);
+      handleSignUpStateChange(
+        errorFormat[properties],
+        !validationFormat[properties].test(value)
+      );
     }
   };
 
