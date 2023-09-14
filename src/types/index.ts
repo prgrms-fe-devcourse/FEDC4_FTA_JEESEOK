@@ -21,6 +21,7 @@ export interface User {
   ];
   notifications: Notification[];
   messages: Message[];
+  username: string;
   _id: string;
   fullName: string;
   email: string;
