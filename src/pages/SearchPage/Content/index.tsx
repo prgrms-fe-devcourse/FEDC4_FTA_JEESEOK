@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import PostCard from '~/components/common/PostCard';
+import PostCard from '~/pages/PostPage/PostCard';
 import { Post, User } from '~/types';
+import { getKoreaTimeFromNow } from '~/utils';
 import Footer from '../Footer';
 import { searchAll } from '../SearchAPI';
 import UserCard from '../UserCardStyle';
 
 interface ContentProps {
   word: string;
+  postArr: Post[];
+  userArr: User[];
+  setPostArr: (e: Post[]) => void;
+  setUserArr: (e: User[]) => void;
 }
 
 const ContentWrapper = styled.div`
@@ -31,33 +36,37 @@ const UserCardGroup = styled(UserCard.Group)`
   overflow: scroll;
 `;
 
-const Content = ({ word }: ContentProps) => {
+const Content = ({
+  word,
+  postArr,
+  userArr,
+  setPostArr,
+  setUserArr,
+}: ContentProps) => {
   const [viewPost, setviewPost] = useState(true);
-  const [postArr, setPostArr] = useState<Post[]>([]);
-  const [userArr, setUserArr] = useState<User[]>([]);
   const topMenu = ['게시글', '유저'];
 
   useEffect(() => {
+    let timer = null;
+
     if (word) {
-      searchAll(`${word}`).then((appData) => {
-        setPostArr(appData.filter((ele) => Object.hasOwn(ele, 'author')));
-        setUserArr(appData.filter((ele) => Object.hasOwn(ele, 'fullName')));
-        console.log(appData);
-      });
+      timer = setTimeout(async () => {
+        const res = await searchAll(`${word}`);
+        setPostArr(
+          res.data.filter((post: Post) => Object.hasOwn(post, 'author'))
+        );
+        setUserArr(
+          res.data.filter((user: User) => Object.hasOwn(user, 'fullName'))
+        );
+      }, 300);
+    } else {
+      setPostArr([]);
+      setUserArr([]);
     }
-    console.log(postArr);
+
+    return () => clearTimeout(timer);
   }, [word]);
 
-  const mbtiParsing = (string: string) => {
-    const regex = /'mbti':\s*'([^"]+)'}/;
-    const match = string.match(regex);
-    return match === null ? '없음' : match[1];
-  };
-  const nickNameParsing = (string: string) => {
-    const regex = /'nick[n|N]ame':\s*'([^"]+)',/;
-    const match = string.match(regex);
-    return match === null ? string : match[1];
-  };
   const handleTapNav = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (e.currentTarget.textContent === '게시글') setviewPost(true);
     else setviewPost(false);
@@ -72,14 +81,15 @@ const Content = ({ word }: ContentProps) => {
             <PostCardGroup>
               {postArr.map((post) => (
                 <PostCard
-                  _id={post._id}
+                  id={post._id}
                   key={post._id}
-                  title={post.title}
-                  comments={post.comments}
-                  likes={post.likes}
-                  channel={post.channel}
-                  author={post.author}
-                  createdAt={post.createdAt}
+                  title={JSON.parse(post.title).title}
+                  commentsNumber={post.comments.length}
+                  likesNumber={post.likes.length}
+                  tag={post.channel.name}
+                  username={post.author.fullName}
+                  mbti=""
+                  createdAt={getKoreaTimeFromNow(post.createdAt)}
                 />
               ))}
               {postArr.length === 0 && (
@@ -91,9 +101,10 @@ const Content = ({ word }: ContentProps) => {
               {userArr.map((user) => (
                 <UserCard
                   src="https://picsum.photos/200?1"
-                  nickname={nickNameParsing(user.fullName)}
-                  mbti={mbtiParsing(user.fullName)}
+                  nickname={user.username}
+                  mbti={JSON.parse(user.fullName).mbti}
                   key={user._id}
+                  id={user._id}
                 />
               ))}
               {userArr.length === 0 && (
