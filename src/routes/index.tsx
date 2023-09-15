@@ -1,12 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
 import {
   Error404Page,
+  Layout,
   LoginPage,
   NotificationPage,
   PostDetailPage,
   PostEditPage,
   PostPage,
-  RootPage,
   SearchPage,
   SignupPage,
   UserEditPage,
@@ -17,7 +17,7 @@ import {
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootPage />,
+    element: <Layout />,
     children: [
       {
         path: '',
@@ -28,12 +28,36 @@ export const router = createBrowserRouter([
         element: <PostPage />,
       },
       {
+        path: 'post/:postId',
+        element: <PostDetailPage />,
+      },
+      {
+        path: 'post/:postId/edit',
+        element: <PostEditPage />,
+      },
+      {
         path: 'search',
         element: <SearchPage />,
       },
       {
+        path: 'login',
+        element: <LoginPage />,
+      },
+      {
+        path: 'signup',
+        element: <SignupPage />,
+      },
+      {
         path: 'user/:userId',
         element: <UserPage />,
+      },
+      {
+        path: 'user/edit',
+        element: <UserEditPage />,
+      },
+      {
+        path: 'user/edit/password',
+        element: <UserPasswordPage />,
       },
       {
         path: 'notification',
@@ -44,33 +68,5 @@ export const router = createBrowserRouter([
         element: <Error404Page />,
       },
     ],
-  },
-  {
-    path: '/login',
-    element: <LoginPage />,
-  },
-  {
-    path: '/signup',
-    element: <SignupPage />,
-  },
-  {
-    path: '/post/create',
-    element: <PostEditPage />,
-  },
-  {
-    path: '/post/:postId',
-    element: <PostDetailPage />,
-  },
-  {
-    path: '/post/:postId/edit',
-    element: <PostEditPage />,
-  },
-  {
-    path: '/user/edit',
-    element: <UserEditPage />,
-  },
-  {
-    path: '/user/edit/password',
-    element: <UserPasswordPage />,
   },
 ]);

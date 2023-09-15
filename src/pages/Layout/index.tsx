@@ -1,0 +1,30 @@
+import { useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { getAuthorizationCheckApi } from '~/api/authorization';
+import { User } from '~/types';
+import Footer from './Footer';
+
+const RootPage = () => {
+  const [userId, setUserId] = useState('');
+
+  useEffect(() => {
+    const getMyUserId = async () => {
+      const user = (await getAuthorizationCheckApi()) as unknown as
+        | User
+        | false;
+
+      if (user) setUserId(user._id);
+    };
+
+    getMyUserId();
+  });
+
+  return (
+    <div>
+      <Outlet />
+      <Footer userId={userId} />
+    </div>
+  );
+};
+
+export default RootPage;
