@@ -1,34 +1,33 @@
-import { AxiosResponse } from 'axios';
 import request from '~/api';
 import { User } from '~/types';
 
 interface GetUsers {
-  (offset: number, limit: number): Promise<AxiosResponse<User[] | false>>;
+  (offset: number, limit: number): Promise<User[] | false>;
 }
 
 export const getUsers: GetUsers = async (offset = 0, limit = 10) => {
-  const data = await request.get<User[]>('/users/get-users', {
+  const res = await request.get<User[]>('/users/get-users', {
     params: {
       offset,
       limit,
     },
   });
 
-  return data;
+  return res.data;
 };
 
 interface GetUser {
-  (userId: string): Promise<AxiosResponse<User | false>>;
+  (userId: string): Promise<User | false>;
 }
 
 export const getUser: GetUser = async (userId) => {
-  const data = await request.get<User>(`/users/${userId}`);
+  const res = await request.get<User>(`/users/${userId}`);
 
-  return data;
+  return res.data;
 };
 
 interface PostUserImage {
-  (image: File): Promise<AxiosResponse<User | false>>;
+  (image: File): Promise<User | false>;
 }
 
 export const postUserImage: PostUserImage = async (image) => {
@@ -36,7 +35,7 @@ export const postUserImage: PostUserImage = async (image) => {
   formData.append('isCover', 'false');
   formData.append('image', image);
 
-  const data = await request.post<User>('/users/upload-photo', formData);
+  const res = await request.post<User>('/users/upload-photo', formData);
 
-  return data;
+  return res.data;
 };

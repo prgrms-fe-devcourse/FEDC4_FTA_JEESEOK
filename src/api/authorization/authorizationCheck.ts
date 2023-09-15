@@ -1,14 +1,13 @@
-import { AxiosResponse } from 'axios';
 import request from '~/api';
 import { User } from '~/types';
 
 interface GetAuthorizationCheck {
-  (): Promise<AxiosResponse<User | false>>;
+  (): Promise<User | false>;
 }
 
 const getAuthorizationCheckApi: GetAuthorizationCheck = async () => {
-  const data = await request.get<User>('/auth-user');
-  return data;
+  const res = await request.get<User>('/auth-user');
+  return res.data;
 };
 
 export default getAuthorizationCheckApi;
