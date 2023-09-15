@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import Button from '~/components/common/Button';
 import Icon from '~/components/common/Icon';
 
 interface HeaderProps {
   word: string;
   setWord: (e: string) => void;
+  setPostArr: (e: []) => void;
+  setUserArr: (e: []) => void;
 }
 
 const HeaderWrapper = styled.div`
@@ -23,7 +24,7 @@ const InputBox = styled.div`
   height: 70%;
   box-sizing: border-box;
   border: 1px solid black;
-  margin-left: 10px;
+  margin-right: 10px;
 `;
 const Input = styled.input`
   background-color: transparent;
@@ -34,34 +35,41 @@ const Input = styled.input`
   font-size: 18px;
   padding: 5px;
 `;
-const IconStyled = styled(Icon)`
+const CloseIconStyled = styled(Icon)`
   cursor: pointer;
   flex-grow: 1;
   text-align: center;
 `;
-const ButtonStyled = styled(Button)`
-  background-color: transparent;
-  border: none;
+const BackIconStyled = styled(Icon)`
+  cursor: pointer;
   flex-grow: 1;
-  display: block;
   text-align: center;
-  height: 70%;
 `;
 
-const Header = ({ word, setWord }: HeaderProps) => {
+const Header = ({ word, setWord, setPostArr, setUserArr }: HeaderProps) => {
   const navigate = useNavigate();
+
+  const handleClick = () => {
+    setWord('');
+    setPostArr([]);
+    setUserArr([]);
+  };
 
   return (
     <HeaderWrapper>
+      <BackIconStyled
+        name="chevron-left"
+        size={30}
+        onClick={() => navigate('/')}
+      />
       <InputBox>
         <Input
           placeholder="검색어를 입력하세요."
           value={word}
           onChange={(e) => setWord(e.target.value)}
         />
-        <IconStyled name="x" onClick={() => setWord('')} />
+        <CloseIconStyled name="x" onClick={handleClick} />
       </InputBox>
-      <ButtonStyled onClick={() => navigate('/')}>취소</ButtonStyled>
     </HeaderWrapper>
   );
 };

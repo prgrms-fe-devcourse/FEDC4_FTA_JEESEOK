@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 import Image, { modeType } from '~/components/common/Image';
@@ -48,6 +49,7 @@ export interface UserCardProp {
   imageSize?: number;
   nickname: string;
   mbti: string;
+  id: string;
   style?: React.CSSProperties;
 }
 
@@ -57,15 +59,22 @@ const UserCard = ({
   imageSize = 200,
   nickname,
   mbti,
+  id,
   ...props
 }: UserCardProp) => {
+  const navigate = useNavigate();
+
   const imageStyle = {
     width: imageSize,
     height: imageSize,
     mode: 'cover' as modeType,
   };
+
+  const handleClick = () => {
+    navigate(`/user/${id}`);
+  };
   return (
-    <CardWrapper {...props}>
+    <CardWrapper {...props} onClick={handleClick}>
       <Image {...imageStyle} src={src} alt={alt} shape="circle" />
       <Text>{nickname}</Text>
       <MbtiTag>{mbti}</MbtiTag>
