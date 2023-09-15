@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import request from '~/api';
 
 interface postLikeRequest {
@@ -18,22 +17,22 @@ interface likeResponse {
 }
 
 interface PostLike {
-  (postId: postLikeRequest): Promise<AxiosResponse<likeResponse | undefined>>;
+  (postId: postLikeRequest): Promise<likeResponse | undefined>;
 }
 
 export const postLike: PostLike = async (postId) => {
-  const data = await request.post<likeResponse>('/likes/create', postId);
-  return data;
+  const res = await request.post<likeResponse>('/likes/create', postId);
+  return res.data;
 };
 
 interface DeleteLike {
-  (postId: deleteLikeRequest): Promise<AxiosResponse<likeResponse | undefined>>;
+  (postId: deleteLikeRequest): Promise<likeResponse | undefined>;
 }
 
 export const deleteLike: DeleteLike = async (postId) => {
-  const data = await request.delete<likeResponse>('/likes/delete', {
+  const res = await request.delete<likeResponse>('/likes/delete', {
     data: postId,
   });
 
-  return data;
+  return res.data;
 };

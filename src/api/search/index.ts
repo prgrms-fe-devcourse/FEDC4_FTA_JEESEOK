@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import { Post, User } from '~/types';
 import request from '..';
 
@@ -24,14 +23,14 @@ interface SearchUserResponse {
 }
 
 interface SearchUser {
-  (query: string): Promise<AxiosResponse<SearchUserResponse[] | false>>;
+  (query: string): Promise<SearchUserResponse[] | false>;
 }
 
 export const searchUser: SearchUser = async (query) => {
-  const data = await request.get<SearchUserResponse[] | false>(
+  const res = await request.get<SearchUserResponse[] | false>(
     `/search/users/${query}`
   );
-  return data;
+  return res.data;
 };
 
 interface SearchAll {
@@ -39,8 +38,8 @@ interface SearchAll {
 }
 
 export const searchAll: SearchAll = async (query) => {
-  const { data } = await request.get<(User | Post)[] | false>(
+  const res = await request.get<(User | Post)[] | false>(
     `/search/all/${query}`
   );
-  return data;
+  return res.data;
 };
