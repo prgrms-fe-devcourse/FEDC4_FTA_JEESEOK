@@ -52,9 +52,12 @@ const Content = ({
     if (word) {
       timer = setTimeout(function () {
         searchAll(`${word}`).then((appData) => {
-          setPostArr(appData.filter((ele) => Object.hasOwn(ele, 'author')));
-          setUserArr(appData.filter((ele) => Object.hasOwn(ele, 'fullName')));
-          console.log(appData);
+          setPostArr(
+            appData.data.filter((ele) => Object.hasOwn(ele, 'author'))
+          );
+          setUserArr(
+            appData.data.filter((ele) => Object.hasOwn(ele, 'fullName'))
+          );
         });
       }, 200);
     } else {
