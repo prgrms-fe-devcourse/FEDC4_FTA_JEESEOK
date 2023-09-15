@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import request from '~/api';
 import { Notification } from '~/types';
 
@@ -16,34 +15,34 @@ interface postNotificationRequest {
 }
 
 interface GetNotification {
-  (): Promise<AxiosResponse<Notification[]>>;
+  (): Promise<Notification[]>;
 }
 
 export const getNotification: GetNotification = async () => {
-  const data = await request.get<Notification[]>('notifications');
+  const res = await request.get<Notification[]>('notifications');
 
-  return data;
+  return res.data;
 };
 
 interface ReadNotification {
-  (): Promise<AxiosResponse<readNotificationResponse>>;
+  (): Promise<readNotificationResponse>;
 }
 
 export const readNotification: ReadNotification = async () => {
-  const data = await request.put<readNotificationResponse>(
+  const res = await request.put<readNotificationResponse>(
     '/notifications/seen'
   );
 
-  return data;
+  return res.data;
 };
 
 interface PostNotification {
-  (notification: postNotificationRequest): Promise<AxiosResponse<Notification>>;
+  (notification: postNotificationRequest): Promise<Notification>;
 }
 export const postNotification: PostNotification = async (notification) => {
-  const data = await request.post<Notification>(
+  const res = await request.post<Notification>(
     '/notifications/create',
     notification
   );
-  return data;
+  return res.data;
 };

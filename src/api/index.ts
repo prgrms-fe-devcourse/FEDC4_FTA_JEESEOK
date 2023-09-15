@@ -10,25 +10,28 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     const storage = localStorage.getItem('AUTH_TOKEN');
-    const AUTH = JSON.parse(storage || '');
-    if (AUTH['token']) {
-      config.headers.Authorization = `Bearer ${AUTH['token']}`;
+    if (storage) {
+      const AUTH = JSON.parse(storage);
+      if (AUTH['token']) {
+        config.headers.Authorization = `Bearer ${AUTH['token']}`;
+      }
     }
+
     return config;
   },
-  (err) => {
-    console.error(err);
-    return false;
+  (error) => {
+    console.error(error);
+    return Promise.reject(error);
   }
 );
 
 request.interceptors.response.use(
   (res) => {
-    return res.data;
+    return res;
   },
   (error) => {
     console.error(error);
-    return false;
+    return Promise.reject(error);
   }
 );
 
