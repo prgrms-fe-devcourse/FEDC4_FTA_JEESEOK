@@ -24,7 +24,7 @@ const PostEditPageWrapper = styled.div`
 const PostEditPage = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
-  const [title, setTitle] = useState('제목');
+  const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [active, setActive] = useState('');
   const [selectedChannel, setSelectedChannel] = useState('');
@@ -36,14 +36,18 @@ const PostEditPage = () => {
       //만약 error나면 어떻게 처리할거임
       if (typeof isAuth === 'string') {
         navigate('/');
-      }
-      if (typeof postId === 'string' && postId !== 'create') {
-        const dummy = window.localStorage.getItem('dummy') as string;
-        setTitle(JSON.parse(dummy).title);
-        setText(JSON.parse(dummy).body);
-        //setText(JSON.parse(readPost(postId)));
+      } else if (postId === 'create') {
+        setTitle('제목');
+      } else if (typeof postId === 'string' && postId !== 'create') {
+        const post = await readPost(postId);
+        if (post && post.data && 'title' in post.data) {
+          const postInformation = JSON.parse(post.data.title);
+          setTitle(postInformation.title);
+          setText(postInformation.body);
+        }
       }
     };
+
     getAuthCheck();
   }, [navigate]);
 
@@ -56,27 +60,19 @@ const PostEditPage = () => {
     } else if (selectedChannel === '') {
       alert('태그를 선택해주세요');
     } else if (postId === 'create') {
-      // writePost(
-      //   JSON.stringify({ title: title, body: text }),
-      //   null,
-      //   selectedChannel
-      // );
-      window.localStorage.setItem(
-        'dummy',
-        JSON.stringify({ title: title, body: text, channelId: selectedChannel })
+      writePost(
+        JSON.stringify({ title: title, body: text }),
+        null,
+        selectedChannel
       );
-      //navigate('/');
+      navigate('/');
     } else if (typeof postId === 'string') {
-      // editPost({
-      //   postId,
-      //   title: JSON.stringify({ title: title, body: text }),
-      //   channelId: selectedChannel,
-      // });
-      window.localStorage.setItem(
-        'dummy',
-        JSON.stringify({ title: title, body: text, channelId: selectedChannel })
-      );
-      //navigate('/');
+      editPost({
+        postId,
+        title: JSON.stringify({ title: title, body: text }),
+        channelId: selectedChannel,
+      });
+      navigate('/');
     }
   }
 
