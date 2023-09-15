@@ -1,12 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
 import {
   Error404Page,
+  Layout,
   LoginPage,
   NotificationPage,
   PostDetailPage,
   PostEditPage,
   PostPage,
-  RootPage,
   SearchPage,
   SignupPage,
   UserEditPage,
@@ -17,7 +17,7 @@ import {
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootPage />,
+    element: <Layout />,
     children: [
       {
         path: '',
