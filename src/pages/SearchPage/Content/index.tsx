@@ -50,16 +50,15 @@ const Content = ({
     let timer = null;
 
     if (word) {
-      timer = setTimeout(function () {
-        searchAll(`${word}`).then((appData) => {
-          setPostArr(
-            appData.data.filter((ele) => Object.hasOwn(ele, 'author'))
-          );
-          setUserArr(
-            appData.data.filter((ele) => Object.hasOwn(ele, 'fullName'))
-          );
-        });
-      }, 200);
+      timer = setTimeout(async () => {
+        const res = await searchAll(`${word}`);
+        setPostArr(
+          res.data.filter((post: Post) => Object.hasOwn(post, 'author'))
+        );
+        setUserArr(
+          res.data.filter((user: User) => Object.hasOwn(user, 'fullName'))
+        );
+      }, 300);
     } else {
       setPostArr([]);
       setUserArr([]);
