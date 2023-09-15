@@ -13,6 +13,8 @@ export interface ButtonProps {
   height: string | number;
   type: 'button' | 'submit' | 'reset' | undefined;
   form: string | undefined;
+  onMouseDown: React.MouseEventHandler<HTMLButtonElement>;
+  onMouseUp: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const Button = ({
@@ -27,6 +29,8 @@ const Button = ({
   height = '20px',
   type,
   form,
+  onMouseDown,
+  onMouseUp,
 }: Partial<ButtonProps>) => {
   const preventOnClick = disabled || isLoading;
 
@@ -41,6 +45,8 @@ const Button = ({
       height={height}
       type={type}
       form={form}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
     >
       {children}
     </BaseButton>

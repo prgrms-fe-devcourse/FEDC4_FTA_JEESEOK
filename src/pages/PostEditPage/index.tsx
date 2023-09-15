@@ -11,7 +11,7 @@ import Textarea from '~/pages/PostEditPage/Textarea';
 import { editPost, readPost, writePost } from '~/pages/PostEditPage/post';
 
 const CHANNEL_ID = {
-  WORK: ' 64f57dc874128417c268916c',
+  WORK: '64f57dc874128417c268916c',
   LOVE: '64f57dd474128417c2689170',
   RELATION: '64f96db08a4e9a3147d9117a',
   MONEY: '64f96d8e8a4e9a3147d91176',
@@ -32,24 +32,31 @@ const PostEditPage = () => {
   useEffect(() => {
     const getAuthCheck = async () => {
       const isAuth = await getAuthorizationCheckApi();
-      console.log(isAuth);
-      //만약 error나면 어떻게 처리할거임
-      if (typeof isAuth === 'string') {
+
+      if (!isAuth) {
         navigate('/');
-      } else if (postId === 'create') {
+        return;
+      }
+
+      if (postId === 'create') {
         setTitle('제목');
-      } else if (typeof postId === 'string' && postId !== 'create') {
-        const post = await readPost(postId);
-        if (post && post.data && 'title' in post.data) {
-          const postInformation = JSON.parse(post.data.title);
+        return;
+      }
+
+      if (typeof postId === 'string') {
+        const postData = (await readPost(postId))?.data;
+        if (postData && postData.author.email === isAuth.email) {
+          const postInformation = JSON.parse(postData.title);
           setTitle(postInformation.title);
           setText(postInformation.body);
+          return;
         }
+        navigate('/');
       }
     };
 
     getAuthCheck();
-  }, [navigate]);
+  }, [navigate, postId]);
 
   function handleSubmit(e: MouseEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -81,8 +88,6 @@ const PostEditPage = () => {
       e.preventDefault();
       setActive((e.target as HTMLButtonElement).id);
       setSelectedChannel((e.target as HTMLButtonElement).id);
-      console.log('selectedChannel : ', selectedChannel);
-      console.log((e.target as HTMLButtonElement).innerText);
     },
     width: '60px',
     height: '30px',
@@ -161,7 +166,7 @@ const PostEditPage = () => {
         ></Tag>
         <Tag
           {...TagProps}
-          children={'금전'}
+          children={'돈'}
           id={CHANNEL_ID.MONEY}
           className={CHANNEL_ID.MONEY == active ? 'active' : ''}
         ></Tag>
