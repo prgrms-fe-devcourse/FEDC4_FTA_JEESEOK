@@ -13,12 +13,13 @@ import { User } from '~/types';
 
 const UserEditPage = () => {
   const navigate = useNavigate();
-  const info = localStorage.getItem('AUTH_TOKEN');
+  const userInfo = localStorage.getItem('AUTH_TOKEN');
 
-  const { user, token } = JSON.parse(info!);
+  const { user, token } = JSON.parse(userInfo!);
   const { fullName, username, _id } = user;
   const { mbti, introduce } = JSON.parse(fullName);
-
+  // 새로고침 시 아직 이미지 url이 localStorage에 저장되지 않아 이전 사진이 불러와짐
+  // localStorage의 사진 url을 저장하는 로직을 완료 버튼을 눌렀을때만 수행하기 위해서는 이 로직이 필요함
   useEffect(() => {
     const getUserImage = async (): Promise<void> => {
       const data = await getUser(_id);
@@ -49,7 +50,6 @@ const UserEditPage = () => {
   };
 
   const handleMbtiButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(editedMbti);
     if (editedMbti.length < 4) {
       setEditedMbti(editedMbti + e.currentTarget.textContent);
     }
@@ -110,7 +110,7 @@ const UserEditPage = () => {
       JSON.stringify({ user: editedUserInfo, token })
     );
 
-    // navigate(-1);
+    navigate(-1);
   };
 
   return (
@@ -129,7 +129,7 @@ const UserEditPage = () => {
               width={150}
               height={150}
               mode={'cover'}
-              style={{ backgroundColor: '#DFE7FF' }}
+              style={{ backgroundColor: '#DFE7FF', cursor: 'pointer' }}
             />
           </label>
           <input
