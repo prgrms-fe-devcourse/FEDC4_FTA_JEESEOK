@@ -12,6 +12,10 @@ const CHANNEL_ID = Object.freeze({
   money: '64f96d8e8a4e9a3147d91176',
 });
 
+const TAG = 'tag';
+const OFFSET = 0;
+const LIMIT = 10;
+
 type Tag = keyof typeof CHANNEL_ID | 'all' | null;
 
 const PostPage = () => {
@@ -20,12 +24,14 @@ const PostPage = () => {
 
   useEffect(() => {
     const getPosts = async () => {
-      const tag = searchParams.get('tag') as Tag;
+      const tag = searchParams.get(TAG) as Tag;
 
       if (!tag || tag === 'all') {
         const allPosts = (
           await Promise.allSettled(
-            Object.values(CHANNEL_ID).map((id) => getChannelPost(id, 0, 10))
+            Object.values(CHANNEL_ID).map((id) =>
+              getChannelPost(id, OFFSET, LIMIT)
+            )
           )
         )
           .filter(
@@ -41,7 +47,7 @@ const PostPage = () => {
         return;
       }
 
-      const posts = await getChannelPost(CHANNEL_ID[tag], 0, 20);
+      const posts = await getChannelPost(CHANNEL_ID[tag], OFFSET, LIMIT);
 
       if (posts) setPosts(posts);
     };
@@ -50,7 +56,7 @@ const PostPage = () => {
   }, [searchParams]);
 
   const handleTagClick = (tag: string) => {
-    searchParams.set('tag', tag);
+    searchParams.set(TAG, tag);
     setSearchParams(searchParams);
   };
 
