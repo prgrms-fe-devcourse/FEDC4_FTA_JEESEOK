@@ -1,15 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getChannelPost } from '~/api/post';
-import { Post, User } from '~/types';
+import { Post } from '~/types';
 import PostCardList from './PostCardList';
 import TagList from './TagList';
-
-interface UserAddUsername extends User {
-  username: string;
-}
-
-type Posts = (Omit<Post, 'author'> & { author: UserAddUsername })[];
 
 const CHANNEL_ID = Object.freeze({
   love: '64f57dd474128417c2689170',
@@ -18,26 +12,22 @@ const CHANNEL_ID = Object.freeze({
   money: '64f96d8e8a4e9a3147d91176',
 });
 
+type Tag = keyof typeof CHANNEL_ID | 'all' | null;
+
 const PostPage = () => {
-  const [posts, setPosts] = useState<Posts>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const getPosts = async () => {
-      const tag = searchParams.get('tag') as
-        | 'all'
-        | 'love'
-        | 'relationship'
-        | 'job'
-        | 'money'
-        | null;
+      const tag = searchParams.get('tag') as Tag;
 
       if (!tag || tag === 'all') {
         const data = (
           await Promise.all(
             Object.values(CHANNEL_ID).map((id) => getChannelPost(id, 0, 10))
           )
-        ).flat() as unknown as Posts | undefined;
+        ).flat() as Post[];
 
         if (data) {
           setPosts(
@@ -50,9 +40,7 @@ const PostPage = () => {
         return;
       }
 
-      const data = (await getChannelPost(CHANNEL_ID[tag], 0, 20)) as unknown as
-        | Posts
-        | undefined;
+      const data = await getChannelPost(CHANNEL_ID[tag], 0, 20);
 
       if (data) setPosts(data);
     };
