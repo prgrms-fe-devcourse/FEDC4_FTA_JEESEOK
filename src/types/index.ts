@@ -1,6 +1,6 @@
 export interface User {
-  coverImage: string;
-  image: string;
+  coverImage?: string;
+  image?: string;
   role: string;
   emailVerified: boolean;
   banned: boolean;
@@ -23,6 +23,7 @@ export interface User {
   messages: Message[];
   _id: string;
   fullName: string;
+  username: string;
   email: string;
   createdAt: string;
   updatedAt: string;
