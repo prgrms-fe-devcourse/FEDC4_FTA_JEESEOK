@@ -23,26 +23,27 @@ const PostPage = () => {
       const tag = searchParams.get('tag') as Tag;
 
       if (!tag || tag === 'all') {
-        const data = (
-          await Promise.all(
+        const allPosts = (
+          await Promise.allSettled(
             Object.values(CHANNEL_ID).map((id) => getChannelPost(id, 0, 10))
           )
-        ).flat() as Post[];
+        )
+          .filter(
+            (result): result is PromiseFulfilledResult<Post[]> =>
+              result.status === 'fulfilled'
+          )
+          .map((result) => result.value)
+          .flat()
+          .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
-        if (data) {
-          setPosts(
-            data.sort(
-              (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)
-            )
-          );
-        }
+        setPosts(allPosts);
 
         return;
       }
 
-      const data = await getChannelPost(CHANNEL_ID[tag], 0, 20);
+      const posts = await getChannelPost(CHANNEL_ID[tag], 0, 20);
 
-      if (data) setPosts(data);
+      if (posts) setPosts(posts);
     };
 
     getPosts();
