@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAuthorizationCheckApi } from '~/api/authorization';
 import { putMyInformation } from '~/api/settings';
+import { getUser, postUserImage } from '~/api/user';
 import UserPhoto from '~/assets/user.svg';
 import Button from '~/components/common/Button';
 import Image from '~/components/common/Image';
@@ -11,130 +11,106 @@ import Textarea from '~/pages/UserEditPage/Textarea';
 import { MainPageContainer, MbtiForm } from '~/pages/UserEditPage/style';
 import { User } from '~/types';
 
-/* 라우터 주소 변경해서 edit하는 사용자의 Id값을 이용해서 
-사용자의 fullName(자기소개, mbti) username(닉네임) image(프로필 사진)을 
-가지고 와서 사용해야 함 !! **/
 const UserEditPage = () => {
-  const [UserInfo, setUserInfo] = useState({
-    fullName: '',
-    username: '',
-    image: '',
-  });
-
-  const [inputValue, setInputValue] = useState('');
-  const [debouncedInputValue, setDebouncedInputValue] = useState('');
-
-  const [editMbti, setEditMbti] = useState('');
-  const [validMbti, setValidMbti] = useState(true);
-
-  const [textareaValue, setTextareaValue] = useState('');
-  const [debouncedTextareaValue, setDebouncedTextareaValue] = useState('');
-
-  const [editUserInfo, setEditUserInfo] = useState({
-    mbti: '',
-    introduce: '',
-    username: '',
-  });
-
   const navigate = useNavigate();
+  const info = localStorage.getItem('AUTH_TOKEN');
+
+  const { user, token } = JSON.parse(info!);
+  const { fullName, username, _id } = user;
+  const { mbti, introduce } = JSON.parse(fullName);
 
   useEffect(() => {
-    const getMyUserInfo = async () => {
-      const user = (await getAuthorizationCheckApi()) as unknown as
-        | User
-        | false;
+    const getUserImage = async (): Promise<void> => {
+      const data = await getUser(_id);
 
-      if (user) {
-        const { fullName, username, image } = user;
-        const { mbti, introduce } = JSON.parse(fullName);
+      if ('image' in data) {
+        const { image } = data;
 
-        setUserInfo({ mbti, introduce, username, image });
+        return setEditedImage(image as string);
       }
     };
 
-    getMyUserInfo();
-  }, []);
+    getUserImage();
+  }, [_id]);
 
-  useEffect(() => {
-    const delayInput = setTimeout(() => {
-      setDebouncedInputValue(inputValue);
-    }, 1000);
-
-    const delayTextarea = setTimeout(() => {
-      setDebouncedTextareaValue(textareaValue);
-    }, 1000);
-
-    return () => {
-      clearTimeout(delayInput);
-      clearTimeout(delayTextarea);
-    };
-  }, [inputValue, textareaValue]);
-
-  useEffect(() => {
-    setEditUserInfo(() => ({
-      mbti: editMbti,
-      introduce: debouncedTextareaValue,
-      username: debouncedInputValue,
-    }));
-    if (
-      editMbti.length !== 4 ||
-      (editMbti[0] !== 'I' && editMbti[0] !== 'E') ||
-      (editMbti[1] !== 'S' && editMbti[1] !== 'N') ||
-      (editMbti[2] !== 'T' && editMbti[2] !== 'F') ||
-      (editMbti[3] !== 'P' && editMbti[3] !== 'J')
-    ) {
-      if (editMbti.length !== 0) {
-        setValidMbti(false);
-      }
-    } else {
-      setValidMbti(true);
-    }
-  }, [editMbti, debouncedInputValue, debouncedTextareaValue]);
+  const [editedMbti, setEditedMbti] = useState(mbti);
+  const [editedIntroduce, setEditedIntroduce] = useState(introduce);
+  const [editedUsername, setEditedUsername] = useState(username);
+  const [editedImage, setEditedImage] = useState<string | null>(null);
 
   const MBTI = ['E', 'N', 'F', 'P', 'I', 'S', 'T', 'J'];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.currentTarget.value);
+    setEditedUsername(e.currentTarget.value);
   };
 
-  const handleCancelButtonClick = () => {
-    setInputValue('');
+  const handleInputCancelButtonClick = () => {
+    setEditedUsername('');
   };
 
   const handleMbtiButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setEditMbti(editMbti + e.currentTarget.textContent);
+    console.log(editedMbti);
+    if (editedMbti.length < 4) {
+      setEditedMbti(editedMbti + e.currentTarget.textContent);
+    }
+  };
+
+  const handleMbtiCancelClick = () => {
+    setEditedMbti('');
   };
 
   const handleTextareaChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    setTextareaValue(e.currentTarget.value);
+    setEditedIntroduce(e.currentTarget.value);
   };
 
-  const handlePasswordClick = () => {
+  const handleChangePasswordButtonClick = () => {
     navigate('/user/edit/password');
   };
 
-  const handleCompleteEditButton = async () => {
-    const { mbti, introduce, username } = editUserInfo;
+  const handleImageUploadButtonClick = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const { image } = (await postUserImage(file)) as unknown as User;
 
+      setEditedImage(image);
+    }
+  };
+
+  const handlePlusButtonClick = () => {
+    const fileInput = document.getElementById('fileInput');
+    fileInput?.click();
+  };
+
+  const handleCompleteEditButton = async () => {
     if (
-      mbti.length !== 4 ||
-      (mbti[0] !== 'I' && mbti[0] !== 'E') ||
-      (mbti[1] !== 'S' && mbti[1] !== 'N') ||
-      (mbti[2] !== 'T' && mbti[2] !== 'F') ||
-      (mbti[3] !== 'P' && mbti[3] !== 'J')
+      editedMbti.length !== 4 ||
+      (editedMbti[0] !== 'I' && editedMbti[0] !== 'E') ||
+      (editedMbti[1] !== 'S' && editedMbti[1] !== 'N') ||
+      (editedMbti[2] !== 'T' && editedMbti[2] !== 'F') ||
+      (editedMbti[3] !== 'P' && editedMbti[3] !== 'J')
     ) {
-      setEditMbti('');
+      alert('MBTI를 다시 입력해 주세요');
+      setEditedMbti('');
 
       return;
     }
-    const fullName = { mbti, introduce };
+    const fullName = { mbti: editedMbti, introduce: editedIntroduce };
 
-    await putMyInformation(JSON.stringify(fullName), username);
-    navigate(-1);
-  };
+    const editedUserInfo = (await putMyInformation(
+      JSON.stringify(fullName),
+      editedUsername
+    )) as unknown as User;
 
-  const handleMbtiCancel = () => {
-    setEditMbti('');
+    editedUserInfo.image = editedImage as string;
+
+    localStorage.setItem(
+      'AUTH_TOKEN',
+      JSON.stringify({ user: editedUserInfo, token })
+    );
+
+    // navigate(-1);
   };
 
   return (
@@ -145,49 +121,82 @@ const UserEditPage = () => {
         onClick={handleCompleteEditButton}
       />
       <MainPageContainer>
-        <Image
-          src={UserPhoto}
-          shape={'circle'}
-          width={150}
-          height={150}
-          mode={'cover'}
-          style={{ backgroundColor: '#DFE7FF' }}
-        />
+        <div style={{ position: 'relative', width: '150px', height: '150px' }}>
+          <label htmlFor="fileInput">
+            <Image
+              src={editedImage ? editedImage : UserPhoto}
+              shape={'circle'}
+              width={150}
+              height={150}
+              mode={'cover'}
+              style={{ backgroundColor: '#DFE7FF' }}
+            />
+          </label>
+          <input
+            type="file"
+            id="fileInput"
+            onChange={handleImageUploadButtonClick}
+            style={{ display: 'none' }}
+          />
+          <button
+            onClick={handlePlusButtonClick}
+            style={{
+              position: 'absolute',
+              bottom: '0',
+              right: '0',
+              left: '110px',
+              width: '40px',
+              height: '40px',
+              background: 'skyblue',
+              borderRadius: '20px',
+              border: 'none',
+              cursor: 'pointer',
+              fontSize: '20px',
+            }}
+          >
+            +
+          </button>
+        </div>
         <Input
-          id={''}
-          value={inputValue}
+          id={'username'}
+          value={editedUsername}
           width={'65%'}
           height={40}
           placeHolder={'닉네임'}
           type={'text'}
           onChange={handleInputChange}
-          onClick={handleCancelButtonClick}
+          onClick={handleInputCancelButtonClick}
         />
         <span>
-          mbti: {editUserInfo.mbti}
-          <button onClick={handleMbtiCancel}>x</button>
+          mbti: {editedMbti}
+          <button onClick={handleMbtiCancelClick}>x</button>
         </span>
         <span
           style={
-            validMbti ? { display: 'none' } : { color: 'red', fontSize: '12px' }
+            editedMbti.length === 4 &&
+            (editedMbti[0] === 'I' || editedMbti[0] === 'E') &&
+            (editedMbti[1] === 'S' || editedMbti[1] === 'N') &&
+            (editedMbti[2] === 'T' || editedMbti[2] === 'F') &&
+            (editedMbti[3] === 'P' || editedMbti[3] === 'J')
+              ? { display: 'none' }
+              : { color: 'red', fontSize: '10px' }
           }
         >
-          유효하지 않은 mbti입니다.
+          유효하지 않은 MBTI입니다.
         </span>
         <MbtiForm>
           {MBTI.map((alphabet, index) => (
             <Button
+              children={alphabet}
               width={50}
               height={50}
               key={index}
               onClick={handleMbtiButtonClick}
-            >
-              {alphabet}
-            </Button>
+            />
           ))}
         </MbtiForm>
         <Textarea
-          value={textareaValue}
+          value={editedIntroduce}
           width={'65%'}
           height={'150px'}
           text={''}
@@ -199,9 +208,12 @@ const UserEditPage = () => {
           placeholder={'자기소개'}
           onChange={handleTextareaChange}
         />
-        <Button width={95} height={30} onClick={handlePasswordClick}>
-          비밀번호 변경
-        </Button>
+        <Button
+          children={'비밀번호 변경'}
+          width={95}
+          height={30}
+          onClick={handleChangePasswordButtonClick}
+        />
       </MainPageContainer>
     </>
   );
