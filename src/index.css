@@ -1,4 +1,9 @@
 
+@font-face {
+    font-family: 'MainFont';
+    src: url('./assets/font/PyeongChangPeace-Bold.ttf') format('opentype');
+}
+
 body {
     margin: 0;
     padding: 0;
