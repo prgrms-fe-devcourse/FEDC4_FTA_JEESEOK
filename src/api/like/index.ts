@@ -17,7 +17,7 @@ interface likeResponse {
 }
 
 interface PostLike {
-  (postId: postLikeRequest): Promise<likeResponse | undefined>;
+  (postId: postLikeRequest): Promise<likeResponse | never>;
 }
 
 export const postLike: PostLike = async (postId) => {
@@ -26,7 +26,7 @@ export const postLike: PostLike = async (postId) => {
 };
 
 interface DeleteLike {
-  (postId: deleteLikeRequest): Promise<likeResponse | undefined>;
+  (postId: deleteLikeRequest): Promise<likeResponse | never>;
 }
 
 export const deleteLike: DeleteLike = async (postId) => {

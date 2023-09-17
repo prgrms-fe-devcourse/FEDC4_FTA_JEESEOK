@@ -2,7 +2,7 @@ import request from '~/api';
 import { User } from '~/types';
 
 interface GetUsers {
-  (offset: number, limit: number): Promise<User[] | false>;
+  (offset: number, limit: number): Promise<User[] | never>;
 }
 
 export const getUsers: GetUsers = async (offset = 0, limit = 10) => {
@@ -17,7 +17,7 @@ export const getUsers: GetUsers = async (offset = 0, limit = 10) => {
 };
 
 interface GetUser {
-  (userId: string): Promise<User | false>;
+  (userId: string): Promise<User | never>;
 }
 
 export const getUser: GetUser = async (userId) => {
@@ -27,7 +27,7 @@ export const getUser: GetUser = async (userId) => {
 };
 
 interface PostUserImage {
-  (image: File): Promise<User | false>;
+  (image: File): Promise<User | never>;
 }
 
 export const postUserImage: PostUserImage = async (image) => {
