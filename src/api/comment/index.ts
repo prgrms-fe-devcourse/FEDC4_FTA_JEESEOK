@@ -24,9 +24,9 @@ interface DeleteComment {
   (commentId: deleteCommentRequest): Promise<Comment | false>;
 }
 
-export const deleteComment: DeleteComment = async (commentId) => {
+export const deleteComment: DeleteComment = async ({ commentId }) => {
   const res = await request.delete<Comment>('/comments/delete', {
-    data: commentId,
+    data: { id: commentId },
   });
 
   return res.data;

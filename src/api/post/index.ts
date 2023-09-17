@@ -54,7 +54,7 @@ interface writePost {
 }
 
 interface readPost {
-  (postId: string): Promise<Post | undefined>;
+  (postId: string): Promise<Post>;
 }
 
 // 특정 채널의 포스트 목록 불러오기

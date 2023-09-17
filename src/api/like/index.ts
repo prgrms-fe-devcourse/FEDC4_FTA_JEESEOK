@@ -1,4 +1,5 @@
 import request from '~/api';
+import { Like } from '~/types';
 
 interface postLikeRequest {
   postId: string;
@@ -17,7 +18,7 @@ interface likeResponse {
 }
 
 interface PostLike {
-  (postId: postLikeRequest): Promise<likeResponse | undefined>;
+  (postId: postLikeRequest): Promise<likeResponse>;
 }
 
 export const postLike: PostLike = async (postId) => {
@@ -26,12 +27,12 @@ export const postLike: PostLike = async (postId) => {
 };
 
 interface DeleteLike {
-  (postId: deleteLikeRequest): Promise<likeResponse | undefined>;
+  (id: deleteLikeRequest): Promise<Like>;
 }
 
-export const deleteLike: DeleteLike = async (postId) => {
+export const deleteLike: DeleteLike = async ({ likeId }) => {
   const res = await request.delete<likeResponse>('/likes/delete', {
-    data: postId,
+    data: { id: likeId },
   });
 
   return res.data;
