@@ -13,7 +13,7 @@ request.interceptors.request.use(
     if (storage) {
       const AUTH = JSON.parse(storage);
       if (AUTH['token']) {
-        config.headers.Authorization = `Bearer ${AUTH['token']}`;
+        config.headers.Authorization = `bearer ${AUTH['token']}`;
       }
     }
 
