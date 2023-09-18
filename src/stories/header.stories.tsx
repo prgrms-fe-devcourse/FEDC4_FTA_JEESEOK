@@ -9,6 +9,8 @@ const meta = {
     isLogo: true,
     isSearch: true,
     title: '스토리북',
+    isSave: false,
+    isEdit: false,
   },
   argTypes: {
     isLogo: {
@@ -19,6 +21,15 @@ const meta = {
     },
     title: {
       control: 'string',
+    },
+    isLogout: {
+      control: 'boolean',
+    },
+    isSave: {
+      control: 'boolean',
+    },
+    isEdit: {
+      control: 'boolean',
     },
   },
 } satisfies Meta<typeof Header>;

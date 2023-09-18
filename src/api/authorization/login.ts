@@ -12,7 +12,7 @@ interface LoginRequest {
 }
 
 interface PostLoginApi {
-  (loginInformation: LoginRequest): Promise<ResponseUser | false>;
+  (loginInformation: LoginRequest): Promise<ResponseUser | never>;
 }
 
 const postLoginApi: PostLoginApi = async (loginInformation) => {

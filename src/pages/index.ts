@@ -1,4 +1,4 @@
-export { default as RootPage } from './RootPage';
+export { default as Layout } from './Layout';
 export { default as LoginPage } from './LoginPage';
 export { default as SignupPage } from './SignupPage';
 export { default as SearchPage } from './SearchPage';

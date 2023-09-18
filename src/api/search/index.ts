@@ -23,22 +23,22 @@ interface SearchUserResponse {
 }
 
 interface SearchUser {
-  (query: string): Promise<SearchUserResponse[] | false>;
+  (query: string): Promise<SearchUserResponse[] | never>;
 }
 
 export const searchUser: SearchUser = async (query) => {
-  const res = await request.get<SearchUserResponse[] | false>(
+  const res = await request.get<SearchUserResponse[] | never>(
     `/search/users/${query}`
   );
   return res.data;
 };
 
 interface SearchAll {
-  (query: string): Promise<(User | Post)[] | false>;
+  (query: string): Promise<(User | Post)[] | never>;
 }
 
 export const searchAll: SearchAll = async (query) => {
-  const res = await request.get<(User | Post)[] | false>(
+  const res = await request.get<(User | Post)[] | never>(
     `/search/all/${query}`
   );
   return res.data;

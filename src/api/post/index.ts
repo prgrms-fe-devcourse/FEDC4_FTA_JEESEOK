@@ -8,7 +8,7 @@ interface EditPostRequest {
 }
 
 interface EditPost {
-  (editPostRequest: EditPostRequest): Promise<false | void>;
+  (editPostRequest: EditPostRequest): Promise<void | never>;
 }
 
 export const editPost: EditPost = async (editPostRequest) => {
@@ -24,7 +24,7 @@ export const editPost: EditPost = async (editPostRequest) => {
 };
 
 interface DeletePost {
-  (id: string): Promise<false | void>;
+  (id: string): Promise<void | never>;
 }
 
 export const deletePost: DeletePost = async (id) => {
@@ -34,27 +34,7 @@ export const deletePost: DeletePost = async (id) => {
 };
 
 interface getChannelPost {
-  (
-    channelId: string,
-    offset: number,
-    limit: number
-  ): Promise<Post[] | undefined>;
-}
-
-interface getUserPost {
-  (
-    authorId: string,
-    offset: number,
-    limit: number
-  ): Promise<Post[] | undefined>;
-}
-
-interface writePost {
-  (title: string, image: File, channelId: string): Promise<void | undefined>;
-}
-
-interface readPost {
-  (postId: string): Promise<Post>;
+  (channelId: string, offset: number, limit: number): Promise<Post[] | never>;
 }
 
 // 특정 채널의 포스트 목록 불러오기
@@ -73,6 +53,10 @@ export const getChannelPost: getChannelPost = async (
   return res.data;
 };
 
+interface getUserPost {
+  (authorId: string, offset: number, limit: number): Promise<Post[] | never>;
+}
+
 // 특정 사용자의 포스트 목록 불러오기
 export const getUserPost: getUserPost = async (authorId, offset, limit) => {
   const res = await request.get(`/posts/author/${authorId}`, {
@@ -85,6 +69,10 @@ export const getUserPost: getUserPost = async (authorId, offset, limit) => {
   return res.data;
 };
 
+interface writePost {
+  (title: string, image: File, channelId: string): Promise<void | never>;
+}
+
 // 특정 채널에 포스트 작성하기
 export const writePost: writePost = async (title, image, channelId) => {
   const formData = new FormData();
@@ -96,6 +84,10 @@ export const writePost: writePost = async (title, image, channelId) => {
 
   return res.data;
 };
+
+interface readPost {
+  (postId: string): Promise<Post | never>;
+}
 
 // 특정 포스트 상세 보기
 export const readPost: readPost = async (postId) => {
