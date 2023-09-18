@@ -95,7 +95,7 @@ const Tag = styled.div`
   background: linear-gradient(45deg, #fccbf3, #e8cbf4, #b6ccf9, #72cdff);
   color: #f8fbff;
   font-family: 'ONE-Mobile-Title';
-  font-size: 12px;
+  font-size: 10px;
 `;
 
 const Title = styled.div`
