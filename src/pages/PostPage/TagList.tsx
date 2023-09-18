@@ -22,12 +22,13 @@ const TagList = ({ onClick }: TagListProps) => {
           fontColor={'#F8FBFF'}
           borderWidth={'1px'}
           borderRadius={'15px'}
-          fontSize={'16px'}
+          fontSize={'14px'}
           onClick={() => onClick(key)}
           style={{
-            padding: '2px 15px',
+            padding: '5px 15px',
             background:
               'linear-gradient(45deg,#FCCBF3, #E8CBF4, #B6CCF9, #72CDFF)',
+            fontFamily: 'ONE-Mobile-Title',
           }}
         >
           {value}

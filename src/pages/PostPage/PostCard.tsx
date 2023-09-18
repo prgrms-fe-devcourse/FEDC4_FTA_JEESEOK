@@ -70,6 +70,7 @@ const PostCardContainer = styled.div`
   border-radius: 15px;
   padding: 10px;
   background-color: #f5f9ff;
+  font-family: 'GangwonEdu_OTFBoldA';
   font-size: 14px;
   color: #494984;
   cursor: pointer;
@@ -93,6 +94,8 @@ const Tag = styled.div`
   border-radius: 15px;
   background: linear-gradient(45deg, #fccbf3, #e8cbf4, #b6ccf9, #72cdff);
   color: #f8fbff;
+  font-family: 'ONE-Mobile-Title';
+  font-size: 12px;
 `;
 
 const Title = styled.div`
