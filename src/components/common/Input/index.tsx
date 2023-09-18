@@ -6,6 +6,7 @@ import {
   InputGroupContainer,
   InputStyle,
   Text,
+  TopText,
 } from '~/components/common/Input/InputStyles.ts';
 
 export interface InputProps {
@@ -21,6 +22,10 @@ export interface InputProps {
   disabled?: boolean;
   validationText?: string;
   onClick?: () => void;
+  border?: string;
+  topText?: string;
+  radius?: string;
+  background?: string;
 }
 
 const Input = ({
@@ -36,10 +41,20 @@ const Input = ({
   width,
   height,
   onClick,
+  border,
+  topText,
+  radius,
+  background,
 }: InputProps) => {
   return (
     <InputContainer id={id} width={width}>
-      <InputGroupContainer height={height}>
+      {topText && <TopText>{topText}</TopText>}
+      <InputGroupContainer
+        height={height}
+        border={border}
+        radius={radius}
+        background={background}
+      >
         <InputStyle
           placeholder={placeHolder}
           type={type}

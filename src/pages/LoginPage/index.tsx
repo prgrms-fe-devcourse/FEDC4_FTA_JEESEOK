@@ -1,6 +1,7 @@
 import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import logoText from '~/assets/logoText.png';
 import Button from '~/components/common/Button';
 import Input from '~/components/common/Input';
 import {
@@ -11,9 +12,9 @@ import {
   PW_INPUT,
   PW_VALIDATION_TEXT,
 } from '~/constants/loginConstants.ts';
-import { PASSWORD, USER_ID } from '~/constants/signUpConstants.ts';
+import { PASSWORD } from '~/constants/signUpConstants.ts';
 import useLocalStorage from '~/hooks/useLocalStorage.ts';
-import postLoginApi, { ResponseUser } from '../../api/authorization/login.ts';
+import postLoginApi from '../../api/authorization/login.ts';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -22,17 +23,62 @@ const LoginContainer = styled.div`
   align-items: center;
 `;
 
+const LoginForm = styled.form``;
+
+const IconContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 308px;
+  height: 273px;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f5f9ff;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: 10px 10px 20px 4px rgb(215, 217, 235, 40%);
+`;
+
 const LoginBody = styled.div`
-  width: 90%;
-  height: 600px;
-  background: white;
-  opacity: 0.9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 341px;
+  height: 471px;
+  background: #f5f9ff;
   margin: 20px;
-  box-shadow: 10px 10px 5px rgb(0, 0, 0, 0.8);
+  border-radius: 25px;
+`;
+
+const Span = styled.span`
+  margin-top: 10px;
+  font-family: 'GangwonEdu_OTFBoldA';
+  font-size: 14px;
+  color: #bbcdf7;
 `;
 
 const Text = styled.span`
   cursor: pointer;
+  color: #494984;
+`;
+
+const LogoImg = styled.img`
+  width: 171px;
+  height: 74px;
+  margin-right: 10px;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 interface LoginStateType {
@@ -79,10 +125,11 @@ const LoginPage = () => {
       return;
     }
 
-    const loginApiResult = (await postLoginApi({
+    const loginApiResult = await postLoginApi({
       id: loginState.id,
       password: loginState.pw,
-    })) as unknown as ResponseUser;
+    });
+
     if (loginApiResult) {
       setAuthState(loginApiResult);
       alert('로그인 되었습니다');
@@ -103,14 +150,19 @@ const LoginPage = () => {
 
   return (
     <LoginContainer>
-      <LoginBody>
-        <form onSubmit={callLoginApi}>
+      <LoginForm onSubmit={callLoginApi}>
+        <LoginBody>
+          <IconContainer>
+            <IconWrapper>
+              <LogoImg src={logoText}></LogoImg>
+            </IconWrapper>
+          </IconContainer>
           <Input
             id={ID_INPUT}
             value={loginState.id}
-            placeHolder={USER_ID}
-            width={'100%'}
-            height={40}
+            width={292}
+            height={43}
+            placeHolder={''}
             isError={loginState.isIdError}
             validationText={ID_VALIDATION_TEXT}
             onChange={(e) => {
@@ -118,26 +170,44 @@ const LoginPage = () => {
               handleSignUpStateChange('isIdError', false);
             }}
             onClick={() => handleInputCancel('id')}
+            border={'1px solid #bbcdf7'}
+            topText={'아이디 입력'}
+            radius={'10px'}
           />
+
           <Input
             id={PW_INPUT}
             value={loginState.pw}
             placeHolder={PASSWORD}
             isError={loginState.isPwError}
             validationText={PW_VALIDATION_TEXT}
-            width={'100%'}
-            height={40}
+            width={292}
+            height={43}
             type={'password'}
             onChange={(e) => {
               handleSignUpStateChange('pw', e.target.value);
               handleSignUpStateChange('isPwError', false);
             }}
             onClick={() => handleInputCancel('pw')}
+            radius={'10px'}
+            border={'1px solid #E4ECFE'}
+            background={'#E4ECFE'}
           />
-          <Button>로그인</Button>
-        </form>
-        <Text onClick={moveSignUp}>회원이 아니신가요?</Text>
-      </LoginBody>
+        </LoginBody>
+        <ButtonWrapper>
+          <Button
+            width={188}
+            height={59}
+            radius={'40px'}
+            background={`linear-gradient(51deg, #FCCBF3 10%, #72CDFF 122.17%)`}
+          >
+            로그인
+          </Button>
+        </ButtonWrapper>
+      </LoginForm>
+      <Span>
+        회원이 아니신가요? <Text onClick={moveSignUp}>회원가입 하기</Text>
+      </Span>
     </LoginContainer>
   );
 };

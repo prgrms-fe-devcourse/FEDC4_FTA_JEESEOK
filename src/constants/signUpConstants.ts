@@ -15,7 +15,7 @@ export const InitSignUpState = {
 };
 
 export const USER_ID = 'ID';
-export const PASSWORD = 'PW';
+export const PASSWORD = '비밀번호 입력';
 export const PASSWORD_CHECK = 'PW 확인';
 export const NICK_NAME = '닉네임';
 export const USER_ID_VALIDATION =

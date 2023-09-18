@@ -3,7 +3,10 @@ import styled from '@emotion/styled';
 import { InputProps } from '~/components/common/Input/index.tsx';
 
 type InputStylesProps = Pick<InputProps, 'width'>;
-type InputGroupContainerProps = Pick<InputProps, 'height'>;
+type InputGroupContainerProps = Pick<
+  InputProps,
+  'height' | 'border' | 'radius' | 'background'
+>;
 
 export const InputContainer = styled.div<InputStylesProps>`
   display: flex;
@@ -12,6 +15,7 @@ export const InputContainer = styled.div<InputStylesProps>`
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width)};
   margin-bottom: 10px;
   margin-top: 5px;
+  position: relative;
 `;
 
 export const InputGroupContainer = styled.div<InputGroupContainerProps>`
@@ -19,14 +23,13 @@ export const InputGroupContainer = styled.div<InputGroupContainerProps>`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border: 1px solid #b2c0cc;
+  border: ${({ border }) => (border ? border : '1px solid #b2c0cc')};
   box-sizing: border-box;
-  &:focus-within {
-    border: 1px solid #0c151c;
-  }
   width: 100%;
   height: ${({ height }) =>
     typeof height === 'number' ? `${height}px` : height};
+  border-radius: ${({ radius }) => (radius ? radius : '0px')};
+  background: ${({ background }) => (background ? background : '#f5f9ff')};
 `;
 
 export const InputStyle = styled.input`
@@ -35,6 +38,13 @@ export const InputStyle = styled.input`
     outline: none;
   }
   border: none;
+  background-color: transparent;
+  color: #2f2f68;
+  font-size: 14px;
+  font-family: 'GangwonEdu_OTFBoldA';
+  &::placeholder {
+    color: #8b9dc6;
+  }
 `;
 
 export const CancelIcon = styled.img`
@@ -47,4 +57,19 @@ export const Text = styled.p`
   text-align: left;
   color: #f44336;
   font-size: 12px;
+`;
+
+export const TopText = styled.div`
+  position: absolute;
+  background: #f5f9ff;
+  z-index: 100;
+  color: #bbcdf7;
+  font-family: 'GangwonEdu_OTFBoldA';
+  font-size: 14px;
+  top: -4px;
+  left: 25px;
+  margin: 0px 1px 0px 1px;
+  font-weight: 400;
+  width: 60px;
+  text-align: center;
 `;
