@@ -57,6 +57,7 @@ export const Text = styled.p`
   text-align: left;
   color: #f44336;
   font-size: 12px;
+  font-family: 'GangwonEdu_OTFBoldA';
 `;
 
 export const TopText = styled.div`
