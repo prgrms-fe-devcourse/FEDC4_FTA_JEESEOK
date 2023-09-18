@@ -1,16 +1,10 @@
 import styled from '@emotion/styled';
-import { Post, User } from '~/types';
+import { Post } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
 import PostCard from './PostCard';
 
-interface UserAddUsername extends User {
-  username: string;
-}
-
-type Posts = (Omit<Post, 'author'> & { author: UserAddUsername })[];
-
 interface PostCardListProps {
-  posts: Posts;
+  posts: Post[];
 }
 
 const PostCardList = ({ posts }: PostCardListProps) => {
