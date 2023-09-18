@@ -26,12 +26,12 @@ export const postLike: PostLike = async (postId) => {
 };
 
 interface DeleteLike {
-  (postId: deleteLikeRequest): Promise<likeResponse | never>;
+  (id: deleteLikeRequest): Promise<likeResponse | never>;
 }
 
-export const deleteLike: DeleteLike = async (postId) => {
+export const deleteLike: DeleteLike = async ({ likeId }) => {
   const res = await request.delete<likeResponse>('/likes/delete', {
-    data: postId,
+    data: { id: likeId },
   });
 
   return res.data;
