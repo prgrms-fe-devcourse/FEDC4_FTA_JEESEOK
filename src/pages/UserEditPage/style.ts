@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 
+export const EditPageContainer = styled.div``;
+
 export const MainPageContainer = styled.main`
   margin-top: 50px;
   display: flex;

@@ -8,7 +8,11 @@ import Image from '~/components/common/Image';
 import Input from '~/components/common/Input';
 import Header from '~/pages/UserEditPage/Header';
 import Textarea from '~/pages/UserEditPage/Textarea';
-import { MainPageContainer, MbtiForm } from '~/pages/UserEditPage/style';
+import {
+  EditPageContainer,
+  MainPageContainer,
+  MbtiForm,
+} from '~/pages/UserEditPage/style';
 import { User } from '~/types';
 
 const UserEditPage = () => {
@@ -114,7 +118,7 @@ const UserEditPage = () => {
   };
 
   return (
-    <>
+    <EditPageContainer>
       <Header
         isLogo={false}
         title={'내 정보 수정'}
@@ -157,16 +161,19 @@ const UserEditPage = () => {
             +
           </button>
         </div>
-        <Input
-          id={'username'}
-          value={editedUsername}
-          width={'65%'}
-          height={40}
-          placeHolder={'닉네임'}
-          type={'text'}
-          onChange={handleInputChange}
-          onClick={handleInputCancelButtonClick}
-        />
+
+        <div style={{ width: '100%' }}>
+          <Input
+            id={'username'}
+            value={editedUsername}
+            width={'100%'}
+            height={40}
+            placeHolder={'닉네임'}
+            type={'text'}
+            onChange={handleInputChange}
+            onClick={handleInputCancelButtonClick}
+          />
+        </div>
         <span>
           mbti: {editedMbti}
           <button onClick={handleMbtiCancelClick}>x</button>
@@ -195,27 +202,32 @@ const UserEditPage = () => {
             />
           ))}
         </MbtiForm>
-        <Textarea
-          value={editedIntroduce}
-          width={'65%'}
-          height={'150px'}
-          text={''}
-          borderRadius={'10px'}
-          fontSize={'14px'}
-          scrollBarWidth={0}
-          scrollBarThumbColor={''}
-          style={{ padding: '10px', boxSizing: 'border-box' }}
-          placeholder={'자기소개'}
-          onChange={handleTextareaChange}
-        />
-        <Button
-          children={'비밀번호 변경'}
-          width={95}
-          height={30}
-          onClick={handleChangePasswordButtonClick}
-        />
+        <div style={{ width: '100%' }}>
+          <Textarea
+            value={editedIntroduce}
+            width={'100%'}
+            height={'150px'}
+            text={''}
+            borderRadius={'10px'}
+            fontSize={'14px'}
+            scrollBarWidth={0}
+            scrollBarThumbColor={''}
+            style={{ padding: '10px', boxSizing: 'border-box' }}
+            placeholder={'자기소개'}
+            onChange={handleTextareaChange}
+          />
+        </div>
+
+        <div style={{ width: '100%' }}>
+          <Button
+            children={'비밀번호 변경'}
+            width={95}
+            height={30}
+            onClick={handleChangePasswordButtonClick}
+          />
+        </div>
       </MainPageContainer>
-    </>
+    </EditPageContainer>
   );
 };
 
