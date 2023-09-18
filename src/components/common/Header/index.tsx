@@ -74,13 +74,12 @@ const Header = ({
 
   return (
     <HeaderContainer>
-      {isLogo && (
+      {isLogo ? (
         <LogoWrapper>
           <LogoIcon src={logoImg} onClick={handleLogoClick} />
           <LogoTitle>FTA</LogoTitle>
         </LogoWrapper>
-      )}
-      {!isLogo && (
+      ) : (
         <BackIcon src={backButtonImg} onClick={handleBackButtonClick} />
       )}
       <MainTitle>{title}</MainTitle>
