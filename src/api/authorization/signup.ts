@@ -14,7 +14,7 @@ interface SignupRequest {
 }
 
 interface PostSignupApi {
-  (signupInformation: SignupRequest): Promise<ResponseUser | false>;
+  (signupInformation: SignupRequest): Promise<ResponseUser | never>;
 }
 
 const postSignupApi: PostSignupApi = async (signupInformation) => {

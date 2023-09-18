@@ -1,7 +1,7 @@
 import request from '~/api';
 
 interface PostLogoutApi {
-  (): Promise<string | false>;
+  (): Promise<string | never>;
 }
 
 const postLogoutApi: PostLogoutApi = async () => {

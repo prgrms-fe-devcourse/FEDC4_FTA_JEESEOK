@@ -2,7 +2,7 @@ import request from '~/api';
 import { User } from '~/types';
 
 interface PutMyInformation {
-  (fullName: string, username: string): Promise<User | false>;
+  (fullName: string, username: string): Promise<User | never>;
 }
 
 export const putMyInformation: PutMyInformation = async (
@@ -18,7 +18,7 @@ export const putMyInformation: PutMyInformation = async (
 };
 
 interface PutPassword {
-  (password: string): Promise<void | false>;
+  (password: string): Promise<void | never>;
 }
 
 export const putPassword: PutPassword = async (password) => {

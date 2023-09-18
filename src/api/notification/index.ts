@@ -1,21 +1,8 @@
 import request from '~/api';
 import { Notification } from '~/types';
 
-interface readNotificationResponse {
-  n: number;
-  nModified: number;
-  ok: number;
-}
-
-interface postNotificationRequest {
-  notificationType: 'COMMENT' | 'FOLLOW' | 'LIKE' | 'MESSAGE';
-  notificationTypeId: string;
-  userId: string;
-  postId: string | null;
-}
-
 interface GetNotification {
-  (): Promise<Notification[]>;
+  (): Promise<Notification[] | never>;
 }
 
 export const getNotification: GetNotification = async () => {
@@ -24,8 +11,14 @@ export const getNotification: GetNotification = async () => {
   return res.data;
 };
 
+interface readNotificationResponse {
+  n: number;
+  nModified: number;
+  ok: number;
+}
+
 interface ReadNotification {
-  (): Promise<readNotificationResponse>;
+  (): Promise<readNotificationResponse | never>;
 }
 
 export const readNotification: ReadNotification = async () => {
@@ -36,9 +29,17 @@ export const readNotification: ReadNotification = async () => {
   return res.data;
 };
 
-interface PostNotification {
-  (notification: postNotificationRequest): Promise<Notification>;
+interface postNotificationRequest {
+  notificationType: 'COMMENT' | 'FOLLOW' | 'LIKE' | 'MESSAGE';
+  notificationTypeId: string;
+  userId: string;
+  postId: string | null;
 }
+
+interface PostNotification {
+  (notification: postNotificationRequest): Promise<Notification | never>;
+}
+
 export const postNotification: PostNotification = async (notification) => {
   const res = await request.post<Notification>(
     '/notifications/create',

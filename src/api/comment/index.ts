@@ -11,7 +11,7 @@ interface deleteCommentRequest {
 }
 
 interface PostComment {
-  (commentRequest: postCommentRequest): Promise<Comment | false>;
+  (commentRequest: postCommentRequest): Promise<Comment | never>;
 }
 
 export const postComment: PostComment = async (commentRequest) => {
@@ -21,7 +21,7 @@ export const postComment: PostComment = async (commentRequest) => {
 };
 
 interface DeleteComment {
-  (commentId: deleteCommentRequest): Promise<Comment | false>;
+  (commentId: deleteCommentRequest): Promise<Comment | never>;
 }
 
 export const deleteComment: DeleteComment = async (commentId) => {

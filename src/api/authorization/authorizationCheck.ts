@@ -2,7 +2,7 @@ import request from '~/api';
 import { User } from '~/types';
 
 interface GetAuthorizationCheck {
-  (): Promise<User | false>;
+  (): Promise<User | never>;
 }
 
 const getAuthorizationCheckApi: GetAuthorizationCheck = async () => {
