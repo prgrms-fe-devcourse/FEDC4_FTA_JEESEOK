@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '~/components/common/Button';
@@ -66,7 +66,9 @@ const LoginPage = () => {
     [loginState]
   );
 
-  const callLoginApi = async () => {
+  const callLoginApi = async (e: FormEvent) => {
+    e.preventDefault();
+
     if (loginState.id.length === 0) {
       handleSignUpStateChange('isIdError', true);
       return;
@@ -102,36 +104,38 @@ const LoginPage = () => {
   return (
     <LoginContainer>
       <LoginBody>
-        <Input
-          id={ID_INPUT}
-          value={loginState.id}
-          placeHolder={USER_ID}
-          width={'100%'}
-          height={40}
-          isError={loginState.isIdError}
-          validationText={ID_VALIDATION_TEXT}
-          onChange={(e) => {
-            handleSignUpStateChange('id', e.target.value);
-            handleSignUpStateChange('isIdError', false);
-          }}
-          onClick={() => handleInputCancel('id')}
-        />
-        <Input
-          id={PW_INPUT}
-          value={loginState.pw}
-          placeHolder={PASSWORD}
-          isError={loginState.isPwError}
-          validationText={PW_VALIDATION_TEXT}
-          width={'100%'}
-          height={40}
-          type={'password'}
-          onChange={(e) => {
-            handleSignUpStateChange('pw', e.target.value);
-            handleSignUpStateChange('isPwError', false);
-          }}
-          onClick={() => handleInputCancel('pw')}
-        />
-        <Button onClick={callLoginApi}>로그인</Button>
+        <form onSubmit={callLoginApi}>
+          <Input
+            id={ID_INPUT}
+            value={loginState.id}
+            placeHolder={USER_ID}
+            width={'100%'}
+            height={40}
+            isError={loginState.isIdError}
+            validationText={ID_VALIDATION_TEXT}
+            onChange={(e) => {
+              handleSignUpStateChange('id', e.target.value);
+              handleSignUpStateChange('isIdError', false);
+            }}
+            onClick={() => handleInputCancel('id')}
+          />
+          <Input
+            id={PW_INPUT}
+            value={loginState.pw}
+            placeHolder={PASSWORD}
+            isError={loginState.isPwError}
+            validationText={PW_VALIDATION_TEXT}
+            width={'100%'}
+            height={40}
+            type={'password'}
+            onChange={(e) => {
+              handleSignUpStateChange('pw', e.target.value);
+              handleSignUpStateChange('isPwError', false);
+            }}
+            onClick={() => handleInputCancel('pw')}
+          />
+          <Button>로그인</Button>
+        </form>
         <Text onClick={moveSignUp}>회원이 아니신가요?</Text>
       </LoginBody>
     </LoginContainer>
