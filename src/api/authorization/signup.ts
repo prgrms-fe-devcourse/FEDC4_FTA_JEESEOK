@@ -14,19 +14,23 @@ interface SignupRequest {
 }
 
 interface PostSignupApi {
-  (signupInformation: SignupRequest): Promise<ResponseUser | never>;
+  (signupInformation: SignupRequest): Promise<ResponseUser | false>;
 }
 
 const postSignupApi: PostSignupApi = async (signupInformation) => {
   const { email, fullName, username, password } = signupInformation;
 
-  const res = await request.post<ResponseUser>('/signup', {
-    email,
-    fullName: JSON.stringify(fullName),
-    username,
-    password,
-  });
-  return res.data;
+  try {
+    const res = await request.post<ResponseUser>('/signup', {
+      email,
+      fullName: JSON.stringify(fullName),
+      username,
+      password,
+    });
+    return res.data;
+  } catch (error) {
+    return false;
+  }
 };
 
 export default postSignupApi;
