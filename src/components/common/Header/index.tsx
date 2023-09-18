@@ -1,9 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { postLogoutApi } from '~/api/authorization';
 import { deletePost } from '~/api/post';
-import backButtonImg from '~/assets/back_button.svg';
 import logoImg from '~/assets/mainLogo.svg';
-import search from '~/assets/search.svg';
 import {
   BackIcon,
   CorrectButton,
@@ -17,7 +15,10 @@ import {
   MainTitle,
   SaveButton,
   SearchIcon,
+  Separator,
 } from '~/components/common/Header/headerStyle.ts';
+import backButtonImg from './back.svg';
+import search from './search.svg';
 
 interface HeaderProps {
   isLogo: boolean;
@@ -87,7 +88,7 @@ const Header = ({
         isHidden={isSearch}
         src={search}
         onClick={handleSearchButtonClick}
-      ></SearchIcon>
+      />
       <LogoutButton isHidden={isLogout} onClick={handleLogoutButtonClick}>
         로그아웃
       </LogoutButton>
@@ -96,6 +97,7 @@ const Header = ({
       </SaveButton>
       <EditWrapper isHidden={isEdit}>
         <CorrectButton onClick={handleCorrectButtonClick}>수정</CorrectButton>
+        <Separator />
         <DeleteButton onClick={handleDeleteButtonClick}>삭제</DeleteButton>
       </EditWrapper>
     </HeaderContainer>
