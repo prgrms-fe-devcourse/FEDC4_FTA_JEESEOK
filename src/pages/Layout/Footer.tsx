@@ -1,11 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 
-interface FooterProps {
-  userId: string | undefined;
-}
-
-const Footer = ({ userId }: FooterProps) => {
+const Footer = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -17,11 +13,21 @@ const Footer = ({ userId }: FooterProps) => {
     navigate('/post/create');
   };
 
-  const contents = userId
+  const getUserId = (): string => {
+    try {
+      const storageValue = localStorage.getItem('AUTH_TOKEN');
+      return storageValue ? JSON.parse(storageValue).user._id : '';
+    } catch (error) {
+      console.log(error);
+      return '';
+    }
+  };
+
+  const footerMenu = getUserId()
     ? [
         { name: '게시판', page: 'post' },
         { name: '알림', page: 'notification' },
-        { name: '마이', page: `user/${userId}` },
+        { name: '마이', page: `user/${getUserId()}` },
       ]
     : [
         { name: '게시판', page: 'post' },
@@ -30,10 +36,10 @@ const Footer = ({ userId }: FooterProps) => {
 
   return (
     <FooterContainer>
-      {userId && ['/', '/post'].includes(pathname) && (
+      {getUserId() && ['/', '/post'].includes(pathname) && (
         <CreateButton onClick={handleCreateButtonClick}>글쓰기</CreateButton>
       )}
-      {contents.map(({ name, page }) => (
+      {footerMenu.map(({ name, page }) => (
         <FooterButton key={page} onClick={() => handleFooterClick(page)}>
           {name}
         </FooterButton>
