@@ -167,7 +167,8 @@ const LoginPage = () => {
             validationText={ID_VALIDATION_TEXT}
             onChange={(e) => {
               handleSignUpStateChange('id', e.target.value);
-              handleSignUpStateChange('isIdError', false);
+              if (loginState.isIdError)
+                handleSignUpStateChange('isIdError', false);
             }}
             onClick={() => handleInputCancel('id')}
             border={'1px solid #bbcdf7'}
@@ -186,7 +187,8 @@ const LoginPage = () => {
             type={'password'}
             onChange={(e) => {
               handleSignUpStateChange('pw', e.target.value);
-              handleSignUpStateChange('isPwError', false);
+              if (loginState.isPwError)
+                handleSignUpStateChange('isPwError', false);
             }}
             onClick={() => handleInputCancel('pw')}
             radius={'10px'}
