@@ -19,11 +19,16 @@ const TagList = ({ onClick }: TagListProps) => {
       {tags.map(([key, value]) => (
         <Tag
           key={key}
-          backgroundColor={'white'}
+          fontColor={'#F8FBFF'}
           borderWidth={'1px'}
           borderRadius={'15px'}
           fontSize={'16px'}
           onClick={() => onClick(key)}
+          style={{
+            padding: '2px 15px',
+            background:
+              'linear-gradient(45deg,#FCCBF3, #E8CBF4, #B6CCF9, #72CDFF)',
+          }}
         >
           {value}
         </Tag>
