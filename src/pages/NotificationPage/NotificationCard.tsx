@@ -51,6 +51,7 @@ const NotificationCardContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 58px;
+  width: calc(100% - 20px);
   border-radius: 25px;
   padding: 10px;
   background-color: #f5f9ff;
