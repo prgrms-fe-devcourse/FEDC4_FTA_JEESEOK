@@ -15,7 +15,6 @@ const ButtonWrapper = styled.button<{ isActive: boolean }>`
   border: none;
   outline: none;
   flex-shrink: 0;
-  padding: 40px;
   border-radius: 50px;
   display: flex;
   justify-content: center;
@@ -26,6 +25,7 @@ const ButtonWrapper = styled.button<{ isActive: boolean }>`
   font-weight: 800;
   background-color: ${({ isActive }) => isActive || '#D9E4FB'};
   cursor: pointer;
+  box-sizing: border-box;
 `;
 
 const TopNavBtn = ({
