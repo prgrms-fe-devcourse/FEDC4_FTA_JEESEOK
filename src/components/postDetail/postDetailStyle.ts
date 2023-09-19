@@ -10,6 +10,13 @@ export const PostDetailContainer = styled.div`
   border-left: 1px solid #ffffff;
 `;
 
+export const ImgWrapper = styled.div`
+  width: 60px;
+  height: 37px;
+`;
+
+export const Img = styled.img``;
+
 export const PostDetailWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,7 +35,7 @@ export const UserContainer = styled.div`
 export const TitleContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0px 10px 0px 10px;
+  margin: 0 10px 0 0;
   width: 100%;
 `;
 
@@ -39,12 +46,48 @@ interface TextProps {
   fontFamily?: string;
   bold?: string;
   margin?: string;
+  center?: boolean;
+  color?: string;
+  width?: string;
 }
 
 export const Text = styled.span<TextProps>`
+  width: ${({ width }) => (width ? width : 'auto')};
   font-size: ${(props) => props.fontSize || '16px'};
   font-weight: ${(props) => props.bold || 'normal'};
   margin: ${(props) => props.margin};
+  text-align: ${({ center }) => (center ? 'center' : '')};
+  color: ${({ color }) => (color ? color : '#000000')};
+  font-family: 'GangwonEdu_OTFBoldA';
+`;
+export const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  height: 50px;
+`;
+
+export const Tag = styled.div`
+  height: 12px;
+  width: 45px;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+  background: linear-gradient(
+    33deg,
+    #fccbf3 3.24%,
+    #e8cbf4 25.67%,
+    #b6ccf9 71.53%,
+    #72cdff 126.79%
+  );
+  border-radius: 10px;
+  color: #f8fbff;
+  font-family: 'ONE-Mobile-Title';
 `;
 
 export const LikeWrapper = styled.div`
