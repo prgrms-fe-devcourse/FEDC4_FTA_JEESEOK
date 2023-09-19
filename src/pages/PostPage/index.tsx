@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getChannelPost } from '~/api/post';
+import Header from '~/components/common/Header';
 import { Post } from '~/types';
 import PostCardList from './PostCardList';
 import TagList from './TagList';
@@ -62,6 +63,7 @@ const PostPage = () => {
 
   return (
     <div>
+      <Header isSearch />
       <TagList onClick={handleTagClick} />
       <div style={{ height: '32px' }}></div>
       <PostCardList posts={posts} />
