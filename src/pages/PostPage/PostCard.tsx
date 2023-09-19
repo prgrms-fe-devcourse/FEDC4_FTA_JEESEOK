@@ -107,17 +107,21 @@ const Title = styled.div`
 const CountContainer = styled.div`
   display: flex;
   gap: 15px;
+  margin-left: 3px;
+  font-size: 10px;
 `;
 
 const Like = styled.div`
   flex-shrink: 0;
   display: flex;
+  align-items: center;
   gap: 5px;
 `;
 
 const Comment = styled.div`
   flex-shrink: 0;
   display: flex;
+  align-items: center;
   gap: 5px;
 `;
 

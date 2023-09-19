@@ -15,26 +15,29 @@ interface TagListProps {
 
 const TagList = ({ onClick }: TagListProps) => {
   return (
-    <TagListContainer>
-      {tags.map(([key, value]) => (
-        <Tag
-          key={key}
-          fontColor={'#F8FBFF'}
-          borderWidth={'1px'}
-          borderRadius={'15px'}
-          fontSize={'14px'}
-          onClick={() => onClick(key)}
-          style={{
-            padding: '5px 15px',
-            background:
-              'linear-gradient(45deg,#FCCBF3, #E8CBF4, #B6CCF9, #72CDFF)',
-            fontFamily: 'ONE-Mobile-Title',
-          }}
-        >
-          {value}
-        </Tag>
-      ))}
-    </TagListContainer>
+    <>
+      <TagListContainer>
+        {tags.map(([key, value]) => (
+          <Tag
+            key={key}
+            fontColor={'#F8FBFF'}
+            borderWidth={'1px'}
+            borderRadius={'15px'}
+            fontSize={'14px'}
+            onClick={() => onClick(key)}
+            style={{
+              padding: '5px 15px',
+              background:
+                'linear-gradient(45deg,#FCCBF3, #E8CBF4, #B6CCF9, #72CDFF)',
+              fontFamily: 'ONE-Mobile-Title',
+            }}
+          >
+            {value}
+          </Tag>
+        ))}
+      </TagListContainer>
+      <div style={{ height: '32px' }} />
+    </>
   );
 };
 

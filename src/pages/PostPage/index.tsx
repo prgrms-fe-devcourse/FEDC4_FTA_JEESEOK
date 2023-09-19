@@ -65,7 +65,6 @@ const PostPage = () => {
     <div>
       <Header isSearch />
       <TagList onClick={handleTagClick} />
-      <div style={{ height: '32px' }}></div>
       <PostCardList posts={posts} />
     </div>
   );
