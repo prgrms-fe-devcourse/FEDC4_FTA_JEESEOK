@@ -113,7 +113,7 @@ const UserPage = () => {
                     shape={'circle'}
                     width={100}
                     height={100}
-                    mode={'fill'}
+                    mode={'cover'}
                     style={{ backgroundColor: '#DFE7FF' }}
                   />
                 </ImageContainer>
