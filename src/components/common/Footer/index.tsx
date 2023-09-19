@@ -1,27 +1,83 @@
-import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Image from '~/components/common/Image';
 import {
-  FooterButton,
-  FooterContainer,
-} from '~/components/common/Footer/FooterStyle';
+  createImg,
+  loginImg,
+  logoImg,
+  myInfoImg,
+  notificationImg,
+  signupImg,
+} from './assets';
+import { CreateButton, FooterButton, FooterContainer } from './style';
 
-interface FooterProps {
-  content: string[];
-}
+const Footer = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-const Footer = ({ content }: FooterProps) => {
-  /* 페이지 이동 */
-  const movePage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(`${e.currentTarget.textContent} 페이지로 이동`);
+  const handleFooterClick = (page: string) => {
+    navigate(`/${page}`);
   };
 
+  const handleCreateButtonClick = () => {
+    navigate('/post/create/edit');
+  };
+
+  const getUserId = (): string => {
+    try {
+      const storageValue = localStorage.getItem('AUTH_TOKEN');
+      return storageValue ? JSON.parse(storageValue).user._id : '';
+    } catch (error) {
+      console.error(error);
+      return '';
+    }
+  };
+
+  const footerMenu = getUserId()
+    ? [
+        { name: '알림', page: 'notification', image: notificationImg },
+        { name: '게시판', page: 'post', image: logoImg },
+        { name: '내 정보', page: `user/${getUserId()}`, image: myInfoImg },
+      ]
+    : [
+        { name: '회원가입', page: 'signup', image: signupImg },
+        { name: '게시판', page: 'post', image: logoImg },
+        { name: '로그인', page: 'login', image: loginImg },
+      ];
+
   return (
-    <FooterContainer>
-      {content.map((item, index) => (
-        <FooterButton key={index} onClick={movePage}>
-          {item}
-        </FooterButton>
-      ))}
-    </FooterContainer>
+    <>
+      <FooterContainer>
+        {getUserId() && ['/', '/post'].includes(pathname) && (
+          <CreateButton onClick={handleCreateButtonClick}>
+            <Image width={75} height={75} src={createImg} />
+          </CreateButton>
+        )}
+        {footerMenu.map(({ name, page, image }) =>
+          page === 'post' ? (
+            <FooterButton
+              key={page}
+              width={'70px'}
+              height={'70px'}
+              backgroundColor={'transparent'}
+              onClick={() => handleFooterClick(page)}
+            >
+              <Image width={50} height={40} src={image} alt={name} />
+            </FooterButton>
+          ) : (
+            <FooterButton
+              key={page}
+              width={'45px'}
+              height={'45px'}
+              backgroundColor={'white'}
+              onClick={() => handleFooterClick(page)}
+            >
+              <Image width={20} height={20} src={image} alt={name} />
+            </FooterButton>
+          )
+        )}
+      </FooterContainer>
+      <div style={{ height: '90px' }} />
+    </>
   );
 };
 
