@@ -1,15 +1,34 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getUser } from '~/api/user';
-import UserPhoto from '~/assets/user.svg';
+import Header from '~/components/common/Header';
 import Image from '~/components/common/Image';
 import PostCard from '~/pages/UserPage/PostCard';
+import TopNavBtn from '~/pages/UserPage/TopNavBtn';
+import rocket from '~/pages/UserPage/assets/rocket.svg';
+import spaceShip from '~/pages/UserPage/assets/spaceShip.svg';
+import UserPhoto from '~/pages/UserPage/assets/user_2.svg';
 import {
+  EditInfoButtonContainer,
+  ImageContainer,
+  ImageNickNameContainer,
+  Info,
   IntroduceArea,
+  IntroduceAreaContainer,
   MainContainer,
+  Mbti,
+  MbtiContainer,
+  MbtiEditInfoButtonContainer,
+  MbtiImageContainer,
   MyInfoButtonContainer,
-  NotificationCardContainer,
+  NickName,
+  NotExistPost,
+  PostCardContainer,
+  Separator,
+  SeparatorWrapper,
+  UserInfo,
   UserInfoContainer,
+  UserPageContainer,
 } from '~/pages/UserPage/style';
 import { Post, User } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
@@ -28,6 +47,8 @@ const UserPage = () => {
     username: '',
     posts: [] as Post[],
   });
+  const [postIsActive, setPostIsActive] = useState(true);
+  const [introduceIsActive, setIntroduceIsActive] = useState(false);
 
   const storedUserInfo = localStorage.getItem('AUTH_TOKEN');
 
@@ -60,10 +81,16 @@ const UserPage = () => {
   };
 
   const handleIntroduceButtonClick = () => {
+    setIntroduceIsActive(true);
+    setPostIsActive(false);
+
     setPostOrIntroduce('introduce');
   };
 
   const handlePostButtonClick = () => {
+    setPostIsActive(true);
+    setIntroduceIsActive(false);
+
     setPostOrIntroduce('post');
   };
 
@@ -72,57 +99,123 @@ const UserPage = () => {
   };
 
   return (
-    <MainContainer>
-      <UserInfoContainer>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '10px',
-          }}
-        >
-          <Image
-            src={image ? image : UserPhoto}
-            shape={'circle'}
-            width={150}
-            height={150}
-            mode={'cover'}
-            style={{ backgroundColor: '#DFE7FF' }}
+    <UserPageContainer>
+      {isMyInfo ? <Header isLogout /> : <Header isLogo={false} />}
+      <MainContainer>
+        <UserInfoContainer>
+          <UserInfo isMyInfo={isMyInfo}>
+            <Info>
+              <ImageNickNameContainer>
+                <ImageContainer>
+                  <Image
+                    src={image ? image : UserPhoto}
+                    shape={'circle'}
+                    width={100}
+                    height={100}
+                    mode={'fill'}
+                    style={{ backgroundColor: '#DFE7FF' }}
+                  />
+                </ImageContainer>
+                <NickName>{username}</NickName>
+              </ImageNickNameContainer>
+
+              <MbtiEditInfoButtonContainer isMyInfo={isMyInfo}>
+                <MbtiContainer>
+                  <MbtiImageContainer>
+                    {mbti[2] === 'T' ? (
+                      <img
+                        src={spaceShip}
+                        width={35}
+                        height={35}
+                        style={{
+                          position: 'absolute',
+                          bottom: 35,
+                          left: 10,
+                          zIndex: 1,
+                        }}
+                      />
+                    ) : mbti[2] === 'F' ? (
+                      <img
+                        src={rocket}
+                        width={45}
+                        height={45}
+                        style={{
+                          position: 'absolute',
+                          bottom: 27,
+                          left: 5,
+                          zIndex: 1,
+                        }}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </MbtiImageContainer>
+                  {mbti.split('').map((char, index) => (
+                    <Mbti char={char} idx={index} key={index}>
+                      {char}
+                    </Mbti>
+                  ))}
+                </MbtiContainer>
+
+                <SeparatorWrapper>
+                  <Separator />
+                </SeparatorWrapper>
+
+                <EditInfoButtonContainer>
+                  <button
+                    style={
+                      isMyInfo
+                        ? {
+                            display: 'block',
+                            width: '80%',
+                            height: '30px',
+                            border: 'none',
+                            borderRadius: '5px',
+                            color: '#494984',
+                            fontFamily: 'ONE-Mobile-Title',
+                            backgroundColor: '#E4ECFE',
+                            textAlign: 'center',
+                            cursor: 'pointer',
+                          }
+                        : { display: 'none' }
+                    }
+                    onClick={handleEditButtonClick}
+                  >
+                    내 정보 수정
+                  </button>
+                </EditInfoButtonContainer>
+              </MbtiEditInfoButtonContainer>
+            </Info>
+            {isMyInfo ? (
+              <></>
+            ) : (
+              <IntroduceArea isMyInfo={isMyInfo}>{introduce}</IntroduceArea>
+            )}
+          </UserInfo>
+        </UserInfoContainer>
+
+        <MyInfoButtonContainer style={isMyInfo ? {} : { display: 'none' }}>
+          <TopNavBtn
+            width={180}
+            height={48}
+            title={'게시글'}
+            onClick={handlePostButtonClick}
+            isActive={postIsActive}
           />
-          <span>{username}</span>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <span>{mbti}</span>
-          </div>
-          <div>
-            <button
-              style={
-                isMyInfo
-                  ? { display: 'block', width: '100%', height: '30px' }
-                  : { display: 'none' }
-              }
-              onClick={handleEditButtonClick}
-            >
-              내 정보 수정
-            </button>
-          </div>
-        </div>
-      </UserInfoContainer>
-      <MyInfoButtonContainer style={isMyInfo ? {} : { display: 'none' }}>
-        <button style={{ width: '100%' }} onClick={handleIntroduceButtonClick}>
-          내 소개
-        </button>
-        <button style={{ width: '100%' }} onClick={handlePostButtonClick}>
-          게시글
-        </button>
-      </MyInfoButtonContainer>
-      <NotificationCardContainer
-        style={isMyInfo ? { display: 'block' } : { display: 'none' }}
-      >
-        {postOrIntroduce === 'post' && posts.length > 0
-          ? posts.map((item, index) => {
+          <TopNavBtn
+            width={180}
+            height={48}
+            title={'자기소개'}
+            onClick={handleIntroduceButtonClick}
+            isActive={introduceIsActive}
+          />
+        </MyInfoButtonContainer>
+
+        <PostCardContainer style={isMyInfo ? {} : { display: 'none' }}>
+          {postOrIntroduce === 'post' && posts.length === 0 ? (
+            <NotExistPost>{'작성한 게시물이 없습니다.'}</NotExistPost>
+          ) : postOrIntroduce === 'post' && posts.length > 0 ? (
+            posts.map((item, index) => {
               return (
                 <PostCard
                   _id={item._id}
@@ -136,14 +229,16 @@ const UserPage = () => {
                 />
               );
             })
-          : introduce}
-      </NotificationCardContainer>
-      <IntroduceArea
-        style={isMyInfo ? { display: 'none' } : { display: 'block' }}
-      >
-        {introduce}
-      </IntroduceArea>
-    </MainContainer>
+          ) : postOrIntroduce === 'introduce' ? (
+            <IntroduceAreaContainer isMyInfo={isMyInfo}>
+              <IntroduceArea isMyInfo={isMyInfo}>{introduce}</IntroduceArea>
+            </IntroduceAreaContainer>
+          ) : (
+            <></>
+          )}
+        </PostCardContainer>
+      </MainContainer>
+    </UserPageContainer>
   );
 };
 

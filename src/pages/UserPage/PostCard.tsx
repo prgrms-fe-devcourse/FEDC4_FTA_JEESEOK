@@ -1,7 +1,8 @@
+import comment from '~/pages/PostPage/assets/comment.svg';
+import heart from '~/pages/PostPage/assets/heart.svg';
 import { Post } from '~/types';
 import {
   Comment,
-  CountContainer,
   CreatedDate,
   DateUserArea,
   Like,
@@ -37,16 +38,32 @@ const PostCard = ({
     <PostCardContainer id={_id} onClick={onClick}>
       <TitleCountArea>
         <div style={{ display: 'flex', gap: '5px' }}>
-          <span>{CHANNEL_ID[channel]}</span>
+          <div
+            style={{
+              background:
+                'linear-gradient(45deg, #FCCBF3, #E8CBF4, #B6CCF9, #72CDFF)',
+              padding: '2px 7px',
+              borderRadius: '20px',
+              color: 'white',
+            }}
+          >
+            <span>{CHANNEL_ID[channel]}</span>
+          </div>
           <Title>{title}</Title>
         </div>
-        <CountContainer>
-          <Like>공감 {likes.length}</Like>
-          <Comment>댓글 {comments.length}</Comment>
-        </CountContainer>
       </TitleCountArea>
       <DateUserArea>
         <CreatedDate>{createdAt}</CreatedDate>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '3px' }}>
+          <Like>
+            <img src={heart} width={'14px'} height={'13px'} />
+            {likes.length}
+          </Like>
+          <Comment>
+            <img src={comment} width={'14px'} height={'13px'} />
+            {comments.length}
+          </Comment>
+        </div>
       </DateUserArea>
     </PostCardContainer>
   );

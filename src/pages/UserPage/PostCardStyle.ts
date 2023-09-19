@@ -1,12 +1,16 @@
 import styled from '@emotion/styled';
 
 export const PostCardContainer = styled.div`
+  width: 95%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
-  padding: 10px;
+  border-radius: 20px;
+  background-color: #f5f9ff;
+  padding: 15px;
+  box-sizing: border-box;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0.2, 0.2, 1.5, 0.2);
 `;
 
 export const TitleCountArea = styled.div`
@@ -15,37 +19,30 @@ export const TitleCountArea = styled.div`
 `;
 
 export const Title = styled.div`
+  display: flex;
+  align-items: center;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
 
-export const CountContainer = styled.div`
-  display: flex;
-  gap: 15px;
-`;
-
 export const Like = styled.div`
-  border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 3px;
 `;
 
 export const Comment = styled.div`
-  border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 3px;
 `;
 
 export const DateUserArea = styled.div`
   display: flex;
   flex-shrink: 0;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
 `;
 
-export const CreatedDate = styled.div`
-  background-color: rgba(0, 0, 0, 0.1);
-`;
-
-export const UserName = styled.div`
-  background-color: rgba(0, 0, 0, 0.1);
-`;
+export const CreatedDate = styled.div``;
