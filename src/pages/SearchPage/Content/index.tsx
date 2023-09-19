@@ -133,7 +133,7 @@ const Content = ({
               <UserCardGroup imageSize={35} gap={5}>
                 {userArr.map((user) => (
                   <UserCard
-                    src="https://picsum.photos/200?1"
+                    src={user.image ? user.image : 'src/assets/person_icon.jpg'}
                     nickname={user.username}
                     mbti={JSON.parse(user.fullName).mbti}
                     key={user._id}
