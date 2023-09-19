@@ -11,6 +11,7 @@ interface TagStyleProps {
   borderColor: string;
   fontSize: string;
   activeBackgroundColor: string;
+  activeFontColor: string;
 }
 
 interface TagProps extends HTMLAttributes<HTMLButtonElement>, TagStyleProps {
@@ -31,7 +32,9 @@ const TagComponent = styled('button')<TagStyleProps>`
     ${({ borderColor }) => borderColor};
   font-size: ${({ fontSize }) => fontSize};
   &.active {
-    background-color: ${({ activeBackgroundColor }) => activeBackgroundColor};
+    background: ${({ activeBackgroundColor }) => activeBackgroundColor};
+    color: ${({ activeFontColor }) => activeFontColor};
+    opacity: 1;
   }
 `;
 
