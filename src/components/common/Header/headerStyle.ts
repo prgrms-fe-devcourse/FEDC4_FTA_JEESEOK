@@ -8,7 +8,8 @@ export const HeaderContainer = styled.header`
   align-items: center;
   color: #2f2f68;
   background-color: #f5f9ff;
-  position: relative;
+  position: fixed;
+  top: 0;
   max-width: 425px;
   width: 100%;
   height: 60px;
