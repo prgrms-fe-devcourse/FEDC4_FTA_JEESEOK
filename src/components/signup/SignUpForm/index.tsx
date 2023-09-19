@@ -2,13 +2,11 @@ import React, { useCallback, useMemo } from 'react';
 import Input from '~/components/common/Input';
 import { SignUpFormContainer } from '~/components/signup/SignUpForm/signUpFormStyle.ts';
 import {
-  NICK_NAME,
   NICK_NAME_VALIDATION,
   PASSWORD,
   PASSWORD_CHECK,
   PASSWORD_CHECK_VALIDATION,
   PASSWORD_VALIDATION,
-  USER_ID,
   USER_ID_VALIDATION,
 } from '~/constants/signUpConstants.ts';
 import { SignUpStateType, inputType } from '~/types/signUpTypes.ts';
@@ -22,7 +20,7 @@ const SignUpForm = ({ signUpState, setSignUpState }: MbtiButtonProps) => {
   const validationFormat = useMemo(
     () => ({
       id: /^[a-z0-9_-]{5,20}$/,
-      pw: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+      pw: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\W]{8,}$/,
       nickName: /^.{2,7}$/,
       pwCheck: signUpState.pw,
     }),
@@ -86,48 +84,60 @@ const SignUpForm = ({ signUpState, setSignUpState }: MbtiButtonProps) => {
       <Input
         id={'idRow'}
         value={signUpState.id}
-        placeHolder={USER_ID}
-        width={'100%'}
-        height={40}
+        placeHolder={''}
+        width={292}
+        height={43}
         onChange={(e) => handleInputChange('id', e.target.value)}
         onClick={() => handleInputCancel('id')}
         isError={signUpState.isIdError}
         validationText={USER_ID_VALIDATION}
+        border={'1px solid #bbcdf7'}
+        topText={'아이디 입력'}
+        radius={'10px'}
       />
       <Input
         id={'pwRow'}
         value={signUpState.pw}
         type={'password'}
         placeHolder={PASSWORD}
-        width={'100%'}
-        height={40}
+        width={292}
+        height={43}
         onChange={(e) => handleInputChange('pw', e.target.value)}
         onClick={() => handleInputCancel('pw')}
         isError={signUpState.isPwError}
         validationText={PASSWORD_VALIDATION}
+        radius={'10px'}
+        border={'1px solid #E4ECFE'}
+        background={'#E4ECFE'}
       />
       <Input
         id={'pwCheckRow'}
         value={signUpState.pwCheck}
         type={'password'}
         placeHolder={PASSWORD_CHECK}
-        width={'100%'}
-        height={40}
+        width={292}
+        height={43}
         onChange={(e) => handleInputChange('pwCheck', e.target.value)}
         onClick={() => handleInputCancel('pwCheck')}
         isError={signUpState.isPwCheckError}
         validationText={PASSWORD_CHECK_VALIDATION}
+        radius={'10px'}
+        border={'1px solid #E4ECFE'}
+        background={'#E4ECFE'}
       />
       <Input
         id={'nickNameRow'}
         value={signUpState.nickName}
-        placeHolder={NICK_NAME}
-        width={'100%'}
-        height={40}
+        placeHolder={''}
+        width={292}
+        height={43}
         onChange={(e) => handleInputChange('nickName', e.target.value)}
         onClick={() => handleInputCancel('nickName')}
         isError={signUpState.isNickNameError}
         validationText={NICK_NAME_VALIDATION}
+        border={'1px solid #bbcdf7'}
+        topText={'닉네임 입력'}
+        radius={'10px'}
       />
     </SignUpFormContainer>
   );
