@@ -105,6 +105,12 @@ const UserPasswordPage = () => {
               onMouseUp={() => {
                 setShowPassword(false);
               }}
+              onTouchStart={() => {
+                setShowPassword(true);
+              }}
+              onTouchEnd={() => {
+                setShowPassword(false);
+              }}
             ></UserPasswordPagePasswordSeeIcon>
           </UserPasswordPageInputWrapper>
           <UserPasswordPageInputWrapper>
@@ -134,6 +140,12 @@ const UserPasswordPage = () => {
                 setShowPasswordCheck(true);
               }}
               onMouseUp={() => {
+                setShowPasswordCheck(false);
+              }}
+              onTouchStart={() => {
+                setShowPasswordCheck(true);
+              }}
+              onTouchEnd={() => {
                 setShowPasswordCheck(false);
               }}
             ></UserPasswordPagePasswordSeeIcon>

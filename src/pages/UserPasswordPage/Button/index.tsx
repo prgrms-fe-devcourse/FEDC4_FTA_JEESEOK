@@ -15,6 +15,8 @@ export interface ButtonProps {
   form: string | undefined;
   onMouseDown: React.MouseEventHandler<HTMLButtonElement>;
   onMouseUp: React.MouseEventHandler<HTMLButtonElement>;
+  onTouchStart?: React.TouchEventHandler<HTMLButtonElement>;
+  onTouchEnd?: React.TouchEventHandler<HTMLButtonElement>;
 }
 
 const Button = ({
@@ -31,6 +33,8 @@ const Button = ({
   form,
   onMouseDown,
   onMouseUp,
+  onTouchStart,
+  onTouchEnd,
 }: Partial<ButtonProps>) => {
   const preventOnClick = disabled || isLoading;
 
@@ -47,6 +51,8 @@ const Button = ({
       form={form}
       onMouseDown={onMouseDown}
       onMouseUp={onMouseUp}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
       {children}
     </BaseButton>
