@@ -118,7 +118,10 @@ const PostDetailPage = () => {
     postDetailData;
   return (
     <PostDetailContainer>
-      <Header isLogo={false} isSearch={false} title={''}></Header>
+      <Header
+        isLogo={false}
+        isEdit={userId === postDetailData.author?._id}
+      ></Header>
       <PostDetail
         channelName={channelName}
         title={title}
