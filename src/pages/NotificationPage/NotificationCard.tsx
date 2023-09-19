@@ -31,9 +31,9 @@ const NotificationCard = ({
   return !seen ? (
     <NotificationCardContainer onClick={handleNotificationCardClick}>
       <CountContainer>
-        <UserName>{author.username}</UserName>
-        {like && <Text>님이 회원님의 게시물에 공감합니다.</Text>}
-        {comment && <Text>님이 회원님의 게시물에 댓글을 남겼습니다.</Text>}
+        <UserName>{author.username}님이</UserName>
+        {like && <Text>회원님의 게시글에 공감합니다.</Text>}
+        {comment && <Text>회원님의 게시글에 댓글을 남겼습니다.</Text>}
       </CountContainer>
       <DateArea>
         <CreatedDate>{getKoreaTimeFromNow(createdAt)}</CreatedDate>
@@ -50,10 +50,15 @@ const NotificationCardContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
+  height: 58px;
+  border-radius: 25px;
   padding: 10px;
-  background-color: white;
+  background-color: #f5f9ff;
   cursor: pointer;
+  font-family: 'GangwonEdu_OTFBoldA';
+  margin-top: 8px;
+  padding: 18px 20px 22px 16px;
+  box-sizing: border-box;
 `;
 
 const CountContainer = styled.div`
@@ -62,23 +67,20 @@ const CountContainer = styled.div`
 `;
 
 const Text = styled.div`
+  width: 250px;
+  position: relative;
+  right: 10px;
   flex-shrink: 0;
-  border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0);
   text-overflow: ellipsis;
 `;
 
-const DateArea = styled.div`
-  display: flex;
-  flex-shrink: 0;
-  flex-direction: column;
-  align-items: center;
-`;
+const DateArea = styled.div``;
 
 const CreatedDate = styled.div`
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0);
 `;
 
 const UserName = styled.div`
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0);
 `;

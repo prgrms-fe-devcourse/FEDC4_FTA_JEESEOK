@@ -19,6 +19,5 @@ export default NotificationCardList;
 const NotificationCardListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  margin-bottom: 70px;
+  margin-bottom: 100px;
 `;
