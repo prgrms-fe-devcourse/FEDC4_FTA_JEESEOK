@@ -70,7 +70,10 @@ const Header = ({
 
     const confirmation = window.confirm('정말로 이 게시물을 삭제하시겠습니까?');
 
-    if (confirmation) deletePost(postId);
+    if (confirmation) {
+      deletePost(postId);
+      navigate(-1);
+    }
   };
 
   return (
