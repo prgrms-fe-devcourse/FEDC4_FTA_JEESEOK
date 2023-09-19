@@ -5,9 +5,9 @@ export const PostCardContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 20px;
+  border-radius: 16px;
   background-color: #f5f9ff;
-  padding: 15px;
+  padding: 12px;
   box-sizing: border-box;
   cursor: pointer;
   box-shadow: 0 2px 4px rgba(0.2, 0.2, 1.5, 0.2);
@@ -46,7 +46,9 @@ export const DateUserArea = styled.div`
   flex-shrink: 0;
   flex-direction: column;
   align-items: flex-end;
-  font-size: 16px;
+  gap: 5px;
 `;
 
-export const CreatedDate = styled.div``;
+export const CreatedDate = styled.div`
+  font-size: 14px;
+`;
