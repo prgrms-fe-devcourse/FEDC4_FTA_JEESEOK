@@ -9,8 +9,10 @@ interface topNavBtnProps {
 }
 
 const ButtonWrapper = styled.button<{ isActive: boolean }>`
-  background-image: ${({ isActive }) =>
-    isActive && "url('src/assets/top_nav_btn.svg')"};
+  background: ${({ isActive }) =>
+    isActive
+      ? 'linear-gradient(45deg, #FCCBF3, #E8CBF4, #B6CCF9, #72CDFF);'
+      : '#D9E4FB'};
   background-size: cover;
   border: none;
   outline: none;
@@ -23,7 +25,6 @@ const ButtonWrapper = styled.button<{ isActive: boolean }>`
   font-size: 23px;
   font-family: 'ONE-Mobile-Title';
   font-weight: 800;
-  background-color: ${({ isActive }) => isActive || '#D9E4FB'};
   cursor: pointer;
   box-sizing: border-box;
 `;
