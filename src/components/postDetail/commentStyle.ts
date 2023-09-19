@@ -5,8 +5,12 @@ export const CommentContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 369px;
+  width: 404px;
+  border-radius: 20px;
   background: #f5f9ff;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  overflow-y: auto;
 `;
 
 export const CommentInputContainer = styled.div`
@@ -14,9 +18,10 @@ export const CommentInputContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  width: 332px;
+  width: 367px;
   background: #e4ecfe;
   border-radius: 40px;
+  margin-top: 10px;
 `;
 
 export const CommentInputWrap = styled.div`
@@ -59,6 +64,36 @@ export const CommentButton = styled.img`
 `;
 
 export const Text = styled.div`
-  text-align: left;
+  font-family: 'ONE-Mobile-Title';
+  text-align: center;
   width: 100%;
+  margin-bottom: 11px;
+  margin-top: 11px;
+`;
+
+export const CommentCountTitle = styled.span`
+  font-family: 'ONE-Mobile-Title';
+  color: #2f2f68;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-right: 5px;
+`;
+
+export const CommentCount = styled.span`
+  font-family: 'ONE-Mobile-Title';
+  color: #f9bbf0;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+export const CommentCountWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  width: 85%;
+  margin-top: 10px;
 `;

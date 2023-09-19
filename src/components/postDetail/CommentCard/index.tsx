@@ -1,14 +1,18 @@
-import defaultUserImage from '~/assets/user.svg';
+import defaultProfile from '~/assets/default_profile.svg';
 import { Comment } from '~/types';
 import {
+  Cancel,
   CommentContainer,
-  CommentWrap,
-  Content,
+  CommentContent,
+  CommentMiddleContainer,
+  CommentTopContainer,
   CreatedDate,
-  Text,
+  Mbti,
+  Underline,
   UserImage,
+  UserInfoWrapper,
   UserName,
-  UserNameDateArea,
+  Vertical,
 } from './style';
 
 interface CommentCard extends Comment {
@@ -29,21 +33,25 @@ const CommentCard = ({
   isLogin,
   onDeleteComment,
 }: CommentCardProps) => {
+  const mbti = JSON.parse(author.fullName)['mbti'];
   return (
     <CommentContainer>
-      <UserImage
-        src={author.image ? author.image : defaultUserImage}
-      ></UserImage>
-      <Content>
-        <UserNameDateArea>
+      <CommentTopContainer>
+        <UserImage
+          src={author.image ? author.image : defaultProfile}
+        ></UserImage>
+        <UserInfoWrapper>
           <UserName>{author.username}</UserName>
-          <CreatedDate>{createdAt}</CreatedDate>
-        </UserNameDateArea>
-        <CommentWrap>
-          <Text>{comment}</Text>
-          {isLogin && <Text onClick={() => onDeleteComment(_id)}>취소</Text>}
-        </CommentWrap>
-      </Content>
+          <Vertical>|</Vertical>
+          <Mbti>{mbti}</Mbti>
+        </UserInfoWrapper>
+        <CreatedDate>{createdAt}</CreatedDate>
+      </CommentTopContainer>
+      <CommentMiddleContainer>
+        <CommentContent>{comment}</CommentContent>
+        {isLogin && <Cancel onClick={() => onDeleteComment(_id)}>삭제</Cancel>}
+      </CommentMiddleContainer>
+      <Underline />
     </CommentContainer>
   );
 };

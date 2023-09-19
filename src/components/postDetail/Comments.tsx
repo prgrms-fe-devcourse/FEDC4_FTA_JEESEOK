@@ -5,6 +5,9 @@ import CommentCard from '~/components/postDetail/CommentCard';
 import CommentInput from '~/components/postDetail/CommentInput.tsx';
 import {
   CommentContainer,
+  CommentCount,
+  CommentCountTitle,
+  CommentCountWrapper,
   Text,
 } from '~/components/postDetail/commentStyle.ts';
 import {
@@ -61,8 +64,10 @@ const Comments = ({
   };
 
   const deleteMyComment = async (commentId: string) => {
-    await deleteComment({ commentId });
-    await updateComment();
+    if (confirm('댓글을 정말 삭제하시겠습니까?')) {
+      await deleteComment({ commentId });
+      await updateComment();
+    }
   };
 
   return (
@@ -74,7 +79,11 @@ const Comments = ({
         isDisabled={commentInputState['disabled']}
         placeholder={commentInputState['placeholder']}
       />
-      <Text>댓글 {comments.length}</Text>
+      <CommentCountWrapper>
+        <CommentCountTitle>댓글</CommentCountTitle>
+        <CommentCount> {comments.length}</CommentCount>
+      </CommentCountWrapper>
+
       {comments &&
         comments.map((comment, index) => (
           <CommentCard
