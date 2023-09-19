@@ -4,7 +4,6 @@ export const PostCardContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #ffffff;
   border-radius: 15px;
   padding: 10px;
   background-color: #f5f9ff;
