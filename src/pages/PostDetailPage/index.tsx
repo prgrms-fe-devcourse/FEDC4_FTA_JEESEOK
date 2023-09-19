@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { deleteLike, postLike } from '~/api/like';
 import { postNotification } from '~/api/notification';
@@ -18,25 +19,28 @@ const PostDetailContainer = styled.div`
 `;
 
 const PostDetailPage = () => {
-  // const { postId } = useParams(); 변경해야함
-  const postId = '6503f6e7febd7c193edf4bd4';
+  const { postId } = useParams() as { postId: string };
+  // const postId = '6503f6e7febd7c193edf4bd4';
 
   /*
    * useLocalStorage훅을 수정해야할거 같음
    * 1. 훅안에서 기본 initialValue를 처리하도록 수정
    * 2. isLogin이라는 플래그 값을 추가
    * **/
-  const userInfo = JSON.parse(localStorage.getItem('AUTH_TOKEN') || '');
-  const userId = userInfo?.user._id || '';
+  const AUTH_TOKEN = localStorage.getItem('AUTH_TOKEN');
+  const userInfo = AUTH_TOKEN ? JSON.parse(AUTH_TOKEN) : null;
+  const userId = userInfo ? userInfo?.user?._id : '';
 
   const [postDetailState, setPostDetailState] =
     useState<Post>(initPostDetailState);
   const [likeState, setLikeState] = useState(initLikeState);
 
   const postDetailApiCall = async () => {
-    const postDetailResult = await readPost(postId);
-    setPostDetailState(postDetailResult);
-    console.log(postDetailResult);
+    if (postId) {
+      const postDetailResult = await readPost(postId);
+      setPostDetailState(postDetailResult);
+      console.log(postDetailResult);
+    }
   };
 
   const toggleLike = async () => {
@@ -114,7 +118,10 @@ const PostDetailPage = () => {
     postDetailData;
   return (
     <PostDetailContainer>
-      <Header isLogo={false} isSearch={false} title={''}></Header>
+      <Header
+        isLogo={false}
+        isEdit={userId === postDetailData.author?._id}
+      ></Header>
       <PostDetail
         channelName={channelName}
         title={title}
@@ -129,7 +136,7 @@ const PostDetailPage = () => {
         comments={postDetailState.comments}
         postId={postId}
         postUserId={postDetailData.author?._id}
-        userId={userInfo.user._id}
+        userId={userInfo ? userInfo.user._id : userInfo}
         updateComment={postDetailApiCall}
       />
     </PostDetailContainer>
