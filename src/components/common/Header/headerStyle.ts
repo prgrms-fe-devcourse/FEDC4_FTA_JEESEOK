@@ -14,6 +14,7 @@ export const HeaderContainer = styled.header`
   width: 100%;
   height: 60px;
   border-radius: 0 0 50px 50px;
+  z-index: 1000;
 `;
 
 export const LogoWrapper = styled.div`
