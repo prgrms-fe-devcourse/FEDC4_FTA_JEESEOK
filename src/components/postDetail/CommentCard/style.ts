@@ -12,12 +12,10 @@ export const CommentContainer = styled.div`
 
 export const CommentTopContainer = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
 `;
 export const CommentMiddleContainer = styled.div`
   display: flex;
-  flex-direction: row;
   height: 100%;
   margin-top: 4px;
   margin-bottom: 7px;
@@ -54,8 +52,8 @@ export const UserName = styled.div`
 
 export const UserInfoWrapper = styled.div`
   display: flex;
-  flex-direction: row;
   width: 100%;
+  align-items: center;
 `;
 export const CreatedDate = styled.div`
   color: #2f2f68;
@@ -97,12 +95,6 @@ export const CommentContent = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-`;
-
-export const CommentWrap = styled.div`
-  display: flex;
-  flex-direction: row;
-  cursor: pointer;
 `;
 
 export const Vertical = styled.div`
