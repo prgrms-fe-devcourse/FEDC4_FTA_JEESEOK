@@ -174,6 +174,7 @@ const UserPage = () => {
                             borderRadius: '5px',
                             color: '#494984',
                             fontFamily: 'ONE-Mobile-Title',
+                            fontSize: '14px',
                             backgroundColor: '#E4ECFE',
                             textAlign: 'center',
                             cursor: 'pointer',

@@ -24,18 +24,21 @@ export const Title = styled.div`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-size: 16px;
 `;
 
 export const Like = styled.div`
   display: flex;
   align-items: center;
   gap: 3px;
+  font-size: 12px;
 `;
 
 export const Comment = styled.div`
   display: flex;
   align-items: center;
   gap: 3px;
+  font-size: 12px;
 `;
 
 export const DateUserArea = styled.div`
@@ -43,6 +46,7 @@ export const DateUserArea = styled.div`
   flex-shrink: 0;
   flex-direction: column;
   align-items: flex-end;
+  font-size: 16px;
 `;
 
 export const CreatedDate = styled.div``;

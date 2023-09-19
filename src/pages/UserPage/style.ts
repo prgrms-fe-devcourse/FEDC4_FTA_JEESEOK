@@ -171,6 +171,6 @@ export const IntroduceArea = styled.div<{ isMyInfo: boolean }>`
   box-sizing: border-box;
   background-color: #e4ecfe;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   overflow-y: auto;
 `;
