@@ -13,6 +13,7 @@ export const PostDetailContainer = styled.div`
 export const ImgWrapper = styled.div`
   width: 60px;
   height: 37px;
+  cursor: pointer;
 `;
 
 export const Img = styled.img``;

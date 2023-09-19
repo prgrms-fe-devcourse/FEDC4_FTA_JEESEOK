@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import defaultProfile from '~/assets/default_profile.svg';
 import likeCancelImage from '~/assets/like_type1.svg';
 import likeImage from '~/assets/like_type2.svg';
@@ -38,20 +39,17 @@ const PostDetail = ({
   onLikeClick,
   isLike,
 }: postDetailProps) => {
+  const navigate = useNavigate();
+
   return (
     <PostDetailContainer>
       <PostDetailWrapper>
         <UserContainer>
-          <ImgWrapper>
+          <ImgWrapper onClick={() => navigate(`/user/${author?._id}`)}>
             <Img
               src={author?.coverImage ? author?.coverImage : defaultProfile}
             ></Img>
           </ImgWrapper>
-          {/*<Image*/}
-          {/*  width={60}*/}
-          {/*  height={37}*/}
-          {/*  src={author?.coverImage ? author?.coverImage : defaultProfile}*/}
-          {/*/>*/}
           <TitleContainer>
             <Text fontSize={'14px'} color={'#2F2F68'}>
               {author?.username}

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import defaultProfile from '~/assets/default_profile.svg';
 import { Comment } from '~/types';
 import {
@@ -34,14 +35,20 @@ const CommentCard = ({
   onDeleteComment,
 }: CommentCardProps) => {
   const mbti = JSON.parse(author.fullName)['mbti'];
+  const navigate = useNavigate();
+  const moveUserPage = () => {
+    navigate(`/user/${author?._id}`);
+  };
+
   return (
     <CommentContainer>
       <CommentTopContainer>
         <UserImage
           src={author.image ? author.image : defaultProfile}
+          onClick={moveUserPage}
         ></UserImage>
         <UserInfoWrapper>
-          <UserName>{author.username}</UserName>
+          <UserName onClick={moveUserPage}>{author.username}</UserName>
           <Vertical>|</Vertical>
           <Mbti>{mbti}</Mbti>
         </UserInfoWrapper>

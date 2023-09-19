@@ -33,7 +33,6 @@ const Comments = ({
   updateComment,
 }: CommentsProps) => {
   const [commentState, setCommentState] = useState('');
-  console.log(userId);
 
   const commentInputState = useMemo(() => {
     const disabled = userId ? false : true;
