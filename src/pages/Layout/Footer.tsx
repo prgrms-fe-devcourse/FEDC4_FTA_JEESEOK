@@ -1,5 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import Image from '~/components/common/Image';
+import createImg from './create.svg';
+import loginImg from './login.svg';
+import logoImg from './logo.svg';
+import myInfoImg from './myInfo.svg';
+import notificationImg from './notification.svg';
+import signupImg from './signup.svg';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -18,32 +25,53 @@ const Footer = () => {
       const storageValue = localStorage.getItem('AUTH_TOKEN');
       return storageValue ? JSON.parse(storageValue).user._id : '';
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return '';
     }
   };
 
   const footerMenu = getUserId()
     ? [
-        { name: '게시판', page: 'post' },
-        { name: '알림', page: 'notification' },
-        { name: '마이', page: `user/${getUserId()}` },
+        { name: '알림', page: 'notification', image: notificationImg },
+        { name: '게시판', page: 'post', image: logoImg },
+        { name: '내 정보', page: `user/${getUserId()}`, image: myInfoImg },
       ]
     : [
-        { name: '게시판', page: 'post' },
-        { name: '로그인', page: 'login' },
+        { name: '회원가입', page: 'signup', image: signupImg },
+        { name: '게시판', page: 'post', image: logoImg },
+        { name: '로그인', page: 'login', image: loginImg },
       ];
 
   return (
     <FooterContainer>
       {getUserId() && ['/', '/post'].includes(pathname) && (
-        <CreateButton onClick={handleCreateButtonClick}>글쓰기</CreateButton>
+        <CreateButton onClick={handleCreateButtonClick}>
+          <Image width={75} height={75} src={createImg} />
+        </CreateButton>
       )}
-      {footerMenu.map(({ name, page }) => (
-        <FooterButton key={page} onClick={() => handleFooterClick(page)}>
-          {name}
-        </FooterButton>
-      ))}
+      {footerMenu.map(({ name, page, image }) =>
+        page === 'post' ? (
+          <FooterButton
+            key={page}
+            width={'70px'}
+            height={'70px'}
+            backgroundColor={'transparent'}
+            onClick={() => handleFooterClick(page)}
+          >
+            <Image width={50} height={40} src={image} alt={name} />
+          </FooterButton>
+        ) : (
+          <FooterButton
+            key={page}
+            width={'45px'}
+            height={'45px'}
+            backgroundColor={'white'}
+            onClick={() => handleFooterClick(page)}
+          >
+            <Image width={20} height={20} src={image} alt={name} />
+          </FooterButton>
+        )
+      )}
     </FooterContainer>
   );
 };
@@ -52,30 +80,40 @@ export default Footer;
 
 const CreateButton = styled.button`
   position: absolute;
-  bottom: 80px;
+  bottom: 90px;
   right: 20px;
-  border-radius: 20px;
-  background-color: white;
-  width: 60px;
-  white-space: nowrap;
-  height: 30px;
+  border: none;
+  background-color: transparent;
+  border-radius: 50%;
   cursor: pointer;
 `;
 
 export const FooterContainer = styled.div`
   max-width: 425px;
-  height: 65px;
+  height: 80px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 65px;
   position: fixed;
   bottom: 0;
   width: 100%;
   z-index: 777;
+  border-radius: 50px 50px 0 0;
+  background-color: #f5f9ff;
 `;
 
-export const FooterButton = styled.button`
-  width: 100%;
-  height: 100%;
-  border: 1px solid;
-  background-color: white;
+interface FooterButtonProps {
+  width: string;
+  height: string;
+  backgroundColor: string;
+}
+
+export const FooterButton = styled.button<FooterButtonProps>`
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
+  border: none;
+  border-radius: 50%;
+  background-color: ${({ backgroundColor }) => backgroundColor};
   cursor: pointer;
 `;
