@@ -17,7 +17,7 @@ const Footer = () => {
   };
 
   const handleCreateButtonClick = () => {
-    navigate('/post/create');
+    navigate('/post/create/edit');
   };
 
   const getUserId = (): string => {
