@@ -1,14 +1,19 @@
+import { useNavigate } from 'react-router-dom';
 import defaultProfile from '~/assets/default_profile.svg';
 import likeCancelImage from '~/assets/like_type1.svg';
 import likeImage from '~/assets/like_type2.svg';
-import Image from '~/components/common/Image';
 import {
+  Img,
+  ImgWrapper,
   LikeImg,
   LikeWrapper,
   PostDetailContainer,
   PostDetailWrapper,
+  Tag,
   Text,
+  TextWrapper,
   TitleContainer,
+  TitleWrapper,
   UserContainer,
 } from '~/components/postDetail/postDetailStyle.ts';
 import { User } from '~/types';
@@ -34,33 +39,43 @@ const PostDetail = ({
   onLikeClick,
   isLike,
 }: postDetailProps) => {
+  const navigate = useNavigate();
+
   return (
     <PostDetailContainer>
       <PostDetailWrapper>
         <UserContainer>
-          <Image
-            width={60}
-            height={37}
-            src={author?.coverImage ? author?.coverImage : defaultProfile}
-          />
+          <ImgWrapper onClick={() => navigate(`/user/${author?._id}`)}>
+            <Img
+              src={author?.coverImage ? author?.coverImage : defaultProfile}
+            ></Img>
+          </ImgWrapper>
           <TitleContainer>
-            <Text fontSize={'14px'} fontFamily={'gang-won-gyo-yug-modu-bold'}>
+            <Text fontSize={'14px'} color={'#2F2F68'}>
               {author?.username}
             </Text>
-            <Text fontSize={'11px'}>
-              {updateAt}
-              <Text fontSize={'10px'}>{channelName}</Text>
-            </Text>
+            <TextWrapper>
+              <Text
+                fontSize={'11px'}
+                margin={'0 5px 0 0'}
+                center={true}
+                color={'#93A6C9'}
+              >
+                {updateAt}
+              </Text>
+              <Tag>{channelName}</Tag>
+            </TextWrapper>
           </TitleContainer>
         </UserContainer>
-        <Text
-          fontSize={'20px'}
-          bold={'semi bold'}
-          margin={`10px 0px 10px 0px}`}
-        >
-          {title}
+        <TitleWrapper>
+          <Text fontSize={'20px'} color={'#2F2F68'}>
+            {title}
+          </Text>
+        </TitleWrapper>
+
+        <Text fontSize={'14px'} color={'#494984'}>
+          {body}
         </Text>
-        <Text fontSize={'14px'}>{body}</Text>
         <LikeWrapper>
           <LikeImg
             src={isLike ? likeImage : likeCancelImage}
