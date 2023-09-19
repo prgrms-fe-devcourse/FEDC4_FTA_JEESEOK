@@ -35,7 +35,7 @@ const Comments = ({
   const [commentState, setCommentState] = useState('');
 
   const commentInputState = useMemo(() => {
-    const disabled = userId ? false : true;
+    const disabled = !userId;
     const placeholder = userId ? loginPlaceholder : nonLoginPlaceholder;
 
     return {
