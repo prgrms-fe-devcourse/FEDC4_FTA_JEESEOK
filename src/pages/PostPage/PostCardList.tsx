@@ -34,6 +34,6 @@ export default PostCardList;
 const PostCardListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  margin-bottom: 70px;
+  gap: 10px;
+  margin: 13px 10px 0 10px;
 `;

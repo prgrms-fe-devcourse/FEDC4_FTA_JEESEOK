@@ -19,11 +19,17 @@ const TagList = ({ onClick }: TagListProps) => {
       {tags.map(([key, value]) => (
         <Tag
           key={key}
-          backgroundColor={'white'}
+          fontColor={'#F8FBFF'}
           borderWidth={'1px'}
           borderRadius={'15px'}
-          fontSize={'16px'}
+          fontSize={'14px'}
           onClick={() => onClick(key)}
+          style={{
+            padding: '5px 15px',
+            background:
+              'linear-gradient(45deg,#FCCBF3, #E8CBF4, #B6CCF9, #72CDFF)',
+            fontFamily: 'ONE-Mobile-Title',
+          }}
         >
           {value}
         </Tag>
@@ -38,6 +44,6 @@ const TagListContainer = styled.div`
   display: flex;
   gap: 5px;
   position: fixed;
-  margin-left: 5px;
-  margin-top: 5px;
+  margin: 10px 10px 5px 10px;
+  z-index: 777;
 `;
