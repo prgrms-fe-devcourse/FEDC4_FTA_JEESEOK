@@ -168,7 +168,7 @@ const UserPage = () => {
                       isMyInfo
                         ? {
                             display: 'block',
-                            width: '80%',
+                            width: '60%',
                             height: '30px',
                             border: 'none',
                             borderRadius: '5px',

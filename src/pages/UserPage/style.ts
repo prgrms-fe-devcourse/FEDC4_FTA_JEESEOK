@@ -21,7 +21,6 @@ export const UserInfoContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: center;
-  gap: 30px;
 `;
 
 export const UserInfo = styled.div<{ isMyInfo: boolean }>`
@@ -30,12 +29,12 @@ export const UserInfo = styled.div<{ isMyInfo: boolean }>`
   flex-direction: ${(props) => (props.isMyInfo ? 'row' : 'column')};
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
   width: 95%;
   height: ${(props) => (props.isMyInfo ? '' : '60vh')};
   background-color: #f5f9ff;
   border-radius: 20px;
-  padding: ${(props) => (props.isMyInfo ? '30px 15px' : '30px 15px 15px 15px')};
+  padding: ${(props) => (props.isMyInfo ? '15px' : '15px')};
   box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0.2, 0.2, 1.5, 0.2);
 `;
@@ -44,14 +43,13 @@ export const Info = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 30px;
 `;
 
 export const ImageNickNameContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   width: 40%;
 `;
 
@@ -66,7 +64,7 @@ export const ImageContainer = styled.div`
 `;
 
 export const MbtiEditInfoButtonContainer = styled.div<{ isMyInfo: boolean }>`
-  margin-bottom: ${(props) => (props.isMyInfo ? '' : '27px')};
+  margin-bottom: ${(props) => (props.isMyInfo ? '-20px' : '17px')};
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -95,7 +93,7 @@ export const SeparatorWrapper = styled.div`
 `;
 
 export const Separator = styled.div`
-  width: 95%;
+  width: 80%;
   height: 1px;
   border-radius: 1px;
   background-color: #bbcdf7;
