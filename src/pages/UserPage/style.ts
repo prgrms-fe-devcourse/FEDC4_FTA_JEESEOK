@@ -141,6 +141,13 @@ export const PostCardContainer = styled.div`
   box-sizing: border-box;
 `;
 
+export const NotExistPostContainer = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const NotExistPost = styled.span`
   font-size: 20px;
 `;

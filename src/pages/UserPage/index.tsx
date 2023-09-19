@@ -23,6 +23,7 @@ import {
   MyInfoButtonContainer,
   NickName,
   NotExistPost,
+  NotExistPostContainer,
   PostCardContainer,
   Separator,
   SeparatorWrapper,
@@ -213,7 +214,9 @@ const UserPage = () => {
 
         <PostCardContainer style={isMyInfo ? {} : { display: 'none' }}>
           {postOrIntroduce === 'post' && posts.length === 0 ? (
-            <NotExistPost>{'작성한 게시물이 없습니다.'}</NotExistPost>
+            <NotExistPostContainer>
+              <NotExistPost>{'작성한 게시물이 없습니다.'}</NotExistPost>
+            </NotExistPostContainer>
           ) : postOrIntroduce === 'post' && posts.length > 0 ? (
             posts.map((item, index) => {
               return (
