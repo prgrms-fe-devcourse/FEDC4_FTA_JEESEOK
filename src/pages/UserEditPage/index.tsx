@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { putMyInformation } from '~/api/settings';
 import { getUser, postUserImage } from '~/api/user';
 import UserPhoto from '~/assets/user.svg';
-import Button from '~/components/common/Button';
 import Image from '~/components/common/Image';
 import Input from '~/components/common/Input';
+import Button from '~/pages/UserEditPage/Button';
 import Header from '~/pages/UserEditPage/Header';
 import Textarea from '~/pages/UserEditPage/Textarea';
 import {
@@ -45,22 +45,45 @@ const UserEditPage = () => {
 
   const MBTI = ['E', 'N', 'F', 'P', 'I', 'S', 'T', 'J'];
 
+  const MBTIButtons = MBTI.map((alphabet, index) => {
+    const isActive = editedMbti.includes(alphabet);
+    const buttonStyle = {
+      width: '50px',
+      height: '50px',
+      backgroundColor: isActive ? 'darkblue' : 'lightblue', // 활성일 때와 비활성일 때 배경색 변경
+      color: isActive ? 'white' : 'black', // 텍스트 색상 변경
+    };
+
+    const handleMbtiButtonClick = () => {
+      if (alphabet === 'E' || alphabet === 'I') {
+        setEditedMbti(editedMbti.replace(editedMbti[0], alphabet));
+      } else if (alphabet === 'N' || alphabet === 'S') {
+        setEditedMbti(editedMbti.replace(editedMbti[1], alphabet));
+      } else if (alphabet === 'F' || alphabet === 'T') {
+        setEditedMbti(editedMbti.replace(editedMbti[2], alphabet));
+      } else if (alphabet === 'P' || alphabet === 'J') {
+        setEditedMbti(editedMbti.replace(editedMbti[3], alphabet));
+      }
+    };
+
+    return (
+      <Button
+        children={alphabet}
+        width={50}
+        height={50}
+        key={index}
+        onClick={handleMbtiButtonClick}
+        style={buttonStyle}
+      />
+    );
+  });
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedUsername(e.currentTarget.value);
   };
 
   const handleInputCancelButtonClick = () => {
     setEditedUsername('');
-  };
-
-  const handleMbtiButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (editedMbti.length < 4) {
-      setEditedMbti(editedMbti + e.currentTarget.textContent);
-    }
-  };
-
-  const handleMbtiCancelClick = () => {
-    setEditedMbti('');
   };
 
   const handleTextareaChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
@@ -174,34 +197,8 @@ const UserEditPage = () => {
             onClick={handleInputCancelButtonClick}
           />
         </div>
-        <span>
-          mbti: {editedMbti}
-          <button onClick={handleMbtiCancelClick}>x</button>
-        </span>
-        <span
-          style={
-            editedMbti.length === 4 &&
-            (editedMbti[0] === 'I' || editedMbti[0] === 'E') &&
-            (editedMbti[1] === 'S' || editedMbti[1] === 'N') &&
-            (editedMbti[2] === 'T' || editedMbti[2] === 'F') &&
-            (editedMbti[3] === 'P' || editedMbti[3] === 'J')
-              ? { display: 'none' }
-              : { color: 'red', fontSize: '10px' }
-          }
-        >
-          유효하지 않은 MBTI입니다.
-        </span>
-        <MbtiForm>
-          {MBTI.map((alphabet, index) => (
-            <Button
-              children={alphabet}
-              width={50}
-              height={50}
-              key={index}
-              onClick={handleMbtiButtonClick}
-            />
-          ))}
-        </MbtiForm>
+
+        <MbtiForm>{MBTIButtons}</MbtiForm>
         <div style={{ width: '100%' }}>
           <Textarea
             value={editedIntroduce}
