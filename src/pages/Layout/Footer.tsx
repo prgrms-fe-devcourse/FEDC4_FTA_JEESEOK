@@ -43,36 +43,39 @@ const Footer = () => {
       ];
 
   return (
-    <FooterContainer>
-      {getUserId() && ['/', '/post'].includes(pathname) && (
-        <CreateButton onClick={handleCreateButtonClick}>
-          <Image width={75} height={75} src={createImg} />
-        </CreateButton>
-      )}
-      {footerMenu.map(({ name, page, image }) =>
-        page === 'post' ? (
-          <FooterButton
-            key={page}
-            width={'70px'}
-            height={'70px'}
-            backgroundColor={'transparent'}
-            onClick={() => handleFooterClick(page)}
-          >
-            <Image width={50} height={40} src={image} alt={name} />
-          </FooterButton>
-        ) : (
-          <FooterButton
-            key={page}
-            width={'45px'}
-            height={'45px'}
-            backgroundColor={'white'}
-            onClick={() => handleFooterClick(page)}
-          >
-            <Image width={20} height={20} src={image} alt={name} />
-          </FooterButton>
-        )
-      )}
-    </FooterContainer>
+    <>
+      <FooterContainer>
+        {getUserId() && ['/', '/post'].includes(pathname) && (
+          <CreateButton onClick={handleCreateButtonClick}>
+            <Image width={75} height={75} src={createImg} />
+          </CreateButton>
+        )}
+        {footerMenu.map(({ name, page, image }) =>
+          page === 'post' ? (
+            <FooterButton
+              key={page}
+              width={'70px'}
+              height={'70px'}
+              backgroundColor={'transparent'}
+              onClick={() => handleFooterClick(page)}
+            >
+              <Image width={50} height={40} src={image} alt={name} />
+            </FooterButton>
+          ) : (
+            <FooterButton
+              key={page}
+              width={'45px'}
+              height={'45px'}
+              backgroundColor={'white'}
+              onClick={() => handleFooterClick(page)}
+            >
+              <Image width={20} height={20} src={image} alt={name} />
+            </FooterButton>
+          )
+        )}
+      </FooterContainer>
+      <div style={{ height: '90px' }} />
+    </>
   );
 };
 
