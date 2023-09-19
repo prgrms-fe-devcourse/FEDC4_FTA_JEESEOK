@@ -1,12 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Image from '~/components/common/Image';
-import createImg from './create.svg';
-import loginImg from './login.svg';
-import logoImg from './logo.svg';
-import myInfoImg from './myInfo.svg';
-import notificationImg from './notification.svg';
-import signupImg from './signup.svg';
+import createImg from './assets/create.svg';
+import loginImg from './assets/login.svg';
+import logoImg from './assets/logo.svg';
+import myInfoImg from './assets/myInfo.svg';
+import notificationImg from './assets/notification.svg';
+import signupImg from './assets/signup.svg';
 
 const Footer = () => {
   const navigate = useNavigate();
