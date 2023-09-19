@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
-import Tag from './Tag';
+import Tag from '../Tag';
+import { TagListContainer } from './style';
 
 const tags = [
   ['all', '전체'],
@@ -7,7 +7,7 @@ const tags = [
   ['relationship', '인간관계'],
   ['job', '취업'],
   ['money', '돈'],
-];
+] as const;
 
 interface TagListProps {
   onClick: (arg: string) => void;
@@ -42,11 +42,3 @@ const TagList = ({ onClick }: TagListProps) => {
 };
 
 export default TagList;
-
-const TagListContainer = styled.div`
-  display: flex;
-  gap: 5px;
-  position: fixed;
-  margin: 10px 10px 5px 10px;
-  z-index: 777;
-`;

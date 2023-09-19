@@ -1,7 +1,7 @@
-import styled from '@emotion/styled';
 import { Post } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
-import PostCard from './PostCard';
+import PostCard from '../PostCard';
+import { PostCardListContainer } from './style';
 
 interface PostCardListProps {
   posts: Post[];
@@ -30,10 +30,3 @@ const PostCardList = ({ posts }: PostCardListProps) => {
 };
 
 export default PostCardList;
-
-const PostCardListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin: 13px 10px 0 10px;
-`;
