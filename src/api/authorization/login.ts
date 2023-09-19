@@ -12,17 +12,20 @@ interface LoginRequest {
 }
 
 interface PostLoginApi {
-  (loginInformation: LoginRequest): Promise<ResponseUser | never>;
+  (loginInformation: LoginRequest): Promise<ResponseUser | false>;
 }
 
 const postLoginApi: PostLoginApi = async (loginInformation) => {
-  const { password, id } = loginInformation;
-  const res = await request.post<ResponseUser>('/login', {
-    email: id,
-    password,
-  });
-
-  return res.data;
+  try {
+    const { password, id } = loginInformation;
+    const res = await request.post<ResponseUser>('/login', {
+      email: id,
+      password,
+    });
+    return res.data;
+  } catch (error) {
+    return false;
+  }
 };
 
 export default postLoginApi;

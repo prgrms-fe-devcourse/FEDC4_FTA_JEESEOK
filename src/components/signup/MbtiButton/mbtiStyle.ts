@@ -5,6 +5,11 @@ export const MbtiContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   justify-items: center;
+  height: 133px;
 `;
 
-export const MbtiTitle = styled.span``;
+export const MbtiTitle = styled.span`
+  color: #2f2f68;
+  font-family: 'GangwonEdu_OTFBoldA';
+  font-size: 16px;
+`;

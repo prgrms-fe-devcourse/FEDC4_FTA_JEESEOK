@@ -11,6 +11,9 @@ export interface ButtonProps {
   fontWeight: string | number;
   width: string | number;
   height: string | number;
+  radius?: string;
+  border?: string;
+  background?: string;
 }
 
 const Button = ({
@@ -23,6 +26,9 @@ const Button = ({
   fontWeight = '400',
   width = '40xp',
   height = '20px',
+  radius,
+  border,
+  background,
 }: Partial<ButtonProps>) => {
   const preventOnClick = disabled || isLoading;
 
@@ -35,6 +41,9 @@ const Button = ({
       fontWeight={fontWeight}
       width={width}
       height={height}
+      radius={radius}
+      border={border}
+      background={background}
     >
       {children}
     </BaseButton>

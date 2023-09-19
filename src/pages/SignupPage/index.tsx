@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import logoText from '~/assets/logoText.png';
 import Button from '~/components/common/Button';
 import Header from '~/components/common/Header';
 import MbtiButton from '~/components/signup/MbtiButton';
@@ -16,13 +17,22 @@ const SignUpContainer = styled.div`
   align-items: center;
 `;
 
+const LogoImg = styled.img`
+  width: 150px;
+  height: 65px;
+  margin-bottom: 20px;
+`;
+
 const SignUpBody = styled.div`
-  width: 90%;
-  height: 600px;
-  background: white;
-  opacity: 0.9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 341px;
+  height: 514px;
   margin: 20px;
-  box-shadow: 10px 10px 5px rgb(0, 0, 0, 0.8);
+  background: #f5f9ff;
+  border-radius: 25px;
 `;
 
 type ValidationObj = {
@@ -55,6 +65,7 @@ const SignupPage = () => {
       isPwCheckError,
       isNickNameError,
     } = signUpState;
+    console.log(signUpState);
 
     if (isIdError || isPwError || isPwCheckError || isNickNameError) return;
 
@@ -66,7 +77,7 @@ const SignupPage = () => {
     ].some(({ length, obj }) => validationCheck(length, obj));
 
     if (hasError) return;
-    if (fullName.mbti.length !== 4) {
+    if (fullName.mbti.join('').length !== 4) {
       alert('mbti를 입력해주세요!');
       return;
     }
@@ -87,7 +98,7 @@ const SignupPage = () => {
       alert('가입되었습니다.');
       navigate('/login');
     } else {
-      console.log('중복 아이디 로직 추가');
+      alert('중복아이디입니다!');
     }
   };
 
@@ -95,10 +106,19 @@ const SignupPage = () => {
     <SignUpContainer>
       <Header isLogo={false} isSearch={false} title={TITLE} />
       <SignUpBody>
+        <LogoImg src={logoText}></LogoImg>
         <SignUpForm signUpState={signUpState} setSignUpState={setSignUpState} />
         <MbtiButton setSignUpState={setSignUpState}></MbtiButton>
       </SignUpBody>
-      <Button width={'100%'} height={80} onClick={apiCall}>
+      <Button
+        width={341}
+        height={42}
+        onClick={apiCall}
+        background={
+          'linear-gradient(71deg, #FCCBF3 4.69%, #E8CBF4 24.48%, #B6CCF9 64.93%, #72CDFF 113.68%)'
+        }
+        radius={'20px'}
+      >
         {TITLE}
       </Button>
     </SignUpContainer>
