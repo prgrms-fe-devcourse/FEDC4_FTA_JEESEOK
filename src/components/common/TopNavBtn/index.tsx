@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 interface topNavBtnProps {
   width?: number;
   height?: number;
-  isActive: boolean;
+  isActive?: boolean;
   title: string;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
