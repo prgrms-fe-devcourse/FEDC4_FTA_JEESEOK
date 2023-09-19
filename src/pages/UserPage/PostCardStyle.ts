@@ -18,13 +18,32 @@ export const TitleCountArea = styled.div`
   overflow: hidden;
 `;
 
+export const ChannelTitleContainer = styled.div`
+  display: flex;
+  gap: 5px;
+`;
+
+export const ChannelContainer = styled.div`
+  background: linear-gradient(45deg, #fccbf3, #e8cbf4, #b6ccf9, #72cdff);
+  padding: 2px 7px;
+  border-radius: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const ChannelName = styled.span`
+  font-size: 14px;
+`;
+
 export const Title = styled.div`
   display: flex;
   align-items: center;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  font-size: 16px;
+  font-size: 14px;
 `;
 
 export const Like = styled.div`
