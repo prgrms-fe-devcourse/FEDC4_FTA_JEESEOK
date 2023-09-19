@@ -70,6 +70,12 @@ export const DateUserArea = styled.div`
   gap: 10px;
 `;
 
+export const UserImage = styled.img`
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+`;
+
 export const CreatedDate = styled.div``;
 
 export const UserNameMbti = styled.div`
