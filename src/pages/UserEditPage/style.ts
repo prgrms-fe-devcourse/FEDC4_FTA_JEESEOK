@@ -8,7 +8,7 @@ export const EditPageContainer = styled.div`
 `;
 
 export const MainPageContainer = styled.main`
-  margin-top: 70px;
+  margin-top: 85px;
   display: flex;
   gap: 15px;
   padding: 20px;

@@ -57,7 +57,10 @@ const UserEditPage = () => {
     const buttonStyle = {
       width: '55px',
       height: '55px',
+      fontSize: '30px',
+      fontFamily: 'Cafe24Font',
       borderRadius: '10px',
+      padding: '5px 0 0 0',
       background: isActive
         ? alphabet === 'I' || alphabet === 'E'
           ? 'linear-gradient(45deg, #E6D1F7, #DDDAF6)'
