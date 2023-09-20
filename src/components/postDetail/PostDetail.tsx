@@ -24,7 +24,7 @@ interface postDetailProps {
   body: string;
   author: User;
   likeCount: number;
-  updateAt: string;
+  createAt: string;
   onLikeClick: () => void;
   isLike: boolean;
 }
@@ -35,7 +35,7 @@ const PostDetail = ({
   body,
   author,
   likeCount,
-  updateAt,
+  createAt,
   onLikeClick,
   isLike,
 }: postDetailProps) => {
@@ -61,7 +61,7 @@ const PostDetail = ({
                 center={true}
                 color={'#93A6C9'}
               >
-                {updateAt}
+                {createAt}
               </Text>
               <Tag>{channelName}</Tag>
             </TextWrapper>
