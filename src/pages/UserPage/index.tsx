@@ -202,15 +202,15 @@ const UserPage = () => {
 
         <MyInfoButtonContainer style={isMyInfo ? {} : { display: 'none' }}>
           <TopNavBtn
-            width={180}
-            height={48}
+            width={160}
+            height={40}
             title={'게시글'}
             onClick={handlePostButtonClick}
             isActive={postIsActive}
           />
           <TopNavBtn
-            width={180}
-            height={48}
+            width={160}
+            height={40}
             title={'자기소개'}
             onClick={handleIntroduceButtonClick}
             isActive={introduceIsActive}
