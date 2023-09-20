@@ -19,6 +19,7 @@ const PostCardList = ({ posts }: PostCardListProps) => {
             title={JSON.parse(title).title}
             likesNumber={likes.length}
             commentsNumber={comments.length}
+            userImage={author.image}
             username={author.username}
             mbti={JSON.parse(author.fullName).mbti}
             createdAt={getKoreaTimeFromNow(createdAt)}

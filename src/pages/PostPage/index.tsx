@@ -53,7 +53,7 @@ const PostPage = () => {
       if (posts) setPosts(posts);
     };
 
-    getPosts();
+    setTimeout(getPosts, 100);
   }, [searchParams]);
 
   const handleTagClick = (tag: string) => {

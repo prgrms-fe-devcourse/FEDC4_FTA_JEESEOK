@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import defaultProfileImg from '~/assets/default_profile.svg';
 import Image from '~/components/common/Image';
 import commentImg from '~/pages/PostPage/assets/comment.svg';
 import heartImg from '~/pages/PostPage/assets/heart.svg';
@@ -13,6 +14,7 @@ import {
   TagTitleArea,
   TagTitleCountArea,
   Title,
+  UserImage,
   UserNameMbti,
 } from './style';
 
@@ -22,6 +24,7 @@ interface PostCardProps {
   title: string;
   likesNumber: number;
   commentsNumber: number;
+  userImage?: string;
   username: string;
   mbti: string;
   createdAt: string;
@@ -33,6 +36,7 @@ const PostCard = ({
   title,
   likesNumber,
   commentsNumber,
+  userImage,
   username,
   mbti,
   createdAt,
@@ -56,7 +60,7 @@ const PostCard = ({
             <span>{likesNumber}</span>
           </Like>
           <Comment>
-            <Image src={commentImg} width={14} height={13} />{' '}
+            <Image src={commentImg} width={14} height={13} />
             <span>{commentsNumber}</span>
           </Comment>
         </CountContainer>
@@ -64,6 +68,7 @@ const PostCard = ({
       <DateUserArea>
         <CreatedDate>{createdAt}</CreatedDate>
         <UserNameMbti>
+          <UserImage src={userImage || defaultProfileImg} />
           <span>{username}</span>
           <span>{mbti}</span>
         </UserNameMbti>
