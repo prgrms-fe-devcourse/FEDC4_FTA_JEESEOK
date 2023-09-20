@@ -81,8 +81,8 @@ const Header = ({
     <>
       <HeaderContainer>
         {isLogo ? (
-          <LogoWrapper>
-            <LogoIcon src={logoImg} onClick={handleLogoClick} />
+          <LogoWrapper onClick={handleLogoClick}>
+            <LogoIcon src={logoImg} />
             <LogoTitle>FTA</LogoTitle>
           </LogoWrapper>
         ) : (
