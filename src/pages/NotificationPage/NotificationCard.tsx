@@ -4,7 +4,6 @@ import { Comment, Like, User } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
 
 interface NotificationCardProps {
-  seen: boolean;
   author: User;
   comment?: Comment;
   like?: Like;
@@ -13,7 +12,6 @@ interface NotificationCardProps {
 }
 
 const NotificationCard = ({
-  seen,
   author,
   post,
   comment,
@@ -28,7 +26,10 @@ const NotificationCard = ({
     }
   };
 
-  return !seen ? (
+  const isLike = !like;
+  const isComment = !comment;
+
+  return !isLike || !isComment ? (
     <NotificationCardContainer onClick={handleNotificationCardClick}>
       <CountContainer>
         <UserName>{author.username}님이</UserName>
