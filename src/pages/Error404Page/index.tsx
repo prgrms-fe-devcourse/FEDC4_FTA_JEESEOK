@@ -1,5 +1,4 @@
 import Header from '~/components/common/Header';
-import Loading from '~/components/common/Loading';
 import planet from './planet.png';
 import {
   ContentImage,
@@ -16,7 +15,6 @@ const Error404Page = () => {
         <ContentImage src={planet} />
         <ContentText>404</ContentText>
       </ContentWrapper>
-      <Loading />
     </PageWrapper>
   );
 };
