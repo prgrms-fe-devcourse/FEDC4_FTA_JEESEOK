@@ -31,14 +31,14 @@ export const InputGroupContainer = styled.div<InputGroupContainerProps>`
 `;
 
 export const InputStyle = styled.input`
-  width: 80%;
+  width: 85%;
   &:focus {
     outline: none;
   }
   border: none;
   background-color: transparent;
   color: #2f2f68;
-  font-size: 14px;
+  font-size: 16px;
   font-family: 'GangwonEdu_OTFBoldA';
   &::placeholder {
     color: #8b9dc6;

@@ -17,7 +17,7 @@ interface TextareaProps
 
 const TextareaComponent = styled('textarea')<TextareaStyleProps>`
   resize: none;
-  overflow: scroll;
+  overflow-y: scroll;
   &:focus {
     outline: none;
   }

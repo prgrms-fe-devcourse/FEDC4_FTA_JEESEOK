@@ -1,8 +1,8 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import React, { CSSProperties } from 'react';
 import { BaseButton } from '~/components/common/Button/style';
 
 export interface ButtonProps {
-  children: ReactNode;
+  children: string;
   className: string;
   disabled: boolean;
   onClick: React.MouseEventHandler<HTMLButtonElement>;

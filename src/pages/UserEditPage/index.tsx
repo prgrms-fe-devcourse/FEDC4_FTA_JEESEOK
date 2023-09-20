@@ -11,8 +11,14 @@ import Textarea from '~/pages/UserEditPage/Textarea';
 import plus from '~/pages/UserEditPage/assets/plus.svg';
 import {
   EditPageContainer,
+  EditPasswordButtonContainer,
+  ImageContainer,
+  InputContainer,
   MainPageContainer,
   MbtiForm,
+  MbtiIntroduceSpanContainer,
+  TextareaContainer,
+  UploadImageButton,
 } from '~/pages/UserEditPage/style';
 import { User } from '~/types';
 
@@ -49,11 +55,21 @@ const UserEditPage = () => {
   const MBTIButtons = MBTI.map((alphabet, index) => {
     const isActive = editedMbti.includes(alphabet);
     const buttonStyle = {
-      width: '50px',
-      height: '50px',
+      width: '55px',
+      height: '55px',
       borderRadius: '10px',
-      backgroundColor: isActive ? '#E6EFFF' : '', // 활성일 때와 비활성일 때 배경색 변경
-      color: isActive ? 'white' : '', // 텍스트 색상 변경
+      background: isActive
+        ? alphabet === 'I' || alphabet === 'E'
+          ? 'linear-gradient(45deg, #E6D1F7, #DDDAF6)'
+          : alphabet === 'S' || alphabet === 'N'
+          ? 'linear-gradient(45deg, #E0DBF7, #D6DAF7,#D2DAF8)'
+          : alphabet === 'T' || alphabet === 'F'
+          ? 'linear-gradient(45deg, #D7DBF8, #CDDAF8,#C5DAF9)'
+          : alphabet === 'P' || alphabet === 'J'
+          ? 'linear-gradient(45deg, #CCDCF9, #C2DCF9,#BCDCFA)'
+          : ''
+        : '#E6EFFF',
+      color: '#FFFFFF',
     };
 
     const handleMbtiButtonClick = () => {
@@ -71,8 +87,8 @@ const UserEditPage = () => {
     return (
       <Button
         children={alphabet}
-        width={50}
-        height={50}
+        width={55}
+        height={55}
         key={index}
         onClick={handleMbtiButtonClick}
         style={buttonStyle}
@@ -103,7 +119,7 @@ const UserEditPage = () => {
       const file = e.target.files[0];
       const { image } = (await postUserImage(file)) as unknown as User;
 
-      setEditedImage(image);
+      setEditedImage(image || '');
     }
   };
 
@@ -151,15 +167,15 @@ const UserEditPage = () => {
         handleSaveButtonClick={handleCompleteEditButton}
       />
       <MainPageContainer>
-        <div style={{ position: 'relative', width: '150px', height: '150px' }}>
+        <ImageContainer>
           <label htmlFor="fileInput">
             <Image
               src={editedImage ? editedImage : UserPhoto}
               shape={'circle'}
-              width={150}
-              height={150}
+              width={110}
+              height={110}
               mode={'cover'}
-              style={{ backgroundColor: '#DFE7FF', cursor: 'pointer' }}
+              style={{ backgroundColor: '#D9E4FB', cursor: 'pointer' }}
             />
           </label>
           <input
@@ -168,40 +184,12 @@ const UserEditPage = () => {
             onChange={handleImageUploadButtonClick}
             style={{ display: 'none' }}
           />
-          <button
-            onClick={handlePlusButtonClick}
-            style={{
-              position: 'absolute',
-              bottom: '0',
-              right: '0',
-              left: '110px',
-              width: '40px',
-              height: '40px',
-              background: '#FCCBF3',
-              borderRadius: '20px',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '50px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
+          <UploadImageButton onClick={handlePlusButtonClick}>
             <img src={plus} />
-          </button>
-        </div>
+          </UploadImageButton>
+        </ImageContainer>
 
-        <div
-          style={{
-            width: '100%',
-            height: '40px',
-            borderRadius: '10px',
-            backgroundColor: '#E4ECFE',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <InputContainer>
           <Input
             id={'username'}
             value={editedUsername}
@@ -214,40 +202,54 @@ const UserEditPage = () => {
             onChange={handleInputChange}
             onClick={handleInputCancelButtonClick}
           />
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-start',
-            width: '100%',
-          }}
-        >
+        </InputContainer>
+
+        <MbtiIntroduceSpanContainer>
           <span>나의 MBTI</span>
-        </div>
+        </MbtiIntroduceSpanContainer>
+
         <MbtiForm>{MBTIButtons}</MbtiForm>
-        <div style={{ width: '100%' }}>
+
+        <MbtiIntroduceSpanContainer>
+          <span>자기소개</span>
+        </MbtiIntroduceSpanContainer>
+
+        <TextareaContainer>
           <Textarea
             value={editedIntroduce || ''}
-            width={'100%'}
-            height={'150px'}
+            width={'90%'}
+            height={'100%'}
             borderRadius={'10px'}
-            fontSize={'14px'}
-            scrollBarWidth={0}
-            scrollBarThumbColor={''}
-            style={{ padding: '10px', boxSizing: 'border-box' }}
+            fontSize={'16px'}
+            scrollBarWidth={4}
+            scrollBarThumbColor={'#FFFFFF'}
+            style={{
+              boxSizing: 'border-box',
+              border: 'none',
+              backgroundColor: '#E4ECFE',
+              color: '#2F2F68',
+              fontFamily: 'GangwonEdu_OTFBoldA',
+              padding: '10px',
+            }}
             placeholder={'자기소개'}
             onChange={handleTextareaChange}
           />
-        </div>
+        </TextareaContainer>
 
-        <div style={{ width: '100%' }}>
+        <EditPasswordButtonContainer>
           <Button
             children={'비밀번호 변경'}
-            width={95}
-            height={30}
+            width={130}
+            height={25}
             onClick={handleChangePasswordButtonClick}
+            style={{
+              color: '#2F2F68',
+              fontSize: '12px',
+              backgroundColor: '#E4ECFE',
+              borderRadius: '10px',
+            }}
           />
-        </div>
+        </EditPasswordButtonContainer>
       </MainPageContainer>
     </EditPageContainer>
   );
