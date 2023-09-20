@@ -240,7 +240,7 @@ const UserEditPage = () => {
           <Button
             children={'비밀번호 변경'}
             width={130}
-            height={25}
+            height={30}
             onClick={handleChangePasswordButtonClick}
             style={{
               color: '#2F2F68',
