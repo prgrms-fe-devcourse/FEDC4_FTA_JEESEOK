@@ -5,10 +5,11 @@ export const EditPageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 80vh;
 `;
 
 export const MainPageContainer = styled.main`
-  margin-top: 85px;
+  margin-top: 160px;
   display: flex;
   gap: 15px;
   padding: 20px;
