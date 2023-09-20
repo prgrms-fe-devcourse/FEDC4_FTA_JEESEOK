@@ -34,6 +34,7 @@ export const CommentInputWrap = styled.div`
   border-bottom-left-radius: 40px;
   margin-left: 15px;
   padding: 5px 0 5px;
+  margin-top: 5px;
 `;
 
 export const CommentInputStyle = styled.textarea`
@@ -46,9 +47,13 @@ export const CommentInputStyle = styled.textarea`
     outline: none;
   }
   overflow: hidden;
+  height: 20px;
   width: 100%;
   line-height: 100%;
   font-size: 15px;
+  ::placeholder {
+    font-family: 'GangwonEdu_OTFBoldA';
+  }
 `;
 
 export const CommentButtonWrap = styled.div`
