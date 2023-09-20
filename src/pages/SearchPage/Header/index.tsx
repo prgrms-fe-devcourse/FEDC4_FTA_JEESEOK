@@ -23,12 +23,12 @@ const InputBox = styled.div`
   display: flex;
   align-items: center;
   width: 80%;
-  height: 60%;
+  height: 50%;
   box-sizing: border-box;
-  border: 1px solid black;
   border-radius: 30px;
   margin-right: 10px;
   margin-left: 5px;
+  background-color: #d9e4fb;
 `;
 const Input = styled.input`
   background-color: transparent;

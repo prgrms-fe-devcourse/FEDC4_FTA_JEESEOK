@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import { searchAll } from '~/api/search';
 import TopNavBtn from '~/components/common/TopNavBtn';
+import UserCard from '~/components/search/UserCard';
 import PostCard from '~/pages/PostPage/PostCard';
 import { Post, User } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
-import { searchAll } from '../SearchAPI';
-import UserCard from '../UserCardStyle';
+
+type SetCard = (value: (Post | User)[]) => void;
 
 interface ContentProps {
   word: string;
   postArr: Post[];
   userArr: User[];
-  setPostArr: (e: Post[]) => void;
-  setUserArr: (e: User[]) => void;
+  setPostArr: SetCard;
+  setUserArr: SetCard;
 }
 
 const ContentWrapper = styled.div`
@@ -30,6 +32,7 @@ const TopNavWrapper = styled.div`
   flex-shrink: 0;
   margin-top: 30px;
   margin-bottom: 10px;
+  gap: 10px;
 `;
 const NoWordWrapper = styled.div`
   position: absolute;
@@ -43,7 +46,7 @@ const NoWordWrapper = styled.div`
   text-align: center;
 `;
 const PostCardGroup = styled.div`
-  height: calc(100% - 170px);
+  height: calc(100% - 88px);
   overflow: scroll;
   display: flex;
   flex-direction: column;
@@ -52,7 +55,7 @@ const PostCardGroup = styled.div`
   margin: 0 auto;
 `;
 const UserCardGroup = styled(UserCard.Group)`
-  height: calc(100% - 170px);
+  height: calc(100% - 88px);
   overflow: scroll;
   width: 95%;
   margin: 0 auto;
@@ -68,24 +71,26 @@ const Content = ({
   const [viewPost, setviewPost] = useState(true);
 
   useEffect(() => {
-    let timer = null;
+    let timer: NodeJS.Timeout | null = null;
 
     if (word) {
       timer = setTimeout(async () => {
         const res = await searchAll(`${word}`);
-        setPostArr(
-          res.data.filter((post: Post) => Object.hasOwn(post, 'author'))
-        );
-        setUserArr(
-          res.data.filter((user: User) => Object.hasOwn(user, 'username'))
-        );
+
+        if (res) {
+          setPostArr(res.filter((post) => 'author' in post));
+          setUserArr(res.filter((user) => 'username' in user));
+        }
       }, 300);
     } else {
       setPostArr([]);
       setUserArr([]);
     }
 
-    return () => clearTimeout(timer);
+    return () => {
+      if (timer !== null) clearTimeout(timer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [word]);
 
   const handleTapNav = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -121,6 +126,7 @@ const Content = ({
                   tag={post.channel.name}
                   username={post.author.username}
                   mbti=""
+                  userImage={post.author.image}
                   createdAt={getKoreaTimeFromNow(post.createdAt)}
                 />
               ))}
