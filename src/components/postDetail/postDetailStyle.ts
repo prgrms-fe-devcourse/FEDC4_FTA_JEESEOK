@@ -2,8 +2,7 @@ import styled from '@emotion/styled';
 
 export const PostDetailContainer = styled.div`
   display: flex;
-  //width: 404px;
-  width: 100%;
+  width: 95%;
   margin: 20px 0 10px;
   background-color: #f5f9ff;
   border-radius: 20px;
