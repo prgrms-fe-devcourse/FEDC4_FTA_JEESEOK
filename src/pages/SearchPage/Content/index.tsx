@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import TopNavBtn from '~/components/common/TopNavBtn';
 import PostCard from '~/pages/PostPage/PostCard';
 import { Post, User } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
-import Footer from '../Footer';
 import { searchAll } from '../SearchAPI';
 import UserCard from '../UserCardStyle';
 
@@ -17,23 +17,45 @@ interface ContentProps {
 
 const ContentWrapper = styled.div`
   flex-grow: 1;
-  background-color: aliceblue;
+  background-color: #e6efff;
   overflow: hidden;
+  position: relative;
+`;
+const TopNavWrapper = styled.div`
+  height: 48px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 30px;
+  margin-bottom: 10px;
 `;
 const NoWordWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 230px;
+  transform: translate(-50%, -50%);
+  font-family: 'ONE-Mobile-Title';
+  color: #2f2f68;
+  font-size: 22px;
+  text-align: center;
 `;
 const PostCardGroup = styled.div`
-  height: calc(100% - 10vh);
+  height: calc(100% - 170px);
   overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 95%;
+  margin: 0 auto;
 `;
 const UserCardGroup = styled(UserCard.Group)`
-  height: calc(100% - 10vh);
+  height: calc(100% - 170px);
   overflow: scroll;
+  width: 95%;
+  margin: 0 auto;
 `;
 
 const Content = ({
@@ -44,7 +66,6 @@ const Content = ({
   setUserArr,
 }: ContentProps) => {
   const [viewPost, setviewPost] = useState(true);
-  const topMenu = ['게시글', '유저'];
 
   useEffect(() => {
     let timer = null;
@@ -56,7 +77,7 @@ const Content = ({
           res.data.filter((post: Post) => Object.hasOwn(post, 'author'))
         );
         setUserArr(
-          res.data.filter((user: User) => Object.hasOwn(user, 'fullName'))
+          res.data.filter((user: User) => Object.hasOwn(user, 'username'))
         );
       }, 300);
     } else {
@@ -76,7 +97,18 @@ const Content = ({
     <ContentWrapper>
       {word ? (
         <>
-          <Footer content={topMenu} onClick={handleTapNav} />
+          <TopNavWrapper>
+            <TopNavBtn
+              title="게시글"
+              isActive={viewPost}
+              onClick={handleTapNav}
+            />
+            <TopNavBtn
+              title="유저"
+              isActive={!viewPost}
+              onClick={handleTapNav}
+            />
+          </TopNavWrapper>
           {viewPost ? (
             <PostCardGroup>
               {postArr.map((post) => (
@@ -87,7 +119,7 @@ const Content = ({
                   commentsNumber={post.comments.length}
                   likesNumber={post.likes.length}
                   tag={post.channel.name}
-                  username={post.author.fullName}
+                  username={post.author.username}
                   mbti=""
                   createdAt={getKoreaTimeFromNow(post.createdAt)}
                 />
@@ -97,24 +129,29 @@ const Content = ({
               )}
             </PostCardGroup>
           ) : (
-            <UserCardGroup imageSize={50}>
-              {userArr.map((user) => (
-                <UserCard
-                  src="https://picsum.photos/200?1"
-                  nickname={user.username}
-                  mbti={JSON.parse(user.fullName).mbti}
-                  key={user._id}
-                  id={user._id}
-                />
-              ))}
+            <>
+              <UserCardGroup imageSize={35} gap={5}>
+                {userArr.map((user) => (
+                  <UserCard
+                    src={
+                      user.image ? user.image : 'src/assets/default_profile.svg'
+                    }
+                    nickname={user.username}
+                    mbti={JSON.parse(user.fullName).mbti}
+                    key={user._id}
+                    id={user._id}
+                    style={{ paddingLeft: '20px' }}
+                  />
+                ))}
+              </UserCardGroup>
               {userArr.length === 0 && (
                 <NoWordWrapper>검색결과가 없습니다.</NoWordWrapper>
               )}
-            </UserCardGroup>
+            </>
           )}
         </>
       ) : (
-        <NoWordWrapper>{'검색어가 없습니다.'}</NoWordWrapper>
+        <NoWordWrapper>{'검색어를 입력해주세요!'}</NoWordWrapper>
       )}
     </ContentWrapper>
   );

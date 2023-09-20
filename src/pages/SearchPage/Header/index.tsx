@@ -12,7 +12,9 @@ interface HeaderProps {
 const HeaderWrapper = styled.div`
   width: 100%;
   height: 80px;
-  background-color: antiquewhite;
+  background-color: #f5f9ff;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -20,11 +22,13 @@ const HeaderWrapper = styled.div`
 const InputBox = styled.div`
   display: flex;
   align-items: center;
-  width: 85%;
-  height: 70%;
+  width: 80%;
+  height: 60%;
   box-sizing: border-box;
   border: 1px solid black;
+  border-radius: 30px;
   margin-right: 10px;
+  margin-left: 5px;
 `;
 const Input = styled.input`
   background-color: transparent;
@@ -32,17 +36,21 @@ const Input = styled.input`
   height: 100%;
   border: none;
   outline: none;
-  font-size: 18px;
-  padding: 5px;
+  font-size: 15px;
+  padding: 5px 10px;
+  color: #8b9dc6;
+  font-family: 'GangwonEdu_OTFBoldA';
 `;
 const CloseIconStyled = styled(Icon)`
   cursor: pointer;
   flex-grow: 1;
   text-align: center;
+  margin-right: 10px;
 `;
 const BackIconStyled = styled(Icon)`
   cursor: pointer;
-  flex-grow: 1;
+  width: 15px;
+  margin-left: 15px;
   text-align: center;
 `;
 
@@ -61,6 +69,7 @@ const Header = ({ word, setWord, setPostArr, setUserArr }: HeaderProps) => {
         name="chevron-left"
         size={30}
         onClick={() => navigate('/')}
+        strokeWidth={3}
       />
       <InputBox>
         <Input
@@ -68,7 +77,7 @@ const Header = ({ word, setWord, setPostArr, setUserArr }: HeaderProps) => {
           value={word}
           onChange={(e) => setWord(e.target.value)}
         />
-        <CloseIconStyled name="x" onClick={handleClick} />
+        <CloseIconStyled name="x" onClick={handleClick} strokeWidth={3} />
       </InputBox>
     </HeaderWrapper>
   );

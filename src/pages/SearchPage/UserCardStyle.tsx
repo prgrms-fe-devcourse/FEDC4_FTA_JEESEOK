@@ -11,11 +11,13 @@ export const CardWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  border: 1px solid black;
   padding: 5px 10px;
-  height: 54px;
+  height: 70px;
   box-sizing: border-box;
   cursor: pointer;
+  background-color: #f5f9ff;
+  border-radius: 15px;
+  color: #2f2f68;
 `;
 
 export const Text = styled.div`
@@ -25,17 +27,14 @@ export const Text = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-family: 'GangwonEdu_OTFBoldA';
 `;
 
 export const MbtiTag = styled.div`
-  background-color: lightgray;
-  font-size: 15px;
-  padding: 5px;
-  width: 40px;
-  border-radius: 25%;
-  flex-shrink: 0;
+  font-size: 18px;
   text-align: center;
   box-sizing: border-box;
+  font-family: 'MainFont';
 `;
 
 export const UserCardGroupWrapper = styled.div`
