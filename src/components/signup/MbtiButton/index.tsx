@@ -30,9 +30,7 @@ const MbtiButton = ({ setSignUpState }: MbtiButtonProps) => {
   const [mbtiStyle, setMbtiStyle] = useState(INIT_MBTI_STYLE);
   const mbtiArr: MbtiKey[] = ['E', 'N', 'F', 'P', 'I', 'S', 'T', 'J'];
 
-  const handleMbtiChange = (item: MbtiKey) => {
-    const isSelect = !mbtiStyle[item].isSelect;
-
+  const changeMbtiStyle = (item: string, isSelect: boolean) => {
     setMbtiStyle((prevState) => ({
       ...prevState,
       [item]: {
@@ -40,21 +38,35 @@ const MbtiButton = ({ setSignUpState }: MbtiButtonProps) => {
         isSelect: isSelect,
       },
     }));
+  };
+
+  const handleMbtiChange = (item: MbtiKey) => {
+    const isSelect = !mbtiStyle[item].isSelect;
+
+    if (isSelect) {
+      const pairs = {
+        E: 'I',
+        I: 'E',
+        N: 'S',
+        S: 'N',
+        T: 'F',
+        F: 'T',
+        J: 'P',
+        P: 'J',
+      };
+
+      if (item in pairs) {
+        changeMbtiStyle(item, isSelect);
+        changeMbtiStyle(pairs[item], !isSelect);
+      }
+    }
 
     setSignUpState((prevState: SignUpStateType) => {
       const newMbti = [...prevState.fullName.mbti]; // 현재 mbti 값을 복사
-
-      if (isSelect) {
-        if (['E', 'I'].includes(item)) newMbti[0] = item;
-        else if (['N', 'S'].includes(item)) newMbti[1] = item;
-        else if (['F', 'T'].includes(item)) newMbti[2] = item;
-        else if (['P', 'J'].includes(item)) newMbti[3] = item;
-      } else {
-        if (['E', 'I'].includes(item)) newMbti[0] = '';
-        else if (['N', 'S'].includes(item)) newMbti[1] = '';
-        else if (['F', 'T'].includes(item)) newMbti[2] = '';
-        else if (['P', 'J'].includes(item)) newMbti[3] = '';
-      }
+      if (['E', 'I'].includes(item)) newMbti[0] = item;
+      else if (['N', 'S'].includes(item)) newMbti[1] = item;
+      else if (['F', 'T'].includes(item)) newMbti[2] = item;
+      else if (['P', 'J'].includes(item)) newMbti[3] = item;
 
       return {
         ...prevState,
