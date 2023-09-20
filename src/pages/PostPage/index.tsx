@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getChannelPost } from '~/api/post';
 import Header from '~/components/common/Header';
+import PostCardList from '~/components/post/PostCardList';
 import { Post } from '~/types';
-import PostCardList from './PostCardList';
 import TagList from './TagList';
 
 const CHANNEL_ID = Object.freeze({

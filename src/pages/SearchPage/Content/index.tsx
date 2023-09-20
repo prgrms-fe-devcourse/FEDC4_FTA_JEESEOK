@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { searchAll } from '~/api/search';
 import TopNavBtn from '~/components/common/TopNavBtn';
+import PostCard from '~/components/post/PostCard';
 import UserCard from '~/components/search/UserCard';
-import PostCard from '~/pages/PostPage/PostCard';
 import { Post, User } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
 
