@@ -70,37 +70,43 @@ const Header = ({
 
     const confirmation = window.confirm('정말로 이 게시물을 삭제하시겠습니까?');
 
-    if (confirmation) deletePost(postId);
+    if (confirmation) {
+      deletePost(postId);
+      navigate(-1);
+    }
   };
 
   return (
-    <HeaderContainer>
-      {isLogo ? (
-        <LogoWrapper>
-          <LogoIcon src={logoImg} onClick={handleLogoClick} />
-          <LogoTitle>FTA</LogoTitle>
-        </LogoWrapper>
-      ) : (
-        <BackIcon src={backButtonImg} onClick={handleBackButtonClick} />
-      )}
-      <MainTitle>{title}</MainTitle>
-      <SearchIcon
-        isHidden={isSearch}
-        src={search}
-        onClick={handleSearchButtonClick}
-      />
-      <LogoutButton isHidden={isLogout} onClick={handleLogoutButtonClick}>
-        로그아웃
-      </LogoutButton>
-      <SaveButton isHidden={isSave} onClick={handleSaveButtonClick}>
-        저장
-      </SaveButton>
-      <EditWrapper isHidden={isEdit}>
-        <CorrectButton onClick={handleCorrectButtonClick}>수정</CorrectButton>
-        <Separator />
-        <DeleteButton onClick={handleDeleteButtonClick}>삭제</DeleteButton>
-      </EditWrapper>
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        {isLogo ? (
+          <LogoWrapper>
+            <LogoIcon src={logoImg} onClick={handleLogoClick} />
+            <LogoTitle>FTA</LogoTitle>
+          </LogoWrapper>
+        ) : (
+          <BackIcon src={backButtonImg} onClick={handleBackButtonClick} />
+        )}
+        <MainTitle>{title}</MainTitle>
+        <SearchIcon
+          isHidden={isSearch}
+          src={search}
+          onClick={handleSearchButtonClick}
+        />
+        <LogoutButton isHidden={isLogout} onClick={handleLogoutButtonClick}>
+          로그아웃
+        </LogoutButton>
+        <SaveButton isHidden={isSave} onClick={handleSaveButtonClick}>
+          저장
+        </SaveButton>
+        <EditWrapper isHidden={isEdit}>
+          <CorrectButton onClick={handleCorrectButtonClick}>수정</CorrectButton>
+          <Separator />
+          <DeleteButton onClick={handleDeleteButtonClick}>삭제</DeleteButton>
+        </EditWrapper>
+      </HeaderContainer>
+      <div style={{ height: '60px' }} />
+    </>
   );
 };
 
