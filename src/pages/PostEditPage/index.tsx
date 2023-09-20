@@ -103,7 +103,7 @@ const PostEditPage = () => {
   };
 
   const TextareaProps = {
-    width: `${425 - 40}px`,
+    width: `calc(100% - 20px)`,
     height: '100%',
     borderRadius: '15px',
     fontSize: '16px',
@@ -202,10 +202,13 @@ const PostEditPageTag = styled(Tag)`
     rgba(114, 205, 255, 0.2)
   );
 
+  overflow: hidden;
+  white-space: nowrap;
   font-family: GangwonEdu_OTFBoldA;
   font-style: normal;
   font-weight: 800;
   line-height: normal;
+  font-size: 0.7rem;
 `;
 
 interface PostEditPageTextareaProps {
@@ -231,10 +234,12 @@ const PostEditPageTextarea = styled(Textarea)<PostEditPageTextareaProps>`
 `;
 
 const PostEditPageMainWrapper = styled.div`
+  max-width: 425px;
+  min-height: 500px;
   position: relative;
   top: 25px;
   margin: 0 auto;
-  width: ${425 - 20}px;
+  width: calc(100% - 20px);
   height: calc(100vh - 250px);
   background-color: #f5f9ff;
   display: flex;
