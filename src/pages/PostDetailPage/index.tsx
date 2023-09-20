@@ -98,6 +98,7 @@ const PostDetailPage = () => {
     let title = '';
     let body = '';
     const likeCount = postDetailState?.likes.length;
+    const createAt = getDate(postDetailState.createdAt);
 
     if (titleBody.length > 0) {
       title = JSON.parse(titleBody)['title'];
@@ -112,9 +113,10 @@ const PostDetailPage = () => {
       likeCount,
       comments,
       updateAt,
+      createAt,
     };
   }, [postDetailState]);
-  const { channelName, title, body, author, likeCount, updateAt } =
+  const { channelName, title, body, author, likeCount, createAt } =
     postDetailData;
   return (
     <PostDetailContainer>
@@ -128,7 +130,7 @@ const PostDetailPage = () => {
         body={body}
         author={author}
         likeCount={likeCount}
-        updateAt={updateAt}
+        createAt={createAt}
         isLike={likeState.isLike}
         onLikeClick={toggleLike}
       />
