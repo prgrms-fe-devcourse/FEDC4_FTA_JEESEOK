@@ -56,6 +56,7 @@ const Header = ({
   const handleLogoutButtonClick = () => {
     postLogoutApi();
     localStorage.removeItem('AUTH_TOKEN');
+    navigate('/');
   };
 
   const handleCorrectButtonClick = () => {
