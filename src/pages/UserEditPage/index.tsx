@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { putMyInformation } from '~/api/settings';
-import { getUser, postUserImage } from '~/api/user';
+import { postUserImage } from '~/api/user';
 import UserPhoto from '~/assets/default_profile.svg';
 import Header from '~/components/common/Header';
 import Image from '~/components/common/Image';
@@ -27,28 +27,29 @@ const UserEditPage = () => {
   const userInfo = localStorage.getItem('AUTH_TOKEN');
 
   const { user, token } = JSON.parse(userInfo!);
-  const { fullName, username, _id } = user;
+  const { fullName, username, image } = user;
   const { mbti, introduce } = JSON.parse(fullName);
-  // 새로고침 시 아직 이미지 url이 localStorage에 저장되지 않아 이전 사진이 불러와짐
+
   // localStorage의 사진 url을 저장하는 로직을 완료 버튼을 눌렀을때만 수행하기 위해서는 이 로직이 필요함
-  useEffect(() => {
-    const getUserImage = async (): Promise<void> => {
-      const data = await getUser(_id);
+  // useEffect(() => {
+  //   const getUserImage = async (): Promise<void> => {
+  //     const data = await getUser(_id);
 
-      if ('image' in data) {
-        const { image } = data;
+  //     if ('image' in data) {
+  //       const { image } = data;
 
-        return setEditedImage(image as string);
-      }
-    };
+  //       return setEditedImage(image as string);
+  //     }
+  //   };
 
-    getUserImage();
-  }, [_id]);
+  //   getUserImage();
+  // }, [_id]);
 
   const [editedMbti, setEditedMbti] = useState(mbti);
   const [editedIntroduce, setEditedIntroduce] = useState(introduce);
   const [editedUsername, setEditedUsername] = useState(username);
-  const [editedImage, setEditedImage] = useState<string | null>(null);
+  const [editedImage, setEditedImage] = useState<string | null>(image);
+  const [uploadedImage, setUploadedImage] = useState({});
 
   const MBTI = ['E', 'N', 'F', 'P', 'I', 'S', 'T', 'J'];
 
@@ -115,14 +116,20 @@ const UserEditPage = () => {
     navigate('/user/edit/password');
   };
 
-  const handleImageUploadButtonClick = async (
+  // 저장 버튼 누르기 전 미리보기 기능, api호출을 위한 state변경
+  const handleImageUploadButtonClick = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (e.target.files) {
       const file = e.target.files[0];
-      const { image } = (await postUserImage(file)) as unknown as User;
+      const reader = new FileReader();
 
-      setEditedImage(image || '');
+      reader.onload = () => {
+        setEditedImage(reader.result as string);
+      };
+
+      reader.readAsDataURL(file);
+      setUploadedImage(file);
     }
   };
 
@@ -146,18 +153,31 @@ const UserEditPage = () => {
     }
     const fullName = { mbti: editedMbti, introduce: editedIntroduce };
 
-    const editedUserInfo = (await putMyInformation(
-      JSON.stringify(fullName),
-      editedUsername
-    )) as unknown as User;
+    if (uploadedImage instanceof File) {
+      const { image } = (await postUserImage(uploadedImage)) as unknown as User;
 
-    editedUserInfo.image = editedImage as string;
+      const editedUserInfo = (await putMyInformation(
+        JSON.stringify(fullName),
+        editedUsername
+      )) as unknown as User;
 
-    localStorage.setItem(
-      'AUTH_TOKEN',
-      JSON.stringify({ user: editedUserInfo, token })
-    );
+      editedUserInfo.image = image as string;
 
+      localStorage.setItem(
+        'AUTH_TOKEN',
+        JSON.stringify({ user: editedUserInfo, token })
+      );
+    } else {
+      const editedUserInfo = (await putMyInformation(
+        JSON.stringify(fullName),
+        editedUsername
+      )) as unknown as User;
+
+      localStorage.setItem(
+        'AUTH_TOKEN',
+        JSON.stringify({ user: editedUserInfo, token })
+      );
+    }
     navigate(-1);
   };
 
