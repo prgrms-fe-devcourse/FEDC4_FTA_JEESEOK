@@ -30,21 +30,6 @@ const UserEditPage = () => {
   const { fullName, username, image } = user;
   const { mbti, introduce } = JSON.parse(fullName);
 
-  // localStorage의 사진 url을 저장하는 로직을 완료 버튼을 눌렀을때만 수행하기 위해서는 이 로직이 필요함
-  // useEffect(() => {
-  //   const getUserImage = async (): Promise<void> => {
-  //     const data = await getUser(_id);
-
-  //     if ('image' in data) {
-  //       const { image } = data;
-
-  //       return setEditedImage(image as string);
-  //     }
-  //   };
-
-  //   getUserImage();
-  // }, [_id]);
-
   const [editedMbti, setEditedMbti] = useState(mbti);
   const [editedIntroduce, setEditedIntroduce] = useState(introduce);
   const [editedUsername, setEditedUsername] = useState(username);
