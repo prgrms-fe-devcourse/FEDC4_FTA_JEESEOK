@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { putMyInformation } from '~/api/settings';
 import { getUser, postUserImage } from '~/api/user';
-import UserPhoto from '~/assets/user.svg';
+import UserPhoto from '~/assets/default_profile.svg';
+import Header from '~/components/common/Header';
 import Image from '~/components/common/Image';
-import Input from '~/components/common/Input';
 import Button from '~/pages/UserEditPage/Button';
-import Header from '~/pages/UserEditPage/Header';
+import Input from '~/pages/UserEditPage/Input';
 import Textarea from '~/pages/UserEditPage/Textarea';
+import plus from '~/pages/UserEditPage/assets/plus.svg';
 import {
   EditPageContainer,
   MainPageContainer,
@@ -50,8 +51,9 @@ const UserEditPage = () => {
     const buttonStyle = {
       width: '50px',
       height: '50px',
-      backgroundColor: isActive ? 'darkblue' : 'lightblue', // 활성일 때와 비활성일 때 배경색 변경
-      color: isActive ? 'white' : 'black', // 텍스트 색상 변경
+      borderRadius: '10px',
+      backgroundColor: isActive ? '#E6EFFF' : '', // 활성일 때와 비활성일 때 배경색 변경
+      color: isActive ? 'white' : '', // 텍스트 색상 변경
     };
 
     const handleMbtiButtonClick = () => {
@@ -145,7 +147,8 @@ const UserEditPage = () => {
       <Header
         isLogo={false}
         title={'내 정보 수정'}
-        onClick={handleCompleteEditButton}
+        isSave={true}
+        handleSaveButtonClick={handleCompleteEditButton}
       />
       <MainPageContainer>
         <div style={{ position: 'relative', width: '150px', height: '150px' }}>
@@ -174,37 +177,59 @@ const UserEditPage = () => {
               left: '110px',
               width: '40px',
               height: '40px',
-              background: 'skyblue',
+              background: '#FCCBF3',
               borderRadius: '20px',
               border: 'none',
               cursor: 'pointer',
-              fontSize: '20px',
+              fontSize: '50px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            +
+            <img src={plus} />
           </button>
         </div>
 
-        <div style={{ width: '100%' }}>
+        <div
+          style={{
+            width: '100%',
+            height: '40px',
+            borderRadius: '10px',
+            backgroundColor: '#E4ECFE',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
           <Input
             id={'username'}
             value={editedUsername}
             width={'100%'}
-            height={40}
+            height={'100%'}
             placeHolder={'닉네임'}
+            background={'#E4ECFE'}
             type={'text'}
+            border={'none'}
             onChange={handleInputChange}
             onClick={handleInputCancelButtonClick}
           />
         </div>
-
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            width: '100%',
+          }}
+        >
+          <span>나의 MBTI</span>
+        </div>
         <MbtiForm>{MBTIButtons}</MbtiForm>
         <div style={{ width: '100%' }}>
           <Textarea
-            value={editedIntroduce}
+            value={editedIntroduce || ''}
             width={'100%'}
             height={'150px'}
-            text={''}
             borderRadius={'10px'}
             fontSize={'14px'}
             scrollBarWidth={0}
