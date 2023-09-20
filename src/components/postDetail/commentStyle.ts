@@ -5,7 +5,8 @@ export const CommentContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 404px;
+  width: 100%;
+  max-width: 404px;
   border-radius: 20px;
   background: #f5f9ff;
   border-top: 1px solid #ffffff;
