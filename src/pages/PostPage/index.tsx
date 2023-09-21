@@ -4,15 +4,9 @@ import { getChannelPost } from '~/api/post';
 import Header from '~/components/common/Header';
 import Loading from '~/components/common/Loading';
 import PostCardList from '~/components/post/PostCardList';
+import { CHANNEL_ID } from '~/constants/channelId';
 import { Post } from '~/types';
 import TagList from './TagList';
-
-const CHANNEL_ID = {
-  JOB: '64f57dc874128417c268916c',
-  LOVE: '64f57dd474128417c2689170',
-  RELATIONSHIP: '64f96db08a4e9a3147d9117a',
-  MONEY: '64f96d8e8a4e9a3147d91176',
-} as const;
 
 const TAG = 'tag';
 const OFFSET = 0;
