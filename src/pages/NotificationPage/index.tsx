@@ -74,6 +74,7 @@ const NotificationPageBtn = styled(Button)`
   right: 20px;
   font-family: 'ONE-Mobile-Title';
   font-size: 16px;
+  white-space: nowrap;
   color: rgba(47, 47, 104, 0.8);
   background-color: rgba(252, 203, 243, 1);
   width: 120px;
