@@ -77,6 +77,7 @@ export interface Notification {
   post: string | null;
   follow?: string;
   comment?: Comment;
+  like?: Like;
   message?: string;
   createdAt: string;
   updatedAt: string;

@@ -18,7 +18,12 @@ const NotificationPage = () => {
       navigate('/');
       return;
     }
-    setNotifications(isAuth.notifications);
+
+    setNotifications(
+      isAuth.notifications.filter(
+        (notification) => !!notification.like || !!notification.comment
+      )
+    );
   };
 
   scrollTo(0, 0);

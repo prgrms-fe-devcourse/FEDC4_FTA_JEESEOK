@@ -26,10 +26,7 @@ const NotificationCard = ({
     }
   };
 
-  const isLike = !like;
-  const isComment = !comment;
-
-  return !isLike || !isComment ? (
+  return (
     <NotificationCardContainer onClick={handleNotificationCardClick}>
       <MessageContainer>
         {like && (
@@ -43,8 +40,6 @@ const NotificationCard = ({
       </MessageContainer>
       <DateContainer>{getKoreaTimeFromNow(createdAt)}</DateContainer>
     </NotificationCardContainer>
-  ) : (
-    <></>
   );
 };
 
