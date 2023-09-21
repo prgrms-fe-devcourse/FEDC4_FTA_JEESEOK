@@ -94,7 +94,9 @@ export const getUserPost: getUserPost = async (authorId, offset, limit) => {
 export const writePost: writePost = async (title, image, channelId) => {
   const formData = new FormData();
   formData.append('title', title);
-  formData.append('image', image);
+  if (image) {
+    formData.append('image', image);
+  }
   formData.append('channelId', channelId);
 
   const res = await request.post('/posts/create', formData);
