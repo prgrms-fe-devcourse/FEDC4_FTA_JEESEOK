@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getChannelPost } from '~/api/post';
 import Header from '~/components/common/Header';
+import Loading from '~/components/common/Loading';
 import PostCardList from '~/components/post/PostCardList';
 import { Post } from '~/types';
 import TagList from './TagList';
@@ -21,10 +22,12 @@ type Tag = keyof typeof CHANNEL_ID | 'all' | null;
 
 const PostPage = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const getPosts = async () => {
+      setLoading(true);
       const tag = searchParams.get(TAG) as Tag;
 
       if (!tag || tag === 'all') {
@@ -44,6 +47,7 @@ const PostPage = () => {
           .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
         setPosts(allPosts);
+        setLoading(false);
 
         return;
       }
@@ -51,6 +55,7 @@ const PostPage = () => {
       const posts = await getChannelPost(CHANNEL_ID[tag], OFFSET, LIMIT);
 
       if (posts) setPosts(posts);
+      setLoading(false);
     };
 
     setTimeout(getPosts, 100);
@@ -64,7 +69,7 @@ const PostPage = () => {
   return (
     <div>
       <Header isSearch />
-      <TagList onClick={handleTagClick} />
+      {loading ? <Loading isLoading /> : <TagList onClick={handleTagClick} />}
       <PostCardList posts={posts} />
     </div>
   );
