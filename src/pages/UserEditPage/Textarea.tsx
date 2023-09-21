@@ -13,13 +13,11 @@ interface TextareaStyleProps {
 
 interface TextareaProps
   extends HTMLAttributes<HTMLTextAreaElement>,
-    TextareaStyleProps {
-  text: string;
-}
+    TextareaStyleProps {}
 
 const TextareaComponent = styled('textarea')<TextareaStyleProps>`
   resize: none;
-  overflow: scroll;
+  overflow-y: scroll;
   &:focus {
     outline: none;
   }
@@ -39,7 +37,6 @@ const TextareaComponent = styled('textarea')<TextareaStyleProps>`
 
 const Textarea = ({
   value,
-  text,
   width,
   height,
   borderRadius,
@@ -58,9 +55,7 @@ const Textarea = ({
       fontSize={fontSize}
       scrollBarWidth={scrollBarWidth}
       scrollBarThumbColor={scrollBarThumbColor}
-    >
-      {text}
-    </TextareaComponent>
+    ></TextareaComponent>
   );
 };
 

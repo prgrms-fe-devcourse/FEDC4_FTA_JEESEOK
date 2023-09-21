@@ -1,17 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { putMyInformation } from '~/api/settings';
-import { getUser, postUserImage } from '~/api/user';
-import UserPhoto from '~/assets/user.svg';
+import { postUserImage } from '~/api/user';
+import UserPhoto from '~/assets/default_profile.svg';
+import Header from '~/components/common/Header';
 import Image from '~/components/common/Image';
-import Input from '~/components/common/Input';
 import Button from '~/pages/UserEditPage/Button';
-import Header from '~/pages/UserEditPage/Header';
+import Input from '~/pages/UserEditPage/Input';
 import Textarea from '~/pages/UserEditPage/Textarea';
+import plus from '~/pages/UserEditPage/assets/plus.svg';
 import {
   EditPageContainer,
+  EditPasswordButtonContainer,
+  ImageContainer,
+  InputContainer,
   MainPageContainer,
   MbtiForm,
+  MbtiIntroduceSpanContainer,
+  TextareaContainer,
+  UploadImageButton,
 } from '~/pages/UserEditPage/style';
 import { User } from '~/types';
 
@@ -20,38 +27,38 @@ const UserEditPage = () => {
   const userInfo = localStorage.getItem('AUTH_TOKEN');
 
   const { user, token } = JSON.parse(userInfo!);
-  const { fullName, username, _id } = user;
+  const { fullName, username, image } = user;
   const { mbti, introduce } = JSON.parse(fullName);
-  // 새로고침 시 아직 이미지 url이 localStorage에 저장되지 않아 이전 사진이 불러와짐
-  // localStorage의 사진 url을 저장하는 로직을 완료 버튼을 눌렀을때만 수행하기 위해서는 이 로직이 필요함
-  useEffect(() => {
-    const getUserImage = async (): Promise<void> => {
-      const data = await getUser(_id);
-
-      if ('image' in data) {
-        const { image } = data;
-
-        return setEditedImage(image as string);
-      }
-    };
-
-    getUserImage();
-  }, [_id]);
 
   const [editedMbti, setEditedMbti] = useState(mbti);
   const [editedIntroduce, setEditedIntroduce] = useState(introduce);
   const [editedUsername, setEditedUsername] = useState(username);
-  const [editedImage, setEditedImage] = useState<string | null>(null);
+  const [editedImage, setEditedImage] = useState<string | null>(image);
+  const [uploadedImage, setUploadedImage] = useState({});
 
   const MBTI = ['E', 'N', 'F', 'P', 'I', 'S', 'T', 'J'];
 
   const MBTIButtons = MBTI.map((alphabet, index) => {
     const isActive = editedMbti.includes(alphabet);
     const buttonStyle = {
-      width: '50px',
-      height: '50px',
-      backgroundColor: isActive ? 'darkblue' : 'lightblue', // 활성일 때와 비활성일 때 배경색 변경
-      color: isActive ? 'white' : 'black', // 텍스트 색상 변경
+      width: '55px',
+      height: '55px',
+      fontSize: '30px',
+      fontFamily: 'Cafe24Font',
+      borderRadius: '10px',
+      padding: '5px 0 0 0',
+      background: isActive
+        ? alphabet === 'I' || alphabet === 'E'
+          ? 'linear-gradient(45deg, #E6D1F7, #DDDAF6)'
+          : alphabet === 'S' || alphabet === 'N'
+          ? 'linear-gradient(45deg, #E0DBF7, #D6DAF7,#D2DAF8)'
+          : alphabet === 'T' || alphabet === 'F'
+          ? 'linear-gradient(45deg, #D7DBF8, #CDDAF8,#C5DAF9)'
+          : alphabet === 'P' || alphabet === 'J'
+          ? 'linear-gradient(45deg, #CCDCF9, #C2DCF9,#BCDCFA)'
+          : ''
+        : '#E6EFFF',
+      color: '#FFFFFF',
     };
 
     const handleMbtiButtonClick = () => {
@@ -69,8 +76,8 @@ const UserEditPage = () => {
     return (
       <Button
         children={alphabet}
-        width={50}
-        height={50}
+        width={55}
+        height={55}
         key={index}
         onClick={handleMbtiButtonClick}
         style={buttonStyle}
@@ -94,14 +101,20 @@ const UserEditPage = () => {
     navigate('/user/edit/password');
   };
 
-  const handleImageUploadButtonClick = async (
+  // 저장 버튼 누르기 전 미리보기 기능, api호출을 위한 state변경
+  const handleImageUploadButtonClick = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (e.target.files) {
       const file = e.target.files[0];
-      const { image } = (await postUserImage(file)) as unknown as User;
+      const reader = new FileReader();
 
-      setEditedImage(image);
+      reader.onload = () => {
+        setEditedImage(reader.result as string);
+      };
+
+      reader.readAsDataURL(file);
+      setUploadedImage(file);
     }
   };
 
@@ -125,18 +138,31 @@ const UserEditPage = () => {
     }
     const fullName = { mbti: editedMbti, introduce: editedIntroduce };
 
-    const editedUserInfo = (await putMyInformation(
-      JSON.stringify(fullName),
-      editedUsername
-    )) as unknown as User;
+    if (uploadedImage instanceof File) {
+      const { image } = (await postUserImage(uploadedImage)) as unknown as User;
 
-    editedUserInfo.image = editedImage as string;
+      const editedUserInfo = (await putMyInformation(
+        JSON.stringify(fullName),
+        editedUsername
+      )) as unknown as User;
 
-    localStorage.setItem(
-      'AUTH_TOKEN',
-      JSON.stringify({ user: editedUserInfo, token })
-    );
+      editedUserInfo.image = image as string;
 
+      localStorage.setItem(
+        'AUTH_TOKEN',
+        JSON.stringify({ user: editedUserInfo, token })
+      );
+    } else {
+      const editedUserInfo = (await putMyInformation(
+        JSON.stringify(fullName),
+        editedUsername
+      )) as unknown as User;
+
+      localStorage.setItem(
+        'AUTH_TOKEN',
+        JSON.stringify({ user: editedUserInfo, token })
+      );
+    }
     navigate(-1);
   };
 
@@ -145,18 +171,19 @@ const UserEditPage = () => {
       <Header
         isLogo={false}
         title={'내 정보 수정'}
-        onClick={handleCompleteEditButton}
+        isSave={true}
+        handleSaveButtonClick={handleCompleteEditButton}
       />
       <MainPageContainer>
-        <div style={{ position: 'relative', width: '150px', height: '150px' }}>
+        <ImageContainer>
           <label htmlFor="fileInput">
             <Image
               src={editedImage ? editedImage : UserPhoto}
               shape={'circle'}
-              width={150}
-              height={150}
+              width={110}
+              height={110}
               mode={'cover'}
-              style={{ backgroundColor: '#DFE7FF', cursor: 'pointer' }}
+              style={{ backgroundColor: '#D9E4FB', cursor: 'pointer' }}
             />
           </label>
           <input
@@ -165,64 +192,72 @@ const UserEditPage = () => {
             onChange={handleImageUploadButtonClick}
             style={{ display: 'none' }}
           />
-          <button
-            onClick={handlePlusButtonClick}
-            style={{
-              position: 'absolute',
-              bottom: '0',
-              right: '0',
-              left: '110px',
-              width: '40px',
-              height: '40px',
-              background: 'skyblue',
-              borderRadius: '20px',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '20px',
-            }}
-          >
-            +
-          </button>
-        </div>
+          <UploadImageButton onClick={handlePlusButtonClick}>
+            <img src={plus} />
+          </UploadImageButton>
+        </ImageContainer>
 
-        <div style={{ width: '100%' }}>
+        <InputContainer>
           <Input
             id={'username'}
             value={editedUsername}
             width={'100%'}
-            height={40}
+            height={'100%'}
             placeHolder={'닉네임'}
+            background={'#E4ECFE'}
             type={'text'}
+            border={'none'}
             onChange={handleInputChange}
             onClick={handleInputCancelButtonClick}
           />
-        </div>
+        </InputContainer>
+
+        <MbtiIntroduceSpanContainer>
+          <span>나의 MBTI</span>
+        </MbtiIntroduceSpanContainer>
 
         <MbtiForm>{MBTIButtons}</MbtiForm>
-        <div style={{ width: '100%' }}>
+
+        <MbtiIntroduceSpanContainer>
+          <span>자기소개</span>
+        </MbtiIntroduceSpanContainer>
+
+        <TextareaContainer>
           <Textarea
-            value={editedIntroduce}
-            width={'100%'}
-            height={'150px'}
-            text={''}
+            value={editedIntroduce || ''}
+            width={'90%'}
+            height={'100%'}
             borderRadius={'10px'}
-            fontSize={'14px'}
-            scrollBarWidth={0}
-            scrollBarThumbColor={''}
-            style={{ padding: '10px', boxSizing: 'border-box' }}
+            fontSize={'16px'}
+            scrollBarWidth={4}
+            scrollBarThumbColor={'#FFFFFF'}
+            style={{
+              boxSizing: 'border-box',
+              border: 'none',
+              backgroundColor: '#E4ECFE',
+              color: '#2F2F68',
+              fontFamily: 'GangwonEdu_OTFBoldA',
+              padding: '10px',
+            }}
             placeholder={'자기소개'}
             onChange={handleTextareaChange}
           />
-        </div>
+        </TextareaContainer>
 
-        <div style={{ width: '100%' }}>
+        <EditPasswordButtonContainer>
           <Button
             children={'비밀번호 변경'}
-            width={95}
+            width={130}
             height={30}
             onClick={handleChangePasswordButtonClick}
+            style={{
+              color: '#2F2F68',
+              fontSize: '12px',
+              backgroundColor: '#E4ECFE',
+              borderRadius: '10px',
+            }}
           />
-        </div>
+        </EditPasswordButtonContainer>
       </MainPageContainer>
     </EditPageContainer>
   );
