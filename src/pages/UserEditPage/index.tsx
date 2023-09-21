@@ -5,6 +5,7 @@ import { postUserImage } from '~/api/user';
 import UserPhoto from '~/assets/default_profile.svg';
 import Header from '~/components/common/Header';
 import Image from '~/components/common/Image';
+import Loading from '~/components/common/Loading';
 import Button from '~/pages/UserEditPage/Button';
 import Input from '~/pages/UserEditPage/Input';
 import Textarea from '~/pages/UserEditPage/Textarea';
@@ -35,6 +36,7 @@ const UserEditPage = () => {
   const [editedUsername, setEditedUsername] = useState(username);
   const [editedImage, setEditedImage] = useState<string | null>(image);
   const [uploadedImage, setUploadedImage] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const MBTI = ['E', 'N', 'F', 'P', 'I', 'S', 'T', 'J'];
 
@@ -139,6 +141,8 @@ const UserEditPage = () => {
     const fullName = { mbti: editedMbti, introduce: editedIntroduce };
 
     if (uploadedImage instanceof File) {
+      setIsLoading(true);
+
       const { image } = (await postUserImage(uploadedImage)) as unknown as User;
 
       const editedUserInfo = (await putMyInformation(
@@ -152,7 +156,11 @@ const UserEditPage = () => {
         'AUTH_TOKEN',
         JSON.stringify({ user: editedUserInfo, token })
       );
+
+      setIsLoading(false);
     } else {
+      setIsLoading(true);
+
       const editedUserInfo = (await putMyInformation(
         JSON.stringify(fullName),
         editedUsername
@@ -162,12 +170,15 @@ const UserEditPage = () => {
         'AUTH_TOKEN',
         JSON.stringify({ user: editedUserInfo, token })
       );
+
+      setIsLoading(false);
     }
     navigate(-1);
   };
 
   return (
     <EditPageContainer>
+      <Loading isLoading={isLoading} />
       <Header
         isLogo={false}
         title={'내 정보 수정'}
