@@ -21,6 +21,8 @@ const NotificationPage = () => {
     setNotifications(isAuth.notifications);
   };
 
+  scrollTo(0, 0);
+
   useEffect(() => {
     getAuthCheck();
   }, [navigate]);
