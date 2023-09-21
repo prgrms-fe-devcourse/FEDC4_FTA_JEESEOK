@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { searchAll } from '~/api/search';
 import TopNavBtn from '~/components/common/TopNavBtn';
@@ -7,14 +7,15 @@ import UserCard from '~/components/search/UserCard';
 import { Post, User } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
 
-type SetCard = (value: (Post | User)[]) => void;
+type SetPostCard = Dispatch<SetStateAction<Post[]>>;
+type SetUserCard = Dispatch<SetStateAction<User[]>>;
 
 interface ContentProps {
   word: string;
   postArr: Post[];
   userArr: User[];
-  setPostArr: SetCard;
-  setUserArr: SetCard;
+  setPostArr: SetPostCard;
+  setUserArr: SetUserCard;
 }
 
 const ContentWrapper = styled.div`
@@ -78,8 +79,8 @@ const Content = ({
         const res = await searchAll(`${word}`);
 
         if (res) {
-          setPostArr(res.filter((post) => 'author' in post));
-          setUserArr(res.filter((user) => 'username' in user));
+          setPostArr(res.filter((post) => 'author' in post) as Post[]);
+          setUserArr(res.filter((user) => 'username' in user) as User[]);
         }
       }, 300);
     } else {
