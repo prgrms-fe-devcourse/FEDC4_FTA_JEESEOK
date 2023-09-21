@@ -56,6 +56,7 @@ const Header = ({
   const handleLogoutButtonClick = () => {
     postLogoutApi();
     localStorage.removeItem('AUTH_TOKEN');
+    navigate('/');
   };
 
   const handleCorrectButtonClick = () => {
@@ -80,8 +81,8 @@ const Header = ({
     <>
       <HeaderContainer>
         {isLogo ? (
-          <LogoWrapper>
-            <LogoIcon src={logoImg} onClick={handleLogoClick} />
+          <LogoWrapper onClick={handleLogoClick}>
+            <LogoIcon src={logoImg} />
             <LogoTitle>FTA</LogoTitle>
           </LogoWrapper>
         ) : (

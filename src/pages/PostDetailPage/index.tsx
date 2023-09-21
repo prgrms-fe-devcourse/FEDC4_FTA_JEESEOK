@@ -39,7 +39,6 @@ const PostDetailPage = () => {
     if (postId) {
       const postDetailResult = await readPost(postId);
       setPostDetailState(postDetailResult);
-      console.log(postDetailResult);
     }
   };
 

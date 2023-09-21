@@ -15,13 +15,13 @@ const ButtonWrapper = styled.button<{ isActive: boolean }>`
   border: none;
   outline: none;
   flex-shrink: 0;
-  padding: 20px 50px;
+  padding: 20px 30px;
   border-radius: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #f8fbff;
-  font-size: 21px;
+  font-size: 18px;
   font-family: 'ONE-Mobile-Title';
   font-weight: 800;
   background: ${({ isActive }) =>

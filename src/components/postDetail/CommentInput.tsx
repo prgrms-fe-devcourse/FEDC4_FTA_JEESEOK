@@ -27,8 +27,13 @@ const CommentInput = ({
 
   const handleInputChange = (value: string) => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      if (textareaRef.current.scrollHeight >= 34) {
+        textareaRef.current.style.height = 'auto';
+        textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      }
+      if (value === '') {
+        textareaRef.current.style.height = `20px`;
+      }
       onChange(value);
     }
   };

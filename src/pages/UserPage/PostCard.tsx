@@ -1,5 +1,5 @@
-import comment from '~/pages/PostPage/assets/comment.svg';
-import heart from '~/pages/PostPage/assets/heart.svg';
+import comment from '~/components/post/assets/comment.svg';
+import heart from '~/components/post/assets/heart.svg';
 import { Post } from '~/types';
 import {
   ChannelContainer,

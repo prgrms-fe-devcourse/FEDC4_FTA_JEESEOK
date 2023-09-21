@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import defaultProfileImg from '~/assets/default_profile.svg';
 import Image from '~/components/common/Image';
-import commentImg from '~/pages/PostPage/assets/comment.svg';
-import heartImg from '~/pages/PostPage/assets/heart.svg';
+import commentImg from '../assets/comment.svg';
+import heartImg from '../assets/heart.svg';
 import {
   Comment,
   CountContainer,

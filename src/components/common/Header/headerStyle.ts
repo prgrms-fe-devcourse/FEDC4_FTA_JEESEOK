@@ -22,12 +22,12 @@ export const LogoWrapper = styled.div`
   align-items: center;
   gap: 5px;
   margin-left: 30px;
+  cursor: pointer;
 `;
 
 export const LogoIcon = styled.img`
   width: 32px;
   height: 24px;
-  cursor: pointer;
 `;
 
 export const LogoTitle = styled.div`
