@@ -31,7 +31,7 @@ import {
   UserInfoContainer,
   UserPageContainer,
 } from '~/pages/UserPage/style';
-import { Post, User } from '~/types';
+import { MyPost, User } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
 
 /** userId값과 localStorage의 id 값과 비교 후 같다면 마이페이지를 보여주고 아니라면 유저 정보 페이지 보여주고 */
@@ -40,7 +40,7 @@ interface InitUserInfo {
   introduce: string;
   image: string | undefined;
   username: string;
-  posts: Post[];
+  posts: MyPost[];
 }
 
 const UserPage = () => {
@@ -51,7 +51,7 @@ const UserPage = () => {
     introduce: '',
     image: '',
     username: '',
-    posts: [] as Post[],
+    posts: [] as MyPost[],
   });
   const [postIsActive, setPostIsActive] = useState(true);
   const [introduceIsActive, setIntroduceIsActive] = useState(false);
@@ -231,6 +231,7 @@ const UserPage = () => {
             </NotExistPostContainer>
           ) : postOrIntroduce === 'post' && posts.length > 0 ? (
             posts.map((item, index) => {
+              console.log(item);
               return (
                 <PostCard
                   _id={item._id}
