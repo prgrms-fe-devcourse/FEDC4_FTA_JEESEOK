@@ -14,9 +14,8 @@ export const FooterContainer = styled.div`
   max-width: 425px;
   height: 80px;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 65px;
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -32,10 +31,12 @@ interface FooterButtonProps {
 }
 
 export const FooterButton = styled.button<FooterButtonProps>`
+  flex-shrink: 0;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   border: none;
   border-radius: 50%;
   background-color: ${({ backgroundColor }) => backgroundColor};
+  box-shadow: 10px 11px 25px -9px rgba(199, 199, 199, 0.75);
   cursor: pointer;
 `;
