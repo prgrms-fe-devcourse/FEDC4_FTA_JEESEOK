@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import Image from '~/components/common/Image';
+import { CreateButton, FooterButton, FooterContainer } from './FooterStyle';
 import {
   createImg,
   loginImg,
@@ -8,7 +9,6 @@ import {
   notificationImg,
   signupImg,
 } from './assets';
-import { CreateButton, FooterButton, FooterContainer } from './style';
 
 const Footer = () => {
   const navigate = useNavigate();
