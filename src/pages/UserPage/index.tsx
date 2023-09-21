@@ -35,11 +35,18 @@ import { Post, User } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
 
 /** userId값과 localStorage의 id 값과 비교 후 같다면 마이페이지를 보여주고 아니라면 유저 정보 페이지 보여주고 */
+interface InitUserInfo {
+  mbti: string;
+  introduce: string;
+  image: string | undefined;
+  username: string;
+  posts: Post[];
+}
 
 const UserPage = () => {
   const [isMyInfo, setIsMyInfo] = useState(false);
   const [postOrIntroduce, setPostOrIntroduce] = useState('post');
-  const [userInfo, setUserInfo] = useState({
+  const [userInfo, setUserInfo] = useState<InitUserInfo>({
     mbti: '',
     introduce: '',
     image: '',
