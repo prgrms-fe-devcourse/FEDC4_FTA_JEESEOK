@@ -2,32 +2,29 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getChannelPost } from '~/api/post';
 import Header from '~/components/common/Header';
+import Loading from '~/components/common/Loading';
 import PostCardList from '~/components/post/PostCardList';
+import { CHANNEL_ID } from '~/constants/channelId';
 import { Post } from '~/types';
 import TagList from './TagList';
-
-const CHANNEL_ID = Object.freeze({
-  love: '64f57dd474128417c2689170',
-  relationship: '64f96db08a4e9a3147d9117a',
-  job: '64f57dc874128417c268916c',
-  money: '64f96d8e8a4e9a3147d91176',
-});
 
 const TAG = 'tag';
 const OFFSET = 0;
 const LIMIT = 10;
 
-type Tag = keyof typeof CHANNEL_ID | 'all' | null;
+type Tag = keyof typeof CHANNEL_ID | 'ALL' | null;
 
 const PostPage = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const getPosts = async () => {
-      const tag = searchParams.get(TAG) as Tag;
+      setLoading(true);
+      const tag = searchParams.get(TAG)?.toUpperCase() as Tag;
 
-      if (!tag || tag === 'all') {
+      if (!tag || tag === 'ALL') {
         const allPosts = (
           await Promise.allSettled(
             Object.values(CHANNEL_ID).map((id) =>
@@ -44,6 +41,7 @@ const PostPage = () => {
           .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
         setPosts(allPosts);
+        setLoading(false);
 
         return;
       }
@@ -51,6 +49,7 @@ const PostPage = () => {
       const posts = await getChannelPost(CHANNEL_ID[tag], OFFSET, LIMIT);
 
       if (posts) setPosts(posts);
+      setLoading(false);
     };
 
     setTimeout(getPosts, 100);
@@ -64,7 +63,7 @@ const PostPage = () => {
   return (
     <div>
       <Header isSearch />
-      <TagList onClick={handleTagClick} />
+      {loading ? <Loading isLoading /> : <TagList onClick={handleTagClick} />}
       <PostCardList posts={posts} />
     </div>
   );
