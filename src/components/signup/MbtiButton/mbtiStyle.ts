@@ -5,6 +5,7 @@ export const MbtiContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   justify-items: center;
+  width: 85%;
   height: 133px;
 `;
 
