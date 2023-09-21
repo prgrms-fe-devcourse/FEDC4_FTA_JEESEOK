@@ -55,7 +55,7 @@ export interface Post {
 export interface Like {
   _id: string;
   user: string;
-  post: Post;
+  post: string;
   createdAt: string;
   updatedAt: string;
 }
