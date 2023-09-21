@@ -30,7 +30,7 @@ const MbtiButton = ({ setSignUpState }: MbtiButtonProps) => {
   const [mbtiStyle, setMbtiStyle] = useState(INIT_MBTI_STYLE);
   const mbtiArr: MbtiKey[] = ['E', 'N', 'F', 'P', 'I', 'S', 'T', 'J'];
 
-  const changeMbtiStyle = (item: string, isSelect: boolean) => {
+  const changeMbtiStyle = (item: MbtiKey, isSelect: boolean) => {
     setMbtiStyle((prevState) => ({
       ...prevState,
       [item]: {
@@ -44,7 +44,7 @@ const MbtiButton = ({ setSignUpState }: MbtiButtonProps) => {
     const isSelect = !mbtiStyle[item].isSelect;
 
     if (isSelect) {
-      const pairs = {
+      const pairs: Record<MbtiKey, MbtiKey> = {
         E: 'I',
         I: 'E',
         N: 'S',

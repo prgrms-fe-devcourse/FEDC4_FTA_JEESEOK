@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { searchAll } from '~/api/search';
 import Loading from '~/components/common/Loading';
@@ -8,12 +8,15 @@ import UserCard from '~/components/search/UserCard';
 import { Post, User } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
 
+type SetPostCard = Dispatch<SetStateAction<Post[]>>;
+type SetUserCard = Dispatch<SetStateAction<User[]>>;
+
 interface ContentProps {
   word: string;
   postArr: Post[];
   userArr: User[];
-  setPostArr: (value: Post[]) => void;
-  setUserArr: (value: User[]) => void;
+  setPostArr: SetPostCard;
+  setUserArr: SetUserCard;
 }
 
 const ContentWrapper = styled.div`

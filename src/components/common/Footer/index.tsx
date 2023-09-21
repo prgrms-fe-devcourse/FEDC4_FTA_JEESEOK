@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import Image from '~/components/common/Image';
+import { CreateButton, FooterButton, FooterContainer } from './FooterStyle';
 import {
   createImg,
   loginImg,
@@ -8,7 +9,6 @@ import {
   notificationImg,
   signupImg,
 } from './assets';
-import { CreateButton, FooterButton, FooterContainer } from './style';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -59,6 +59,9 @@ const Footer = () => {
               width={'70px'}
               height={'70px'}
               backgroundColor={'transparent'}
+              style={{
+                boxShadow: 'none',
+              }}
               onClick={() => handleFooterClick(page)}
             >
               <Image width={50} height={40} src={image} alt={name} />
@@ -68,7 +71,7 @@ const Footer = () => {
               key={page}
               width={'45px'}
               height={'45px'}
-              backgroundColor={'white'}
+              backgroundColor={'#F5F9FF'}
               onClick={() => handleFooterClick(page)}
             >
               <Image width={20} height={20} src={image} alt={name} />

@@ -1,5 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/react';
-import CommentCard from '~/components/common/CommentCard';
+import CommentCard from '~/components/postDetail/CommentCard';
+import { User } from '~/types';
 
 const meta = {
   title: 'Component/CommentCard',
@@ -22,14 +23,15 @@ const commentData = {
 };
 
 export const Default: Story = () => {
-  const { _id, comment, author, post, createdAt } = commentData;
+  const { _id, comment, author, createdAt } = commentData;
   return (
     <CommentCard
       _id={_id}
       comment={comment}
-      author={author}
-      post={post}
+      author={author as User}
       createdAt={createdAt}
+      isLogin={false}
+      onDeleteComment={() => {}}
     />
   );
 };

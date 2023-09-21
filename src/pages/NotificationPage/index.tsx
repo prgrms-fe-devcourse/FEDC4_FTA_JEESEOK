@@ -8,10 +8,6 @@ import Header from '~/components/common/Header';
 import { Notification } from '~/types';
 import NotificationCardList from './NotificationCardList';
 
-const NotificationPageWrapper = styled.div`
-  width;100%
-  `;
-
 const NotificationPage = () => {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -22,8 +18,15 @@ const NotificationPage = () => {
       navigate('/');
       return;
     }
-    setNotifications(isAuth.notifications);
+
+    setNotifications(
+      isAuth.notifications.filter(
+        (notification) => !!notification.like || !!notification.comment
+      )
+    );
   };
+
+  scrollTo(0, 0);
 
   useEffect(() => {
     getAuthCheck();
@@ -60,12 +63,18 @@ const NotificationPage = () => {
 
 export default NotificationPage;
 
+const NotificationPageWrapper = styled.div`
+  max-width: 425px;
+  width: 100%;
+`;
+
 const NotificationPageBtn = styled(Button)`
   position: absolute;
   bottom: 90px;
   right: 20px;
   font-family: 'ONE-Mobile-Title';
   font-size: 16px;
+  white-space: nowrap;
   color: rgba(47, 47, 104, 0.8);
   background-color: rgba(252, 203, 243, 1);
   width: 120px;

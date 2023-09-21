@@ -1,6 +1,6 @@
 import comment from '~/components/post/assets/comment.svg';
 import heart from '~/components/post/assets/heart.svg';
-import { Post } from '~/types';
+import { MyPost } from '~/types';
 import {
   ChannelContainer,
   ChannelName,
@@ -15,7 +15,7 @@ import {
 } from './PostCardStyle';
 
 type PostCardProps = Pick<
-  Post,
+  MyPost,
   '_id' | 'title' | 'channel' | 'createdAt' | 'likes' | 'comments'
 > & {
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -42,7 +42,9 @@ const PostCard = ({
       <TitleCountArea>
         <ChannelTitleContainer>
           <ChannelContainer>
-            <ChannelName>{CHANNEL_ID[channel]}</ChannelName>
+            <ChannelName>
+              {CHANNEL_ID[channel as keyof typeof CHANNEL_ID]}
+            </ChannelName>
           </ChannelContainer>
           <Title>{title}</Title>
         </ChannelTitleContainer>

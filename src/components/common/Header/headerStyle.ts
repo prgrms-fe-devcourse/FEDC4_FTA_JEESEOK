@@ -50,6 +50,7 @@ export const MainTitle = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  white-space: nowrap;
 `;
 
 type HiddenProps = {
@@ -72,6 +73,7 @@ const ButtonStyled = styled(Button)`
   font-family: 'ONE-Mobile-Title';
   font-weight: 400;
   font-size: 15px;
+  white-space: nowrap;
   cursor: pointer;
 `;
 

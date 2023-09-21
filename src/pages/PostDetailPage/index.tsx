@@ -51,9 +51,21 @@ const PostDetailPage = () => {
     }
 
     if (isLike) {
-      await deleteLike({ likeId });
+      const data = await deleteLike({ likeId });
+      const likes = postDetailState.likes.filter(
+        (like) => like._id !== data._id
+      );
+      setPostDetailState((prevState) => ({
+        ...prevState,
+        likes: [...likes],
+      }));
     } else {
       const data = await postLike({ postId });
+      setPostDetailState((prevState) => ({
+        ...prevState,
+        likes: [...prevState.likes, data],
+      }));
+
       await postNotification({
         notificationType: LIKE,
         notificationTypeId: data._id,
@@ -61,8 +73,6 @@ const PostDetailPage = () => {
         postId: postId,
       });
     }
-
-    await postDetailApiCall();
   };
 
   //게시글 디테일 API 콜

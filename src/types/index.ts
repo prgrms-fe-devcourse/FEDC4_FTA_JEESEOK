@@ -1,3 +1,15 @@
+export interface MyPost {
+  likes: Like[];
+  comments: Comment[];
+  _id: string;
+  image?: string;
+  imagePublicId?: string;
+  title: string;
+  channel: string;
+  author: string;
+  createdAt: string;
+  updatedAt: string;
+}
 export interface User {
   coverImage?: string;
   image?: string;
@@ -5,7 +17,7 @@ export interface User {
   emailVerified: boolean;
   banned: boolean;
   isOnline: boolean;
-  posts: Post[];
+  posts: MyPost[];
   likes: Like[];
   comments: string[];
   followers: [];
@@ -55,7 +67,7 @@ export interface Post {
 export interface Like {
   _id: string;
   user: string;
-  post: Post;
+  post: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -77,6 +89,7 @@ export interface Notification {
   post: string | null;
   follow?: string;
   comment?: Comment;
+  like?: Like;
   message?: string;
   createdAt: string;
   updatedAt: string;
