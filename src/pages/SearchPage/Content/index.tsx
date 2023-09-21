@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { searchAll } from '~/api/search';
+import Loading from '~/components/common/Loading';
 import TopNavBtn from '~/components/common/TopNavBtn';
 import PostCard from '~/components/post/PostCard';
 import UserCard from '~/components/search/UserCard';
 import { Post, User } from '~/types';
 import { getKoreaTimeFromNow } from '~/utils';
 
-type SetCard = (value: (Post | User)[]) => void;
-
 interface ContentProps {
   word: string;
   postArr: Post[];
   userArr: User[];
-  setPostArr: SetCard;
-  setUserArr: SetCard;
+  setPostArr: (value: Post[]) => void;
+  setUserArr: (value: User[]) => void;
 }
 
 const ContentWrapper = styled.div`
@@ -69,17 +68,24 @@ const Content = ({
   setUserArr,
 }: ContentProps) => {
   const [viewPost, setviewPost] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
 
     if (word) {
-      timer = setTimeout(async () => {
-        const res = await searchAll(`${word}`);
+      setIsLoading(true);
 
-        if (res) {
-          setPostArr(res.filter((post) => 'author' in post));
-          setUserArr(res.filter((user) => 'username' in user));
+      timer = setTimeout(async () => {
+        try {
+          const res = await searchAll(`${word}`);
+
+          if (res) {
+            setPostArr(res.filter((post) => 'author' in post) as Post[]);
+            setUserArr(res.filter((user) => 'username' in user) as User[]);
+          }
+        } finally {
+          setIsLoading(false);
         }
       }, 300);
     } else {
@@ -102,6 +108,7 @@ const Content = ({
     <ContentWrapper>
       {word ? (
         <>
+          {isLoading && <Loading isLoading={isLoading} />}
           <TopNavWrapper>
             <TopNavBtn
               title="게시글"
