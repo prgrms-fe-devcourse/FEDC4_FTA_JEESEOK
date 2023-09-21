@@ -3,15 +3,13 @@ import styled from '@emotion/styled';
 export const UserPageContainer = styled.div`
   max-width: 425px;
   min-width: 375px;
-  height: 100vh;
 `;
 
 export const MainContainer = styled.main`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   width: 100%;
-  height: 100vh;
   color: #2f2f68;
   font-family: 'GangwonEdu_OTFBoldA';
 `;
@@ -31,6 +29,7 @@ export const UserInfo = styled.div<{ isMyInfo: boolean }>`
   align-items: center;
   gap: 20px;
   width: 95%;
+  height: 200px;
   height: ${(props) => (props.isMyInfo ? '' : '60vh')};
   background-color: #f5f9ff;
   border-radius: 20px;
@@ -73,7 +72,7 @@ export const MbtiEditInfoButtonContainer = styled.div<{ isMyInfo: boolean }>`
 `;
 
 export const NickName = styled.span`
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 export const MbtiContainer = styled.div`
@@ -135,19 +134,19 @@ export const PostCardContainer = styled.div`
   align-items: center;
   max-width: 425px;
   min-width: 375px;
-  height: 35%;
+  height: 300px;
   box-sizing: border-box;
 `;
 
 export const NotExistPostContainer = styled.div`
-  height: 100%;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 export const NotExistPost = styled.span`
-  font-size: 20px;
+  font-size: 18px;
 `;
 
 export const IntroduceAreaContainer = styled.div<{ isMyInfo: boolean }>`
@@ -163,7 +162,7 @@ export const IntroduceAreaContainer = styled.div<{ isMyInfo: boolean }>`
 
 export const IntroduceArea = styled.div<{ isMyInfo: boolean }>`
   width: ${(props) => (props.isMyInfo ? '95%' : '100%')};
-  height: ${(props) => (props.isMyInfo ? '95%' : '80%')};
+  height: ${(props) => (props.isMyInfo ? '280px' : '300px')};
   border-radius: 20px;
   padding: 20px 20px;
   box-sizing: border-box;

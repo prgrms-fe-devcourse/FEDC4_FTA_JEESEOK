@@ -37,9 +37,7 @@ import { getKoreaTimeFromNow } from '~/utils';
 /** userId값과 localStorage의 id 값과 비교 후 같다면 마이페이지를 보여주고 아니라면 유저 정보 페이지 보여주고 */
 
 const UserPage = () => {
-  const navigate = useNavigate();
-  const { userId } = useParams();
-  const [isMyInfo, setIsMyInfo] = useState(true);
+  const [isMyInfo, setIsMyInfo] = useState(false);
   const [postOrIntroduce, setPostOrIntroduce] = useState('post');
   const [userInfo, setUserInfo] = useState({
     mbti: '',
@@ -51,10 +49,19 @@ const UserPage = () => {
   const [postIsActive, setPostIsActive] = useState(true);
   const [introduceIsActive, setIntroduceIsActive] = useState(false);
 
-  const storedUserInfo = localStorage.getItem('AUTH_TOKEN');
+  const navigate = useNavigate();
+  const { userId } = useParams();
 
-  const { user } = JSON.parse(storedUserInfo!);
-  const { _id } = user;
+  useEffect(() => {
+    const storedUserInfo = localStorage.getItem('AUTH_TOKEN');
+
+    if (storedUserInfo) {
+      const { user } = JSON.parse(storedUserInfo);
+      const { _id } = user;
+
+      if (_id === userId) setIsMyInfo(true);
+    }
+  }, [userId]);
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -70,13 +77,10 @@ const UserPage = () => {
       }
     };
 
-    if (_id !== userId) setIsMyInfo(false);
-
     getUserInfo();
-  }, [userId, _id]);
+  }, [userId]);
 
   const { mbti, introduce, image, username, posts } = userInfo;
-
   const handleEditButtonClick = () => {
     navigate('/user/edit');
   };
@@ -198,15 +202,15 @@ const UserPage = () => {
 
         <MyInfoButtonContainer style={isMyInfo ? {} : { display: 'none' }}>
           <TopNavBtn
-            width={180}
-            height={48}
+            width={160}
+            height={40}
             title={'게시글'}
             onClick={handlePostButtonClick}
             isActive={postIsActive}
           />
           <TopNavBtn
-            width={180}
-            height={48}
+            width={160}
+            height={40}
             title={'자기소개'}
             onClick={handleIntroduceButtonClick}
             isActive={introduceIsActive}
