@@ -8,10 +8,6 @@ import Header from '~/components/common/Header';
 import { Notification } from '~/types';
 import NotificationCardList from './NotificationCardList';
 
-const NotificationPageWrapper = styled.div`
-  width;100%
-  `;
-
 const NotificationPage = () => {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -59,6 +55,11 @@ const NotificationPage = () => {
 };
 
 export default NotificationPage;
+
+const NotificationPageWrapper = styled.div`
+  max-width: 425px;
+  width: 100%;
+`;
 
 const NotificationPageBtn = styled(Button)`
   position: absolute;

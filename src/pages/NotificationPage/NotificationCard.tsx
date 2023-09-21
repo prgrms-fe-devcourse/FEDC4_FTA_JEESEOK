@@ -31,14 +31,17 @@ const NotificationCard = ({
 
   return !isLike || !isComment ? (
     <NotificationCardContainer onClick={handleNotificationCardClick}>
-      <CountContainer>
-        <UserName>{author.username}님이</UserName>
-        {like && <Text>회원님의 게시글에 공감합니다.</Text>}
-        {comment && <Text>회원님의 게시글에 댓글을 남겼습니다.</Text>}
-      </CountContainer>
-      <DateArea>
-        <CreatedDate>{getKoreaTimeFromNow(createdAt)}</CreatedDate>
-      </DateArea>
+      <MessageContainer>
+        {like && (
+          <Text>{author.username}님이 회원님의 게시글에 공감합니다.</Text>
+        )}
+        {comment && (
+          <Text>
+            {author.username}님이 회원님의 게시글에 댓글을 남겼습니다.
+          </Text>
+        )}
+      </MessageContainer>
+      <DateContainer>{getKoreaTimeFromNow(createdAt)}</DateContainer>
     </NotificationCardContainer>
   ) : (
     <></>
@@ -63,26 +66,20 @@ const NotificationCardContainer = styled.div`
   box-sizing: border-box;
 `;
 
-const CountContainer = styled.div`
-  display: flex;
-  gap: 15px;
+const MessageContainer = styled.div`
+  padding-left: 10px;
+  width: 75%;
+  overflow-x: hidden;
+  white-space: nowrap;
 `;
 
 const Text = styled.div`
-  width: 250px;
   position: relative;
   right: 10px;
-  flex-shrink: 0;
-  background-color: rgba(0, 0, 0, 0);
-  text-overflow: ellipsis;
-`;
-
-const DateArea = styled.div``;
-
-const CreatedDate = styled.div`
   background-color: rgba(0, 0, 0, 0);
 `;
 
-const UserName = styled.div`
-  background-color: rgba(0, 0, 0, 0);
+const DateContainer = styled.div`
+  overflow: hidden;
+  white-space: nowrap;
 `;
