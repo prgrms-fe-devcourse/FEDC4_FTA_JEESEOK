@@ -40,10 +40,9 @@ export const UploadImageButton = styled.button`
   width: 30px;
   height: 30px;
   background: #fccbf3;
-  border-radius: 20px;
+  border-radius: 100%;
   border: none;
   cursor: pointer;
-  font-size: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
