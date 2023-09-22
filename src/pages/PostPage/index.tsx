@@ -4,9 +4,9 @@ import { getChannelPost } from '~/api/post';
 import Header from '~/components/common/Header';
 import Loading from '~/components/common/Loading';
 import PostCardList from '~/components/post/PostCardList';
+import TagList from '~/components/post/TagList';
 import { CHANNEL_ID } from '~/constants/channelId';
 import { Post } from '~/types';
-import TagList from './TagList';
 
 const TAG = 'tag';
 const OFFSET = 0;

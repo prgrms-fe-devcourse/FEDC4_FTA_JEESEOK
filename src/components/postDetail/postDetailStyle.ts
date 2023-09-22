@@ -17,7 +17,11 @@ export const ImgWrapper = styled.div`
   cursor: pointer;
 `;
 
-export const Img = styled.img``;
+export const Img = styled.img`
+  width: 39px;
+  height: 38px;
+  border-radius: 20px;
+`;
 
 export const PostDetailWrapper = styled.div`
   display: flex;
@@ -61,6 +65,7 @@ export const Text = styled.span<TextProps>`
   text-align: ${({ center }) => (center ? 'center' : '')};
   color: ${({ color }) => (color ? color : '#000000')};
   font-family: 'GangwonEdu_OTFBoldA';
+  word-break: break-all;
 `;
 export const TextWrapper = styled.div`
   display: flex;
