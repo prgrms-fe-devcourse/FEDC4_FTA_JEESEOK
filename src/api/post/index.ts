@@ -70,14 +70,16 @@ export const getUserPost: getUserPost = async (authorId, offset, limit) => {
 };
 
 interface writePost {
-  (title: string, image: File, channelId: string): Promise<void | never>;
+  (title: string, image: File | null, channelId: string): Promise<void | never>;
 }
 
 // 특정 채널에 포스트 작성하기
 export const writePost: writePost = async (title, image, channelId) => {
   const formData = new FormData();
   formData.append('title', title);
-  formData.append('image', image);
+  if (image) {
+    formData.append('image', image);
+  }
   formData.append('channelId', channelId);
 
   const res = await request.post('/posts/create', formData);

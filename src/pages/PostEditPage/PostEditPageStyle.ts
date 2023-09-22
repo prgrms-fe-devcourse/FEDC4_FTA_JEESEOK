@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import Tag from '~/pages/PostEditPage/Tag';
+import Tag from '~/components/common/Tag';
 import Textarea from '~/pages/PostEditPage/Textarea';
 
 export const PostEditPageWrapper = styled.div`
