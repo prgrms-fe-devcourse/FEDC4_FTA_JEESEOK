@@ -30,8 +30,11 @@ const UserPasswordPage = () => {
         return;
       }
     };
+
     getAuthCheck();
   }, [navigate]);
+
+  scrollTo(0, 0);
 
   const handleSubmit = (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -219,6 +222,11 @@ const UserPasswordPagePasswordSeeIcon = styled(Button)`
   background-size: 100%;
   border: none;
   background-color: #e4ecfe;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
 `;
 
 const UserPasswordPageInputWrapper = styled.div`
