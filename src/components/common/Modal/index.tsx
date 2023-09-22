@@ -121,6 +121,8 @@ const ModalContent = styled.div`
   color: #2f2f68;
   font-family: 'GangwonEdu_OTFBoldA';
   font-size: 18px;
+  text-align: center;
+  word-break: keep-all;
 `;
 
 const ModalFooter = styled.div`
