@@ -126,18 +126,6 @@ const UserEditPage = () => {
   };
 
   const handleCompleteEditButton = async () => {
-    if (
-      editedMbti.length !== 4 ||
-      (editedMbti[0] !== 'I' && editedMbti[0] !== 'E') ||
-      (editedMbti[1] !== 'S' && editedMbti[1] !== 'N') ||
-      (editedMbti[2] !== 'T' && editedMbti[2] !== 'F') ||
-      (editedMbti[3] !== 'P' && editedMbti[3] !== 'J')
-    ) {
-      alert('MBTI를 다시 입력해 주세요');
-      setEditedMbti('');
-
-      return;
-    }
     const fullName = { mbti: editedMbti, introduce: editedIntroduce };
 
     if (uploadedImage instanceof File) {
