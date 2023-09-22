@@ -2,11 +2,18 @@ import { useEffect, useState } from 'react';
 import { MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
 import { getAuthorizationCheckApi } from '~/api/authorization';
 import Header from '~/components/common/Header';
-import Tag from '~/pages/PostEditPage/Tag';
-import Textarea from '~/pages/PostEditPage/Textarea';
+import {
+  PostEditPageHeading,
+  PostEditPageHorizontalLine,
+  PostEditPageInput,
+  PostEditPageMainWrapper,
+  PostEditPageTag,
+  PostEditPageTagWrapper,
+  PostEditPageTextarea,
+  PostEditPageWrapper,
+} from '~/pages/PostEditPage/PostEditPageStyle.ts';
 import { editPost, readPost, writePost } from '~/pages/PostEditPage/post';
 
 const CHANNEL_ID = {
@@ -16,10 +23,6 @@ const CHANNEL_ID = {
   MONEY: '64f96d8e8a4e9a3147d91176',
 };
 
-const PostEditPageWrapper = styled.div`
-  width: 100%;
-`;
-
 const PostEditPage = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
@@ -27,6 +30,8 @@ const PostEditPage = () => {
   const [text, setText] = useState('');
   const [active, setActive] = useState('');
   const [selectedChannel, setSelectedChannel] = useState('');
+
+  scrollTo(0, 0);
 
   useEffect(() => {
     const getAuthCheck = async () => {
@@ -121,21 +126,16 @@ const PostEditPage = () => {
         handleSaveButtonClick={() => handleSubmit()}
       ></Header>
       <PostEditPageMainWrapper>
-        <PostEditPageHeading marginBottom={'0px'}>제목</PostEditPageHeading>
-        <PostEditPageTextarea
-          {...TextareaProps}
+        <PostEditPageHeading marginBottom={'6px'}>제목</PostEditPageHeading>
+        <PostEditPageInput
           value={title}
-          height={'25px'}
-          fontSize="16px"
-          overFlow="hidden"
-          onChange={(e: MouseEvent<HTMLTextAreaElement>) =>
-            setTitle((e.target as HTMLTextAreaElement).value)
-          }
-          placeholder="제목을 작성해 주세요"
-          backgroundColor={'#f5f9ff'}
-        ></PostEditPageTextarea>
+          placeholder={'제목을 작성해 주세요'}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setTitle((e.target as HTMLInputElement).value);
+          }}
+        />
         <PostEditPageHorizontalLine
-          marginTop={'10px'}
+          marginTop={'8px'}
         ></PostEditPageHorizontalLine>
         <PostEditPageHeading marginBottom={'8px'}>태그</PostEditPageHeading>
         <PostEditPageTagWrapper>
@@ -184,104 +184,3 @@ const PostEditPage = () => {
 };
 
 export default PostEditPage;
-
-const PostEditPageTag = styled(Tag)`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  border: none;
-
-  margin-right: 5px;
-
-  background: linear-gradient(
-    45deg,
-    rgba(252, 203, 243, 0.2),
-    rgba(232, 203, 244, 0.2),
-    rgba(182, 204, 249, 0.2),
-    rgba(114, 205, 255, 0.2)
-  );
-
-  overflow: hidden;
-  white-space: nowrap;
-  font-family: GangwonEdu_OTFBoldA;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
-  font-size: 0.7rem;
-`;
-
-interface PostEditPageTextareaProps {
-  backgroundColor: string;
-}
-
-const PostEditPageTextarea = styled(Textarea)<PostEditPageTextareaProps>`
-  border: none;
-  background-color: ${({ backgroundColor }) => backgroundColor};
-  font-family: GangwonEdu_OTFBoldA;
-  box-sizing: border-box;
-  padding-top: 6px;
-  padding-left: 12px;
-  caret-color: #2f2f68;
-  ::placeholder {
-    color: #8b9dc6;
-    font-family: GangwonEdu_OTFBoldA;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-`;
-
-const PostEditPageMainWrapper = styled.div`
-  max-width: 425px;
-  min-height: 500px;
-  position: relative;
-  top: 25px;
-  margin: 0 auto;
-  width: calc(100% - 20px);
-  height: calc(100vh - 250px);
-  background-color: #f5f9ff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-  padding-bottom: 10px;
-  box-sizing: content-box;
-  border-radius: 15px;
-  box-shadow: 2px 2px 2px 2px rgba(245, 249, 255, 0.1);
-`;
-
-const PostEditPageTagWrapper = styled.div`
-  width: calc(100% - 40px);
-  display: flex;
-  justify-content: flex-start;
-`;
-
-interface PostEditPageHeadingProps {
-  marginBottom: string;
-}
-
-const PostEditPageHeading = styled('h1')<PostEditPageHeadingProps>`
-  font-family: GangwonEdu_OTFBoldA;
-  width: calc(100% - 40px);
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: ${({ marginBottom }) => marginBottom};
-`;
-
-interface PostEditPageHorizontalLineProps {
-  marginTop: string;
-}
-
-const PostEditPageHorizontalLine = styled(
-  'div'
-)<PostEditPageHorizontalLineProps>`
-  position: relative;
-  margin: 0 auto;
-  width: calc(100% - 20px);
-  height: 1px;
-  background-color: #bbcdf7;
-  margin-top: ${({ marginTop }) => marginTop};
-  margin-bottom: 16px;
-`;
