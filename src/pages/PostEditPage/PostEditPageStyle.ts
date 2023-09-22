@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import Tag from '~/components/common/Tag';
-import Textarea from '~/pages/PostEditPage/Textarea';
+import Textarea from '~/components/common/Textarea';
 
 export const PostEditPageWrapper = styled.div`
   width: 100%;
