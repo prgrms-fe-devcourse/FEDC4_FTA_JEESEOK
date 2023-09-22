@@ -28,6 +28,7 @@ export const InputGroupContainer = styled.div<InputGroupContainerProps>`
     typeof height === 'number' ? `${height}px` : height};
   border-radius: ${({ radius }) => (radius ? radius : '0px')};
   background: ${({ background }) => (background ? background : '#f5f9ff')};
+  padding: 0 10px 0 5px;
 `;
 
 export const InputStyle = styled.input`
