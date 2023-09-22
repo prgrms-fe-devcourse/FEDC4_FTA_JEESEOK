@@ -43,12 +43,12 @@ const UserEditPage = () => {
   const MBTIButtons = MBTI.map((alphabet, index) => {
     const isActive = editedMbti.includes(alphabet);
     const buttonStyle = {
-      width: '45px',
-      height: '45px',
-      fontSize: '25px',
+      width: '55px',
+      height: '55px',
+      fontSize: '35px',
       fontFamily: 'Cafe24Font',
       borderRadius: '10px',
-      padding: '3px 0 0 0',
+      padding: '5px 0 0 0',
       background: isActive
         ? alphabet === 'I' || alphabet === 'E'
           ? 'linear-gradient(45deg, #E6D1F7, #DDDAF6)'
