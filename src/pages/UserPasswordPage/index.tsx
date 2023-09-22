@@ -6,6 +6,7 @@ import { getAuthorizationCheckApi } from '~/api/authorization';
 import { putPassword } from '~/api/settings';
 import Button from '~/components/common/Button';
 import Header from '~/components/common/Header';
+import Modal from '~/components/common/Modal';
 import Input from '~/pages/UserPasswordPage/Input';
 
 const UserPasswordPageWrapper = styled.div`
@@ -20,6 +21,8 @@ const UserPasswordPage = () => {
   const [checkPasswordValue, setCheckPasswordValue] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
+  const [modalState, setModalState] = useState(false);
+  const [messageState, setMessageState] = useState('');
 
   useEffect(() => {
     const getAuthCheck = async () => {
@@ -33,14 +36,27 @@ const UserPasswordPage = () => {
     getAuthCheck();
   }, [navigate]);
 
+  const invokeModal = (message: string) => {
+    setMessageState(message);
+    setModalState(true);
+  };
+
   const handleSubmit = (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!regPass.test(passwordValue)) {
-      alert('비밀번호는 영문,숫자를 포함해서 8자 이상 입력해주세요.');
+      invokeModal('비밀번호는 영문,숫자를 포함해서 8자 이상 입력해주세요.');
     } else if (passwordValue !== checkPasswordValue) {
-      alert('새 비밀번호가 비밀번호 확인값과 일치하지 않습니다.');
+      invokeModal('새 비밀번호가 비밀번호 확인값과 일치하지 않습니다.');
     } else {
-      alert('비밀번호가 변경되었습니다!');
+      invokeModal('비밀번호가 변경되었습니다!');
+    }
+  };
+
+  const handleCloseButtonClick = () => {
+    setModalState(false);
+
+    if (messageState === '비밀번호가 변경되었습니다!') {
       putPassword(passwordValue);
       navigate('/');
     }
@@ -157,6 +173,11 @@ const UserPasswordPage = () => {
         type="submit"
         form="editPost"
       ></UserPasswordPagePasswordSaveBtn>
+      {modalState && (
+        <Modal handleCloseButtonClick={handleCloseButtonClick}>
+          {messageState}
+        </Modal>
+      )}
     </UserPasswordPageWrapper>
   );
 };
