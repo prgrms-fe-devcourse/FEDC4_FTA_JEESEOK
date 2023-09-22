@@ -3,7 +3,9 @@ import { MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { getAuthorizationCheckApi } from '~/api/authorization';
+import { editPost, readPost, writePost } from '~/api/post';
 import Header from '~/components/common/Header';
+import { CHANNEL_ID } from '~/constants/channelId';
 import {
   PostEditPageHeading,
   PostEditPageHorizontalLine,
@@ -14,14 +16,6 @@ import {
   PostEditPageTextarea,
   PostEditPageWrapper,
 } from '~/pages/PostEditPage/PostEditPageStyle.ts';
-import { editPost, readPost, writePost } from '~/pages/PostEditPage/post';
-
-const CHANNEL_ID = {
-  WORK: '64f57dc874128417c268916c',
-  LOVE: '64f57dd474128417c2689170',
-  RELATION: '64f96db08a4e9a3147d9117a',
-  MONEY: '64f96d8e8a4e9a3147d91176',
-};
 
 const PostEditPage = () => {
   const navigate = useNavigate();
@@ -48,7 +42,7 @@ const PostEditPage = () => {
       }
 
       if (typeof postId === 'string') {
-        const postData = (await readPost(postId))?.data;
+        const postData = await readPost(postId);
         if (postData && postData.author.email === isAuth.email) {
           const postInformation = JSON.parse(postData.title);
           setTitle(postInformation.title);
@@ -148,14 +142,14 @@ const PostEditPage = () => {
           <PostEditPageTag
             {...TagProps}
             children={'취업'}
-            id={CHANNEL_ID.WORK}
-            className={CHANNEL_ID.WORK == active ? 'active' : ''}
+            id={CHANNEL_ID.JOB}
+            className={CHANNEL_ID.JOB == active ? 'active' : ''}
           ></PostEditPageTag>
           <PostEditPageTag
             {...TagProps}
             children={'인간관계'}
-            id={CHANNEL_ID.RELATION}
-            className={CHANNEL_ID.RELATION == active ? 'active' : ''}
+            id={CHANNEL_ID.RELATIONSHIP}
+            className={CHANNEL_ID.RELATIONSHIP == active ? 'active' : ''}
           ></PostEditPageTag>
           <PostEditPageTag
             {...TagProps}
