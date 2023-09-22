@@ -32,7 +32,7 @@ const TopNavWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 10px;
   gap: 10px;
 `;
@@ -49,18 +49,38 @@ const NoWordWrapper = styled.div`
 `;
 const PostCardGroup = styled.div`
   height: calc(100% - 88px);
-  overflow: scroll;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   gap: 5px;
   width: 95%;
   margin: 0 auto;
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #e6efff;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #fccbf3, #e8cbf4, #b6ccf9, #72cdff);
+    border-radius: 5px;
+  }
 `;
 const UserCardGroup = styled(UserCard.Group)`
   height: calc(100% - 88px);
-  overflow: scroll;
+  overflow-y: auto;
   width: 95%;
   margin: 0 auto;
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #e6efff;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #fccbf3, #e8cbf4, #b6ccf9, #72cdff);
+    border-radius: 5px;
+  }
 `;
 
 const Content = ({
