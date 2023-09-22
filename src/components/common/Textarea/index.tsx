@@ -2,6 +2,7 @@ import { HTMLAttributes } from 'react';
 import styled from '@emotion/styled';
 
 interface TextareaStyleProps {
+  overFlow: string;
   width: string;
   height: string;
   borderRadius: string;
@@ -13,12 +14,12 @@ interface TextareaStyleProps {
 interface TextareaProps
   extends HTMLAttributes<HTMLTextAreaElement>,
     TextareaStyleProps {
-  text: string;
+  value: string;
 }
 
 const TextareaComponent = styled('textarea')<TextareaStyleProps>`
   resize: none;
-  overflow: scroll;
+  overflow: ${({ overFlow }) => overFlow};
   &:focus {
     outline: none;
   }
@@ -37,7 +38,8 @@ const TextareaComponent = styled('textarea')<TextareaStyleProps>`
 `;
 
 const Textarea = ({
-  text,
+  value,
+  overFlow,
   width,
   height,
   borderRadius,
@@ -45,19 +47,19 @@ const Textarea = ({
   scrollBarWidth = 1,
   scrollBarThumbColor = 'gray',
   ...props
-}: TextareaProps) => {
+}: Partial<TextareaProps>) => {
   return (
     <TextareaComponent
       {...props}
-      width={width}
-      height={height}
-      borderRadius={borderRadius}
-      fontSize={fontSize}
+      value={value}
+      overFlow={overFlow!}
+      width={width!}
+      height={height!}
+      borderRadius={borderRadius!}
+      fontSize={fontSize!}
       scrollBarWidth={scrollBarWidth}
       scrollBarThumbColor={scrollBarThumbColor}
-    >
-      {text}
-    </TextareaComponent>
+    ></TextareaComponent>
   );
 };
 

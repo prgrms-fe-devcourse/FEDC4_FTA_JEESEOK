@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { putMyInformation } from '~/api/settings';
 import { postUserImage } from '~/api/user';
 import UserPhoto from '~/assets/default_profile.svg';
+import Button from '~/components/common/Button';
 import Header from '~/components/common/Header';
 import Image from '~/components/common/Image';
 import Loading from '~/components/common/Loading';
-import Button from '~/pages/UserEditPage/Button';
+import Textarea from '~/components/common/Textarea';
 import Input from '~/pages/UserEditPage/Input';
-import Textarea from '~/pages/UserEditPage/Textarea';
 import plus from '~/pages/UserEditPage/assets/plus.svg';
 import {
   EditPageContainer,

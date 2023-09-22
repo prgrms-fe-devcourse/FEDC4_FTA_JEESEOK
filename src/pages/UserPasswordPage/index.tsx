@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { getAuthorizationCheckApi } from '~/api/authorization';
 import { putPassword } from '~/api/settings';
+import Button from '~/components/common/Button';
 import Header from '~/components/common/Header';
-import Button from '~/pages/UserPasswordPage/Button';
 import Input from '~/pages/UserPasswordPage/Input';
 
 const UserPasswordPageWrapper = styled.div`
