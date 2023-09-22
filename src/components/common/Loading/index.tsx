@@ -8,19 +8,19 @@ interface LoadingProps {
 }
 
 const bomb = keyframes`
-    from {
-        top: 10%;
-        left: 5%;
-        animation-timing-function: cubic-bezier(1, 0, 0.6, 0.7);
-    }
-    80% {
-        opacity: 1;
-    }
-    to {
-        top: 35%;
-        left: 25%;
-        opacity: 0;
-    }
+  from {
+    top: 10%;
+    left: 5%;
+    animation-timing-function: cubic-bezier(1, 0, 0.6, 0.7);
+  }
+  80% {
+    opacity: 1;
+  }
+  to {
+    top: 35%;
+    left: 25%;
+    opacity: 0;
+  }
 `;
 
 const BackGround = styled.div`
@@ -29,7 +29,7 @@ const BackGround = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(3px);
   min-height: 100vh;
   max-width: 425px;
   margin: auto;
@@ -48,6 +48,7 @@ const Planet = styled.img`
 
 const Crash = styled.img`
   position: absolute;
+  transform: rotate(15deg);
   animation: ${bomb} 1.5s infinite;
 `;
 

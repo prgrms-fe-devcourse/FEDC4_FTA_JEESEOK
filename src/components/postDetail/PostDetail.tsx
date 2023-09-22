@@ -46,9 +46,7 @@ const PostDetail = ({
       <PostDetailWrapper>
         <UserContainer>
           <ImgWrapper onClick={() => navigate(`/user/${author?._id}`)}>
-            <Img
-              src={author?.coverImage ? author?.coverImage : defaultProfile}
-            ></Img>
+            <Img src={author?.image ? author?.image : defaultProfile}></Img>
           </ImgWrapper>
           <TitleContainer>
             <Text fontSize={'14px'} color={'#2F2F68'}>

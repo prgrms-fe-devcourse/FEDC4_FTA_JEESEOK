@@ -1,16 +1,8 @@
 import { useState } from 'react';
-import styled from '@emotion/styled';
 import Content from '~/pages/SearchPage/Content';
 import Header from '~/pages/SearchPage/Header';
 import { Post, User } from '~/types';
-
-const SearchWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: calc(100vh - 90px);
-  overflow: hidden;
-`;
+import { SearchWrapper } from './SearchPageStyle';
 
 const SearchPage = () => {
   const [word, setWord] = useState('');
