@@ -10,6 +10,8 @@ interface TagStyleProps {
   borderWidth: string;
   borderColor: string;
   fontSize: string;
+  activeBackgroundColor: string;
+  activeFontColor: string;
 }
 
 interface TagProps extends HTMLAttributes<HTMLButtonElement>, TagStyleProps {
@@ -29,6 +31,12 @@ const TagComponent = styled('button')<TagStyleProps>`
   border: ${({ borderWidth }) => borderWidth} solid
     ${({ borderColor }) => borderColor};
   font-size: ${({ fontSize }) => fontSize};
+  white-space: nowrap;
+  &.active {
+    background: ${({ activeBackgroundColor }) => activeBackgroundColor};
+    color: ${({ activeFontColor }) => activeFontColor};
+    opacity: 1;
+  }
 `;
 
 const Tag = ({
@@ -44,22 +52,26 @@ const Tag = ({
   borderColor,
   borderWidth,
   fontSize,
+  activeBackgroundColor,
+  activeFontColor,
   ...props
-}: TagProps) => {
+}: Partial<TagProps>) => {
   const preventOnClick = disabled || isLoading;
 
   return (
     <TagComponent
       {...props}
       onClick={preventOnClick ? undefined : onClick}
-      width={width}
-      height={height}
-      fontColor={fontColor}
-      backgroundColor={backgroundColor}
-      borderRadius={borderRadius}
-      borderColor={borderColor}
-      borderWidth={borderWidth}
-      fontSize={fontSize}
+      width={width!}
+      height={height!}
+      fontColor={fontColor!}
+      backgroundColor={backgroundColor!}
+      borderRadius={borderRadius!}
+      borderColor={borderColor!}
+      borderWidth={borderWidth!}
+      fontSize={fontSize!}
+      activeBackgroundColor={activeBackgroundColor!}
+      activeFontColor={activeFontColor!}
     >
       {children}
     </TagComponent>
