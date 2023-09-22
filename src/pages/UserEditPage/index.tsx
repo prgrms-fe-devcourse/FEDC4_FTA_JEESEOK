@@ -43,12 +43,12 @@ const UserEditPage = () => {
   const MBTIButtons = MBTI.map((alphabet, index) => {
     const isActive = editedMbti.includes(alphabet);
     const buttonStyle = {
-      width: '55px',
-      height: '55px',
-      fontSize: '30px',
+      width: '45px',
+      height: '45px',
+      fontSize: '25px',
       fontFamily: 'Cafe24Font',
       borderRadius: '10px',
-      padding: '5px 0 0 0',
+      padding: '3px 0 0 0',
       background: isActive
         ? alphabet === 'I' || alphabet === 'E'
           ? 'linear-gradient(45deg, #E6D1F7, #DDDAF6)'
@@ -239,7 +239,7 @@ const UserEditPage = () => {
             width={'90%'}
             height={'100%'}
             borderRadius={'10px'}
-            fontSize={'16px'}
+            fontSize={'14px'}
             scrollBarWidth={4}
             scrollBarThumbColor={'#FFFFFF'}
             style={{
@@ -258,12 +258,12 @@ const UserEditPage = () => {
         <EditPasswordButtonContainer>
           <Button
             children={'비밀번호 변경'}
-            width={130}
+            width={110}
             height={30}
             onClick={handleChangePasswordButtonClick}
             style={{
               color: '#2F2F68',
-              fontSize: '12px',
+              fontSize: '10px',
               backgroundColor: '#E4ECFE',
               borderRadius: '10px',
             }}

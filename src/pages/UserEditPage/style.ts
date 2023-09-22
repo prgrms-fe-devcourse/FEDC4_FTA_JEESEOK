@@ -5,21 +5,20 @@ export const EditPageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80vh;
 `;
 
 export const MainPageContainer = styled.main`
-  margin-top: 160px;
+  margin-top: 70px;
   display: flex;
-  gap: 15px;
-  padding: 20px;
+  gap: 5px;
+  padding: 10px;
   background-color: #f5f9ff;
   box-sizing: border-box;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 20px;
-  width: 90%;
+  width: 80%;
   box-shadow: 0 2px 4px rgba(0.2, 0.2, 1.5, 0.2);
   margin-bottom: 20px;
 `;
@@ -49,7 +48,7 @@ export const UploadImageButton = styled.button`
 `;
 
 export const InputContainer = styled.div`
-  width: 90%;
+  width: 85%;
   height: 40px;
   border-radius: 10px;
   background-color: #e4ecfe;
@@ -61,7 +60,7 @@ export const InputContainer = styled.div`
 export const MbtiIntroduceSpanContainer = styled.div`
   display: flex;
   justify-content: flex-start;
-  width: 90%;
+  width: 85%;
   font-family: 'GangwonEdu_OTFBoldA';
   font-size: 14px;
   color: #2f2f68;
@@ -71,22 +70,21 @@ export const MbtiForm = styled.div`
   display: grid;
   align-items: center;
   justify-content: center;
-  width: 80%;
-  gap: 15px;
+  gap: 5px;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, auto);
 `;
 
 export const TextareaContainer = styled.div`
-  width: 100%;
-  height: 200px;
+  width: 95%;
+  height: 130px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 export const EditPasswordButtonContainer = styled.div`
-  width: 90%;
+  width: 85%;
   display: flex;
   justify-content: flex-end;
 `;

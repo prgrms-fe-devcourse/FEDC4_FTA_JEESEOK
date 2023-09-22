@@ -39,7 +39,7 @@ export const InputStyle = styled.input`
   border: none;
   background-color: transparent;
   color: #2f2f68;
-  font-size: 16px;
+  font-size: 14px;
   font-family: 'GangwonEdu_OTFBoldA';
   &::placeholder {
     color: #8b9dc6;
