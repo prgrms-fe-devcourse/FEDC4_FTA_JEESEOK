@@ -1,4 +1,4 @@
-import Tag from '../Tag';
+import Tag from '~/components/common/Tag';
 import { TagListContainer } from './style';
 
 const tags = [
