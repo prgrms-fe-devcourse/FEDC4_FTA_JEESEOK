@@ -1,8 +1,8 @@
-import React, { ReactNode } from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import { BaseButton } from './style';
 
 export interface ButtonProps {
-  children: ReactNode;
+  children: ReactNode | string;
   className: string;
   disabled: boolean;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
@@ -14,6 +14,13 @@ export interface ButtonProps {
   radius?: string;
   border?: string;
   background?: string;
+  style?: CSSProperties;
+  type?: 'button' | 'submit' | 'reset' | undefined;
+  form?: string | undefined;
+  onMouseDown?: React.MouseEventHandler<HTMLButtonElement>;
+  onMouseUp?: React.MouseEventHandler<HTMLButtonElement>;
+  onTouchStart?: React.TouchEventHandler<HTMLButtonElement>;
+  onTouchEnd?: React.TouchEventHandler<HTMLButtonElement>;
 }
 
 const Button = ({
@@ -29,6 +36,13 @@ const Button = ({
   radius,
   border,
   background,
+  style = {},
+  type,
+  form,
+  onMouseDown,
+  onMouseUp,
+  onTouchStart,
+  onTouchEnd,
 }: Partial<ButtonProps>) => {
   const preventOnClick = disabled || isLoading;
 
@@ -44,6 +58,13 @@ const Button = ({
       radius={radius}
       border={border}
       background={background}
+      style={style}
+      type={type}
+      form={form}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
       {children}
     </BaseButton>

@@ -231,7 +231,6 @@ const UserPage = () => {
             </NotExistPostContainer>
           ) : postOrIntroduce === 'post' && posts.length > 0 ? (
             posts.map((item, index) => {
-              console.log(item);
               return (
                 <PostCard
                   _id={item._id}
