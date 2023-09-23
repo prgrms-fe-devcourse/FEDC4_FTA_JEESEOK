@@ -3,6 +3,7 @@ import Button from '~/components/common/Button';
 
 export const UserPasswordPageWrapper = styled.div`
   width: 100%;
+  min-width: 220px;
 `;
 
 export const UserPasswordPageMainWrapper = styled.div`
@@ -20,15 +21,16 @@ export const UserPasswordPageMainWrapper = styled.div`
 
 export const UserPasswordPageHeading = styled.header`
   font-family: 'ONE-Mobile-Title';
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 0 auto;
+  margin-top: 30px;
   color: #2f2f68;
-  position: relative;
   max-width: 425px;
-  width: 100%;
+  width: 80%;
   height: 60px;
-  border-radius: 0 0 50px 50px;
+  text-align: center;
+  @media (max-width: 360px) {
+    width: 134px;
+  }
 `;
 
 export const UserPasswordPageLogoImg = styled.div`
@@ -56,7 +58,7 @@ export const UserPasswordPagePasswordSaveBtn = styled(Button)`
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 305px;
+  width: 80%;
   height: 42px;
   font-size: 20px;
   font-family: 'ONE-Mobile-Title';
@@ -64,6 +66,7 @@ export const UserPasswordPagePasswordSaveBtn = styled(Button)`
   border: none;
   border-radius: 21px;
   background: linear-gradient(45deg, #fccbf3, #e8cbf4, #b6ccf9, #72cdff);
+  margin-bottom: 100px;
 `;
 
 export const UserPasswordPageInputContainer = styled.div`
@@ -117,7 +120,11 @@ export const UserPasswordPageSeeIcon = styled.img`
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
+  pointer-events: none;
 `;
+
+export const UserPasswordPageSeeIconWrapper = styled.div``;
+
 export const UserPasswordPageText = styled.p`
   margin: 1px 0px 0px 2px;
   text-align: left;

@@ -14,6 +14,7 @@ import {
   UserPasswordPageMainWrapper,
   UserPasswordPagePasswordSaveBtn,
   UserPasswordPageSeeIcon,
+  UserPasswordPageSeeIconWrapper,
   UserPasswordPageText,
   UserPasswordPageWrapper,
 } from '~/pages/UserPasswordPage/UserPasswordPageStyle';
@@ -89,8 +90,7 @@ const UserPasswordPage = () => {
                   }}
                 />
                 {passwordValue.length > 0 && (
-                  <UserPasswordPageSeeIcon
-                    src="/src/assets/passwordSeeIcon.svg"
+                  <UserPasswordPageSeeIconWrapper
                     onMouseDown={() => {
                       setShowPassword(true);
                     }}
@@ -103,7 +103,9 @@ const UserPasswordPage = () => {
                     onTouchEnd={() => {
                       setShowPassword(false);
                     }}
-                  />
+                  >
+                    <UserPasswordPageSeeIcon src="/src/assets/passwordSeeIcon.svg" />
+                  </UserPasswordPageSeeIconWrapper>
                 )}
               </UserPasswordPageInputGroupContainer>
               {passwordValue.length > 0 && !regPass.test(passwordValue) && (
@@ -125,8 +127,7 @@ const UserPasswordPage = () => {
                   }}
                 />
                 {checkPasswordValue.length > 0 && (
-                  <UserPasswordPageSeeIcon
-                    src="/src/assets/passwordSeeIcon.svg"
+                  <UserPasswordPageSeeIconWrapper
                     onMouseDown={() => {
                       setShowPasswordCheck(true);
                     }}
@@ -139,7 +140,9 @@ const UserPasswordPage = () => {
                     onTouchEnd={() => {
                       setShowPasswordCheck(false);
                     }}
-                  />
+                  >
+                    <UserPasswordPageSeeIcon src="/src/assets/passwordSeeIcon.svg" />
+                  </UserPasswordPageSeeIconWrapper>
                 )}
               </UserPasswordPageInputGroupContainer>
               {checkPasswordValue.length > 0 &&
