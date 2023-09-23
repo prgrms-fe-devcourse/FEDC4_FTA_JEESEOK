@@ -5,18 +5,16 @@ export const EditPageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80vh;
 `;
 
 export const MainPageContainer = styled.main`
-  margin-top: 160px;
+  margin-top: 70px;
   display: flex;
   gap: 15px;
   padding: 20px;
   background-color: #f5f9ff;
   box-sizing: border-box;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   border-radius: 20px;
   width: 90%;
@@ -43,7 +41,6 @@ export const UploadImageButton = styled.button`
   border-radius: 20px;
   border: none;
   cursor: pointer;
-  font-size: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,7 +70,7 @@ export const MbtiForm = styled.div`
   align-items: center;
   justify-content: center;
   width: 80%;
-  gap: 15px;
+  gap: 10px;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, auto);
 `;

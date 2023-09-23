@@ -45,7 +45,7 @@ const UserEditPage = () => {
     const buttonStyle = {
       width: '55px',
       height: '55px',
-      fontSize: '30px',
+      fontSize: '35px',
       fontFamily: 'Cafe24Font',
       borderRadius: '10px',
       padding: '5px 0 0 0',
@@ -126,18 +126,6 @@ const UserEditPage = () => {
   };
 
   const handleCompleteEditButton = async () => {
-    if (
-      editedMbti.length !== 4 ||
-      (editedMbti[0] !== 'I' && editedMbti[0] !== 'E') ||
-      (editedMbti[1] !== 'S' && editedMbti[1] !== 'N') ||
-      (editedMbti[2] !== 'T' && editedMbti[2] !== 'F') ||
-      (editedMbti[3] !== 'P' && editedMbti[3] !== 'J')
-    ) {
-      alert('MBTI를 다시 입력해 주세요');
-      setEditedMbti('');
-
-      return;
-    }
     const fullName = { mbti: editedMbti, introduce: editedIntroduce };
 
     if (uploadedImage instanceof File) {
@@ -239,7 +227,7 @@ const UserEditPage = () => {
             width={'90%'}
             height={'100%'}
             borderRadius={'10px'}
-            fontSize={'16px'}
+            fontSize={'14px'}
             scrollBarWidth={4}
             scrollBarThumbColor={'#FFFFFF'}
             style={{
@@ -258,12 +246,12 @@ const UserEditPage = () => {
         <EditPasswordButtonContainer>
           <Button
             children={'비밀번호 변경'}
-            width={130}
+            width={110}
             height={30}
             onClick={handleChangePasswordButtonClick}
             style={{
               color: '#2F2F68',
-              fontSize: '12px',
+              fontSize: '10px',
               backgroundColor: '#E4ECFE',
               borderRadius: '10px',
             }}
