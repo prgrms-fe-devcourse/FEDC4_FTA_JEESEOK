@@ -6,12 +6,14 @@ import { readNotification } from '~/api/notification';
 import Button from '~/components/common/Button';
 import Header from '~/components/common/Header';
 import Loading from '~/components/common/Loading';
+import Modal from '~/components/common/Modal';
 import { Notification } from '~/types';
 import NotificationCardList from './NotificationCardList';
 
 const NotificationPage = () => {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [modalState, setModalState] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const getAuthCheck = async () => {
@@ -38,10 +40,9 @@ const NotificationPage = () => {
   scrollTo(0, 0);
 
   const handleAllNotificationDelete = async () => {
-    if (confirm('알림을 전체 삭제하시겠습니까?')) {
-      await readNotification();
-      await getAuthCheck();
-    }
+    await readNotification();
+    await getAuthCheck();
+    setModalState(false);
   };
 
   return (
@@ -53,7 +54,7 @@ const NotificationPage = () => {
           <Header isLogout />
           <NotificationPageBtnWrapper>
             {notifications.length > 0 && (
-              <NotificationPageBtn onClick={handleAllNotificationDelete}>
+              <NotificationPageBtn onClick={() => setModalState(true)}>
                 알림전체삭제
               </NotificationPageBtn>
             )}
@@ -62,9 +63,32 @@ const NotificationPage = () => {
           {notifications.length > 0 ? (
             <NotificationCardList {...notifications} />
           ) : (
-            <NotificationPageEmptyText>
-              새로운 알림이 없습니다!
-            </NotificationPageEmptyText>
+            <>
+              <Header isLogout />
+              <NotificationPageBtnWrapper>
+                {notifications.length > 0 && (
+                  <NotificationPageBtn onClick={handleAllNotificationDelete}>
+                    알림전체삭제
+                  </NotificationPageBtn>
+                )}
+              </NotificationPageBtnWrapper>
+
+              {notifications.length > 0 ? (
+                <NotificationCardList {...notifications} />
+              ) : (
+                <NotificationPageEmptyText>
+                  새로운 알림이 없습니다!
+                </NotificationPageEmptyText>
+              )}
+            </>
+          )}
+          {modalState && (
+            <Modal
+              handleConfirmButtonClick={handleAllNotificationDelete}
+              handleCloseButtonClick={() => setModalState(false)}
+            >
+              알림을 전체 삭제하시겠습니까?
+            </Modal>
           )}
         </>
       )}

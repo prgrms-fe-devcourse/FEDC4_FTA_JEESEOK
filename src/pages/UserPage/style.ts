@@ -22,14 +22,14 @@ export const UserInfoContainer = styled.div`
 `;
 
 export const UserInfo = styled.div<{ isMyInfo: boolean }>`
-  margin-top: 30px;
+  margin-top: 10px;
   display: flex;
   flex-direction: ${(props) => (props.isMyInfo ? 'row' : 'column')};
   justify-content: center;
   align-items: center;
   gap: 20px;
   width: 95%;
-  height: 200px;
+  height: 170px;
   height: ${(props) => (props.isMyInfo ? '' : '60vh')};
   background-color: #f5f9ff;
   border-radius: 20px;
@@ -155,14 +155,14 @@ export const IntroduceAreaContainer = styled.div<{ isMyInfo: boolean }>`
   justify-content: center;
   align-items: center;
   background-color: #f5f9ff;
-  height: ${(props) => (props.isMyInfo ? '100%' : '100%')};
+  height: ${(props) => (props.isMyInfo ? '80%' : '100%')};
   border-radius: 25px;
   box-shadow: 0 2px 4px rgba(0.2, 0.2, 1.5, 0.2);
 `;
 
 export const IntroduceArea = styled.div<{ isMyInfo: boolean }>`
   width: ${(props) => (props.isMyInfo ? '95%' : '100%')};
-  height: ${(props) => (props.isMyInfo ? '280px' : '300px')};
+  height: ${(props) => (props.isMyInfo ? '93%' : '300px')};
   border-radius: 20px;
   padding: 20px 20px;
   box-sizing: border-box;

@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import logoText from '~/assets/logoText.png';
 import Button from '~/components/common/Button';
 import Input from '~/components/common/Input';
+import Modal from '~/components/common/Modal/index.tsx';
 import {
   ID_INPUT,
   ID_VALIDATION_TEXT,
@@ -94,6 +95,8 @@ const LoginPage = () => {
     'AUTH_TOKEN',
     InitAuthState
   );
+  const [modalState, setModalState] = useState(false);
+  const [messageState, setMessageState] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -111,6 +114,11 @@ const LoginPage = () => {
     },
     [loginState]
   );
+
+  const invokeModal = (message: string) => {
+    setMessageState(message);
+    setModalState(true);
+  };
 
   const callLoginApi = async (e: FormEvent) => {
     e.preventDefault();
@@ -132,12 +140,11 @@ const LoginPage = () => {
 
     if (loginApiResult) {
       setAuthState(loginApiResult);
-      alert('로그인 되었습니다');
-      navigate('/');
+      invokeModal('로그인 되었습니다.');
     } else {
-      alert('아이디 또는 비밀번호를 잘못 입력했습니다. 다시 확인해주세요.');
-      handleInputCancel('id');
-      handleInputCancel('pw');
+      invokeModal(
+        '아이디 또는 비밀번호를 잘못 입력했습니다. 다시 확인해주세요.'
+      );
     }
   };
   const moveSignUp = () => {
@@ -146,6 +153,17 @@ const LoginPage = () => {
 
   const handleInputCancel = (properties: keyof LoginStateType) => {
     handleSignUpStateChange(properties, '');
+  };
+
+  const handleCloseButtonClick = () => {
+    if (messageState === '로그인 되었습니다.') {
+      navigate('/');
+    } else {
+      handleInputCancel('id');
+      handleInputCancel('pw');
+    }
+
+    setModalState(false);
   };
 
   return (
@@ -210,6 +228,11 @@ const LoginPage = () => {
       <Span>
         회원이 아니신가요? <Text onClick={moveSignUp}>회원가입 하기</Text>
       </Span>
+      {modalState && (
+        <Modal handleCloseButtonClick={handleCloseButtonClick}>
+          {messageState}
+        </Modal>
+      )}
     </LoginContainer>
   );
 };

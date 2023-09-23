@@ -16,6 +16,7 @@ import {
 } from '~/constants/postDetail.ts';
 import { Comment } from '~/types';
 import { getDate } from '~/utils';
+import Modal from '../common/Modal';
 
 interface CommentsProps {
   comments: Comment[];
@@ -33,6 +34,7 @@ const Comments = ({
   updateComment,
 }: CommentsProps) => {
   const [commentState, setCommentState] = useState('');
+  const [modalState, setModalState] = useState(false);
 
   const commentInputState = useMemo(() => {
     const disabled = !userId;
@@ -49,7 +51,7 @@ const Comments = ({
     if (!commentState) return;
     const data = await postComment({ postId, comment: commentState });
     if (data) {
-      alert('댓글 작성이 완료되었습니다.');
+      setModalState(true);
       setCommentState('');
       await updateComment();
 
@@ -63,10 +65,8 @@ const Comments = ({
   };
 
   const deleteMyComment = async (commentId: string) => {
-    if (confirm('댓글을 정말 삭제하시겠습니까?')) {
-      await deleteComment({ commentId });
-      await updateComment();
-    }
+    await deleteComment({ commentId });
+    await updateComment();
   };
 
   return (
@@ -80,7 +80,7 @@ const Comments = ({
       />
       <CommentCountWrapper>
         <CommentCountTitle>댓글</CommentCountTitle>
-        <CommentCount> {comments.length}</CommentCount>
+        <CommentCount>{comments.length}</CommentCount>
       </CommentCountWrapper>
 
       {comments &&
@@ -96,6 +96,11 @@ const Comments = ({
           ></CommentCard>
         ))}
       {!comments.length && <Text>댓글이 없습니다.</Text>}
+      {modalState && (
+        <Modal handleCloseButtonClick={() => setModalState(false)}>
+          댓글 작성이 완료되었습니다.
+        </Modal>
+      )}
     </CommentContainer>
   );
 };

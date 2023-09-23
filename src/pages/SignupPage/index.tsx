@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import logoText from '~/assets/logoText.png';
 import Button from '~/components/common/Button';
 import Header from '~/components/common/Header';
+import Modal from '~/components/common/Modal/index.tsx';
 import MbtiButton from '~/components/signup/MbtiButton';
 import SignUpForm from '~/components/signup/SignUpForm';
 import { InitSignUpState, TITLE } from '~/constants/signUpConstants.ts';
@@ -42,6 +43,8 @@ type ValidationObj = {
 const SignupPage = () => {
   const [signUpState, setSignUpState] =
     useState<SignUpStateType>(InitSignUpState);
+  const [modalState, setModalState] = useState(false);
+  const [messageState, setMessageState] = useState('');
   const navigate = useNavigate();
 
   const validationCheck = (length: number, obj: ValidationObj) => {
@@ -65,7 +68,6 @@ const SignupPage = () => {
       isPwCheckError,
       isNickNameError,
     } = signUpState;
-    console.log(signUpState);
 
     if (isIdError || isPwError || isPwCheckError || isNickNameError) return;
 
@@ -78,7 +80,8 @@ const SignupPage = () => {
 
     if (hasError) return;
     if (fullName.mbti.join('').length !== 4) {
-      alert('mbti를 입력해주세요!');
+      setMessageState('mbti를 입력해주세요!');
+      setModalState(true);
       return;
     }
 
@@ -95,10 +98,19 @@ const SignupPage = () => {
     const result = await postSignupApi(apiRequestData);
 
     if (result) {
-      alert('가입되었습니다.');
-      navigate('/login');
+      setMessageState('가입되었습니다.');
+      setModalState(true);
     } else {
-      alert('중복아이디입니다!');
+      setMessageState('중복아이디입니다!');
+      setModalState(true);
+    }
+  };
+
+  const handleCloseButtonClick = () => {
+    setModalState(false);
+
+    if (messageState === '가입되었습니다.') {
+      navigate('/login');
     }
   };
 
@@ -121,6 +133,11 @@ const SignupPage = () => {
       >
         {TITLE}
       </Button>
+      {modalState && (
+        <Modal handleCloseButtonClick={handleCloseButtonClick}>
+          {messageState}
+        </Modal>
+      )}
     </SignUpContainer>
   );
 };
