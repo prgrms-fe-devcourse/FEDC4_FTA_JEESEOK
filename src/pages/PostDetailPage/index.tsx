@@ -5,6 +5,7 @@ import { deleteLike, postLike } from '~/api/like';
 import { postNotification } from '~/api/notification';
 import { readPost } from '~/api/post';
 import Header from '~/components/common/Header';
+import Modal from '~/components/common/Modal';
 import Comments from '~/components/postDetail/Comments.tsx';
 import PostDetail from '~/components/postDetail/PostDetail.tsx';
 import { initLikeState, initPostDetailState } from '~/constants/postDetail.ts';
@@ -34,6 +35,7 @@ const PostDetailPage = () => {
   const [postDetailState, setPostDetailState] =
     useState<Post>(initPostDetailState);
   const [likeState, setLikeState] = useState(initLikeState);
+  const [modalState, setModalState] = useState(false);
 
   const postDetailApiCall = async () => {
     if (postId) {
@@ -46,7 +48,7 @@ const PostDetailPage = () => {
     const LIKE = 'LIKE';
     const { isLike, likeId } = likeState;
     if (!userId) {
-      alert('로그인 후 사용가능합니다.');
+      setModalState(true);
       return;
     }
 
@@ -150,6 +152,11 @@ const PostDetailPage = () => {
         userId={userInfo ? userInfo.user._id : userInfo}
         updateComment={postDetailApiCall}
       />
+      {modalState && (
+        <Modal handleCloseButtonClick={() => setModalState(false)}>
+          로그인 후 사용가능합니다.
+        </Modal>
+      )}
     </PostDetailContainer>
   );
 };

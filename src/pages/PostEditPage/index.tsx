@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { getAuthorizationCheckApi } from '~/api/authorization';
 import { editPost, readPost, writePost } from '~/api/post';
 import Header from '~/components/common/Header';
+import Modal from '~/components/common/Modal';
 import { CHANNEL_ID } from '~/constants/channelId';
 import {
   PostEditPageHeading,
@@ -24,6 +25,8 @@ const PostEditPage = () => {
   const [text, setText] = useState('');
   const [active, setActive] = useState('');
   const [selectedChannel, setSelectedChannel] = useState('');
+  const [modalState, setModalState] = useState(false);
+  const [messageState, setMessageState] = useState('');
 
   scrollTo(0, 0);
 
@@ -56,13 +59,18 @@ const PostEditPage = () => {
     getAuthCheck();
   }, [navigate, postId]);
 
+  const invokeModal = (message: string) => {
+    setMessageState(message);
+    setModalState(true);
+  };
+
   function handleSubmit() {
     if (title === '') {
-      alert('제목을 적어주세요');
-    } else if (text === '') {
-      alert('글 내용이 필요합니다');
+      invokeModal('제목을 적어주세요.');
     } else if (selectedChannel === '') {
-      alert('태그를 선택해주세요');
+      invokeModal('태그를 선택해주세요.');
+    } else if (text === '') {
+      invokeModal('본문을 적어주세요.');
     } else if (postId === 'create') {
       writePost(
         JSON.stringify({ title: title, body: text }),
@@ -173,6 +181,11 @@ const PostEditPage = () => {
           backgroundColor={'#e4ecfe'}
         ></PostEditPageTextarea>
       </PostEditPageMainWrapper>
+      {modalState && (
+        <Modal handleCloseButtonClick={() => setModalState(false)}>
+          {messageState}
+        </Modal>
+      )}
     </PostEditPageWrapper>
   );
 };
