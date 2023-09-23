@@ -5,6 +5,7 @@ import { getAuthorizationCheckApi } from '~/api/authorization';
 import { readNotification } from '~/api/notification';
 import Button from '~/components/common/Button';
 import Header from '~/components/common/Header';
+import Loading from '~/components/common/Loading';
 import Modal from '~/components/common/Modal';
 import { Notification } from '~/types';
 import NotificationCardList from './NotificationCardList';
@@ -13,11 +14,14 @@ const NotificationPage = () => {
   const navigate = useNavigate();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [modalState, setModalState] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const getAuthCheck = async () => {
+    setLoading(true);
     const isAuth = await getAuthorizationCheckApi();
     if (!isAuth) {
       navigate('/');
+      setLoading(false);
       return;
     }
 
@@ -26,13 +30,14 @@ const NotificationPage = () => {
         (notification) => !!notification.like || !!notification.comment
       )
     );
+    setLoading(false);
   };
-
-  scrollTo(0, 0);
 
   useEffect(() => {
     getAuthCheck();
   }, [navigate]);
+
+  scrollTo(0, 0);
 
   const handleAllNotificationDelete = async () => {
     await readNotification();
@@ -42,29 +47,50 @@ const NotificationPage = () => {
 
   return (
     <NotificationPageWrapper>
-      <Header isLogout />
-      <NotificationPageBtnWrapper>
-        {notifications.length > 0 && (
-          <NotificationPageBtn onClick={() => setModalState(true)}>
-            알림전체삭제
-          </NotificationPageBtn>
-        )}
-      </NotificationPageBtnWrapper>
-
-      {notifications.length > 0 ? (
-        <NotificationCardList {...notifications} />
+      {loading ? (
+        <Loading isLoading />
       ) : (
-        <NotificationPageEmptyText>
-          새로운 알림이 없습니다!
-        </NotificationPageEmptyText>
-      )}
-      {modalState && (
-        <Modal
-          handleConfirmButtonClick={handleAllNotificationDelete}
-          handleCloseButtonClick={() => setModalState(false)}
-        >
-          알림을 전체 삭제하시겠습니까?
-        </Modal>
+        <>
+          <Header isLogout />
+          <NotificationPageBtnWrapper>
+            {notifications.length > 0 && (
+              <NotificationPageBtn onClick={() => setModalState(true)}>
+                알림전체삭제
+              </NotificationPageBtn>
+            )}
+          </NotificationPageBtnWrapper>
+
+          {notifications.length > 0 ? (
+            <NotificationCardList {...notifications} />
+          ) : (
+            <>
+              <Header isLogout />
+              <NotificationPageBtnWrapper>
+                {notifications.length > 0 && (
+                  <NotificationPageBtn onClick={handleAllNotificationDelete}>
+                    알림전체삭제
+                  </NotificationPageBtn>
+                )}
+              </NotificationPageBtnWrapper>
+
+              {notifications.length > 0 ? (
+                <NotificationCardList {...notifications} />
+              ) : (
+                <NotificationPageEmptyText>
+                  새로운 알림이 없습니다!
+                </NotificationPageEmptyText>
+              )}
+            </>
+          )}
+          {modalState && (
+            <Modal
+              handleConfirmButtonClick={handleAllNotificationDelete}
+              handleCloseButtonClick={() => setModalState(false)}
+            >
+              알림을 전체 삭제하시겠습니까?
+            </Modal>
+          )}
+        </>
       )}
     </NotificationPageWrapper>
   );
