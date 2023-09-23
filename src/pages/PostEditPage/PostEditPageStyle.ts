@@ -56,7 +56,7 @@ export const PostEditPageTextarea = styled(Textarea)<PostEditPageTextareaProps>`
 
 export const PostEditPageMainWrapper = styled.div`
   max-width: 425px;
-  min-height: 500px;
+  min-height: 220px;
   position: relative;
   top: 25px;
   margin: 0 auto;
