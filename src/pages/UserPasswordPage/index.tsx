@@ -1,11 +1,23 @@
 import { useEffect, useState } from 'react';
 import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
 import { getAuthorizationCheckApi } from '~/api/authorization';
 import { putPassword } from '~/api/settings';
-import Button from '~/components/common/Button';
 import Header from '~/components/common/Header';
+import {
+  UserPasswordPageHeading,
+  UserPasswordPageInputContainer,
+  UserPasswordPageInputGroupContainer,
+  UserPasswordPageInputStyle,
+  UserPasswordPageInputWrapper,
+  UserPasswordPageLogoImg,
+  UserPasswordPageMainWrapper,
+  UserPasswordPagePasswordSaveBtn,
+  UserPasswordPageSeeIcon,
+  UserPasswordPageSeeIconWrapper,
+  UserPasswordPageText,
+  UserPasswordPageWrapper,
+} from '~/pages/UserPasswordPage/UserPasswordPageStyle';
 import Modal from '~/components/common/Modal';
 import Input from '~/pages/UserPasswordPage/Input';
 
@@ -33,6 +45,7 @@ const UserPasswordPage = () => {
         return;
       }
     };
+
     getAuthCheck();
   }, [navigate]);
 
@@ -40,6 +53,8 @@ const UserPasswordPage = () => {
     setMessageState(message);
     setModalState(true);
   };
+
+  scrollTo(0, 0);
 
   const handleSubmit = (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -60,16 +75,6 @@ const UserPasswordPage = () => {
       putPassword(passwordValue);
       navigate('/');
     }
-  };
-
-  const InputProps = {
-    id: 'newPassword',
-    width: '80%',
-    height: '30px',
-    disabled: false,
-    background: '#e4ecfe',
-    border: 'none',
-    radius: '8px',
   };
 
   const ButtonProps = {
@@ -93,78 +98,81 @@ const UserPasswordPage = () => {
           새로운 비밀번호를 입력해주세요
         </UserPasswordPageHeading>
         <form onSubmit={handleSubmit} id="editPost">
+          {' '}
           <UserPasswordPageInputWrapper>
-            <UserPasswordPageInput
-              {...InputProps}
-              type={showPassword ? 'text' : 'password'}
-              value={passwordValue}
-              placeHolder={'비밀번호 입력'}
-              onClick={() => {
-                setPasswordValue('');
-              }}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setPasswordValue((e.target as HTMLInputElement).value);
-              }}
-              isError={!regPass.test(passwordValue) ? true : false}
-              validationText={
-                '비밀번호는 영문,숫자를 포함해서 8자 이상 입력해주세요.'
-              }
-              isCancel={false}
-            />
-            <UserPasswordPagePasswordSeeIcon
-              children={''}
-              className={'showPassword'}
-              type={'button'}
-              onMouseDown={() => {
-                setShowPassword(true);
-              }}
-              onMouseUp={() => {
-                setShowPassword(false);
-              }}
-              onTouchStart={() => {
-                setShowPassword(true);
-              }}
-              onTouchEnd={() => {
-                setShowPassword(false);
-              }}
-            ></UserPasswordPagePasswordSeeIcon>
+            <UserPasswordPageInputContainer>
+              <UserPasswordPageInputGroupContainer>
+                <UserPasswordPageInputStyle
+                  type={showPassword ? 'text' : 'password'}
+                  value={passwordValue}
+                  placeholder={'비밀번호 입력'}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setPasswordValue((e.target as HTMLInputElement).value);
+                  }}
+                />
+                {passwordValue.length > 0 && (
+                  <UserPasswordPageSeeIconWrapper
+                    onMouseDown={() => {
+                      setShowPassword(true);
+                    }}
+                    onMouseUp={() => {
+                      setShowPassword(false);
+                    }}
+                    onTouchStart={() => {
+                      setShowPassword(true);
+                    }}
+                    onTouchEnd={() => {
+                      setShowPassword(false);
+                    }}
+                  >
+                    <UserPasswordPageSeeIcon src="/src/assets/passwordSeeIcon.svg" />
+                  </UserPasswordPageSeeIconWrapper>
+                )}
+              </UserPasswordPageInputGroupContainer>
+              {passwordValue.length > 0 && !regPass.test(passwordValue) && (
+                <UserPasswordPageText>
+                  비밀번호는 영문,숫자를 포함해서 8자 이상 입력해주세요.
+                </UserPasswordPageText>
+              )}
+            </UserPasswordPageInputContainer>
           </UserPasswordPageInputWrapper>
           <UserPasswordPageInputWrapper>
-            {' '}
-            <UserPasswordPageInput
-              {...InputProps}
-              type={showPasswordCheck ? 'text' : 'password'}
-              value={checkPasswordValue}
-              placeHolder={'비밀번호 확인'}
-              onClick={() => {
-                setCheckPasswordValue('');
-              }}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCheckPasswordValue((e.target as HTMLInputElement).value);
-              }}
-              isError={passwordValue !== checkPasswordValue ? true : false}
-              validationText={
-                '새 비밀번호가 비밀번호 확인값과 일치하지 않습니다.'
-              }
-              isCancel={false}
-            />
-            <UserPasswordPagePasswordSeeIcon
-              children={''}
-              className={'showPassword'}
-              type={'button'}
-              onMouseDown={() => {
-                setShowPasswordCheck(true);
-              }}
-              onMouseUp={() => {
-                setShowPasswordCheck(false);
-              }}
-              onTouchStart={() => {
-                setShowPasswordCheck(true);
-              }}
-              onTouchEnd={() => {
-                setShowPasswordCheck(false);
-              }}
-            ></UserPasswordPagePasswordSeeIcon>
+            <UserPasswordPageInputContainer>
+              <UserPasswordPageInputGroupContainer>
+                <UserPasswordPageInputStyle
+                  type={showPasswordCheck ? 'text' : 'password'}
+                  value={checkPasswordValue}
+                  placeholder={'비밀번호 확인'}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setCheckPasswordValue((e.target as HTMLInputElement).value);
+                  }}
+                />
+                {checkPasswordValue.length > 0 && (
+                  <UserPasswordPageSeeIconWrapper
+                    onMouseDown={() => {
+                      setShowPasswordCheck(true);
+                    }}
+                    onMouseUp={() => {
+                      setShowPasswordCheck(false);
+                    }}
+                    onTouchStart={() => {
+                      setShowPasswordCheck(true);
+                    }}
+                    onTouchEnd={() => {
+                      setShowPasswordCheck(false);
+                    }}
+                  >
+                    <UserPasswordPageSeeIcon src="/src/assets/passwordSeeIcon.svg" />
+                  </UserPasswordPageSeeIconWrapper>
+                )}
+              </UserPasswordPageInputGroupContainer>
+              {checkPasswordValue.length > 0 &&
+                passwordValue !== checkPasswordValue && (
+                  <UserPasswordPageText>
+                    새 비밀번호가 비밀번호 확인값과 일치하지 않습니다.
+                  </UserPasswordPageText>
+                )}
+            </UserPasswordPageInputContainer>
           </UserPasswordPageInputWrapper>
         </form>
       </UserPasswordPageMainWrapper>
@@ -183,85 +191,3 @@ const UserPasswordPage = () => {
 };
 
 export default UserPasswordPage;
-
-const UserPasswordPageMainWrapper = styled.div`
-  background-color: #f5f9ff;
-  width: calc(100% - 80px);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  top: 23px;
-  height: 263px;
-  border-radius: 10px;
-`;
-
-const UserPasswordPageInput = styled(Input)`
-  ::placeholder {
-    font-size: 10.049px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-`;
-
-const UserPasswordPageHeading = styled.header`
-  font-family: 'ONE-Mobile-Title';
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #2f2f68;
-  position: relative;
-  max-width: 425px;
-  width: 100%;
-  height: 60px;
-  border-radius: 0 0 50px 50px;
-`;
-
-const UserPasswordPageLogoImg = styled.div`
-  width: 72px;
-  height: 30px;
-  margin: 0 auto;
-  position: relative;
-  right: 10px;
-  background-image: url('/src/assets/logoText.png');
-  background-repeat: no-repeat;
-  background-size: 100%;
-`;
-const UserPasswordPagePasswordSeeIcon = styled(Button)`
-  position: absolute;
-  top: 14px;
-  left: 80%;
-  width: 17px;
-  height: 12px;
-  background-image: url('/src/assets/passwordSeeIcon.svg');
-  background-repeat: no-repeat;
-  background-size: 100%;
-  border: none;
-  background-color: #e4ecfe;
-`;
-
-const UserPasswordPageInputWrapper = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-`;
-
-const UserPasswordPagePasswordSaveBtn = styled(Button)`
-  position: relative;
-  margin: 0 auto;
-  top: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 305px;
-  height: 42px;
-  font-size: 20px;
-  font-family: 'ONE-Mobile-Title';
-  color: #f8fbff;
-  border: none;
-  border-radius: 21px;
-  background: linear-gradient(45deg, #fccbf3, #e8cbf4, #b6ccf9, #72cdff);
-`;
