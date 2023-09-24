@@ -2,14 +2,10 @@ import { getChannelPost } from '~/api/post';
 import { CHANNEL_ID } from '~/constants/channelId';
 import { Post } from '~/types';
 
-export const getAllPosts = async (
-  channelId: typeof CHANNEL_ID,
-  offset: number,
-  limit: number
-) => {
+export const getAllPosts = async (channelId: typeof CHANNEL_ID) => {
   return (
     await Promise.allSettled(
-      Object.values(channelId).map((id) => getChannelPost(id, offset, limit))
+      Object.values(channelId).map((id) => getChannelPost(id, 0, 30))
     )
   )
     .filter(
