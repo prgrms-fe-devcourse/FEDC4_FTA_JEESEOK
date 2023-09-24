@@ -118,9 +118,9 @@ const UserPage = () => {
     <UserPageContainer>
       {isMyInfo ? <Header isLogout /> : <Header isLogo={false} />}
       <MainContainer>
-        <UserInfoContainer>
+        <UserInfoContainer isMyInfo={isMyInfo}>
           <UserInfo isMyInfo={isMyInfo}>
-            <Info>
+            <Info isMyInfo={isMyInfo}>
               <ImageNickNameContainer>
                 <ImageContainer>
                   <Image
