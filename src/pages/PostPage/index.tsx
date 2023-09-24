@@ -48,8 +48,9 @@ const PostPage = () => {
   }, [searchParams, offset]);
 
   useEffect(() => {
-    const div = observerRef.current;
-    if (!div || posts.length < LIMIT || posts.length % LIMIT !== 0) return;
+    const observerEl = observerRef.current;
+    if (!observerEl || posts.length < LIMIT || posts.length % LIMIT !== 0)
+      return;
 
     const observer = new IntersectionObserver(
       (entries) =>
@@ -63,10 +64,10 @@ const PostPage = () => {
       }
     );
 
-    observer.observe(div);
+    observer.observe(observerEl);
 
     return () => {
-      observer.unobserve(div);
+      observer.unobserve(observerEl);
     };
   }, [observerRef, posts]);
 
