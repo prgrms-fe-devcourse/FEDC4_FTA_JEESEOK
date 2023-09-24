@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import styled from '@emotion/styled';
 import { getChannelPost } from '~/api/post';
 import Header from '~/components/common/Header';
 import Loading from '~/components/common/Loading';
@@ -9,6 +8,7 @@ import PostCardList from '~/components/post/PostCardList';
 import TagList from '~/components/post/TagList';
 import { CHANNEL_ID } from '~/constants/channelId';
 import { Post } from '~/types';
+import { ObserverContainer } from './PostPageStyle';
 import { getAllPosts } from './getAllPosts';
 
 const TAG = 'tag';
@@ -101,12 +101,3 @@ const PostPage = () => {
 };
 
 export default PostPage;
-
-const ObserverContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 10px;
-  font-family: 'GangwonEdu_OTFBoldA';
-  color: #494984;
-`;
