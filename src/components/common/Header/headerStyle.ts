@@ -1,6 +1,16 @@
 import styled from '@emotion/styled';
 import Button from '../Button';
 
+export const HeaderBackground = styled.div`
+  position: fixed;
+  top: 0;
+  max-width: 425px;
+  width: 100%;
+  height: 60px;
+  background-color: #e6efff;
+  z-index: 1000;
+`;
+
 export const HeaderContainer = styled.header`
   font-family: 'ONE-Mobile-Title';
   display: flex;
@@ -8,13 +18,9 @@ export const HeaderContainer = styled.header`
   align-items: center;
   color: #2f2f68;
   background-color: #f5f9ff;
-  position: fixed;
-  top: 0;
-  max-width: 425px;
   width: 100%;
-  height: 60px;
+  height: 100%;
   border-radius: 0 0 50px 50px;
-  z-index: 1000;
 `;
 
 export const LogoWrapper = styled.div`
