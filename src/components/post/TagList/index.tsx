@@ -1,5 +1,5 @@
 import Tag from '~/components/common/Tag';
-import { TagListContainer } from './style';
+import { TagListContainer } from './TagListStyle';
 
 const tags = [
   ['all', '전체'],
