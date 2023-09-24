@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import styled from '@emotion/styled';
 import { getChannelPost } from '~/api/post';
 import Header from '~/components/common/Header';
 import Loading from '~/components/common/Loading';
+import Spinner from '~/components/common/Spinner';
 import PostCardList from '~/components/post/PostCardList';
 import TagList from '~/components/post/TagList';
 import { CHANNEL_ID } from '~/constants/channelId';
@@ -10,7 +12,6 @@ import { Post } from '~/types';
 import { getAllPosts } from './getAllPosts';
 
 const TAG = 'tag';
-const OFFSET = 0;
 const LIMIT = 15;
 
 type Tag = keyof typeof CHANNEL_ID | 'ALL' | null;
@@ -18,28 +19,61 @@ type Tag = keyof typeof CHANNEL_ID | 'ALL' | null;
 const PostPage = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const observerRef = useRef<HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const currentTag = searchParams.get(TAG)?.toUpperCase() as Tag;
 
   useEffect(() => {
     const getPosts = async () => {
       setLoading(true);
-      const tag = searchParams.get(TAG)?.toUpperCase() as Tag;
 
-      if (!tag || tag === 'ALL') {
-        const allPosts = await getAllPosts(CHANNEL_ID, OFFSET, LIMIT);
+      if (!currentTag || currentTag === 'ALL') {
+        const allPosts = await getAllPosts(CHANNEL_ID);
         setPosts([...allPosts]);
       } else {
-        const posts = await getChannelPost(CHANNEL_ID[tag], OFFSET, LIMIT);
-        setPosts([...posts]);
+        const channelPosts = await getChannelPost(
+          CHANNEL_ID[currentTag],
+          offset,
+          LIMIT
+        );
+        setPosts([...posts, ...channelPosts]);
       }
 
       setLoading(false);
     };
 
     setTimeout(getPosts, 100);
-  }, [searchParams]);
+  }, [searchParams, offset]);
+
+  useEffect(() => {
+    const div = observerRef.current;
+    if (!div || posts.length < LIMIT || posts.length % LIMIT !== 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setOffset((prev) => prev + LIMIT);
+          }
+        }),
+      {
+        threshold: 1,
+      }
+    );
+
+    observer.observe(div);
+
+    return () => {
+      observer.unobserve(div);
+    };
+  }, [observerRef, posts]);
 
   const handleTagClick = (tag: string) => {
+    if (currentTag === tag.toUpperCase()) return;
+
+    setOffset(0);
+    setPosts([]);
     searchParams.set(TAG, tag);
     setSearchParams(searchParams);
   };
@@ -48,9 +82,29 @@ const PostPage = () => {
     <>
       <Header isSearch />
       <TagList onClick={handleTagClick} />
-      {loading ? <Loading isLoading /> : <PostCardList posts={posts} />}
+      <PostCardList posts={posts} />
+      {loading && offset === 0 ? <Loading isLoading /> : null}
+      <ObserverContainer ref={observerRef}>
+        {posts.length > 0 &&
+          (!currentTag || currentTag === 'ALL' ? (
+            <span>최신순으로 최대 30개까지 제공됩니다.</span>
+          ) : posts.length % LIMIT === 0 ? (
+            <Spinner size={30} color={'#494984'} loading />
+          ) : (
+            <span>더 이상 게시글이 없습니다.</span>
+          ))}
+      </ObserverContainer>
     </>
   );
 };
 
 export default PostPage;
+
+const ObserverContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  font-family: 'GangwonEdu_OTFBoldA';
+  color: #494984;
+`;
