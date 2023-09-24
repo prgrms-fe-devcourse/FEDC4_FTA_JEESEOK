@@ -7,31 +7,13 @@ import PostCardList from '~/components/post/PostCardList';
 import TagList from '~/components/post/TagList';
 import { CHANNEL_ID } from '~/constants/channelId';
 import { Post } from '~/types';
+import { getAllPosts } from './getAllPosts';
 
 const TAG = 'tag';
 const OFFSET = 0;
 const LIMIT = 15;
 
 type Tag = keyof typeof CHANNEL_ID | 'ALL' | null;
-
-const getAllPosts = async (
-  channelId: typeof CHANNEL_ID,
-  offset: number,
-  limit: number
-) => {
-  return (
-    await Promise.allSettled(
-      Object.values(channelId).map((id) => getChannelPost(id, offset, limit))
-    )
-  )
-    .filter(
-      (result): result is PromiseFulfilledResult<Post[]> =>
-        result.status === 'fulfilled'
-    )
-    .map((result) => result.value)
-    .flat()
-    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-};
 
 const PostPage = () => {
   const [posts, setPosts] = useState<Post[]>([]);
