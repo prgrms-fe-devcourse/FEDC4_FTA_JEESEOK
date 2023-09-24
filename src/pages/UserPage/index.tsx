@@ -143,24 +143,42 @@ const UserPage = () => {
                         src={spaceShip}
                         width={35}
                         height={35}
-                        style={{
-                          position: 'absolute',
-                          bottom: 35,
-                          left: 10,
-                          zIndex: 1,
-                        }}
+                        style={
+                          isMyInfo
+                            ? {
+                                position: 'absolute',
+                                bottom: 35,
+                                left: 10,
+                                zIndex: 1,
+                              }
+                            : {
+                                position: 'absolute',
+                                bottom: 35,
+                                left: 20,
+                                zIndex: 1,
+                              }
+                        }
                       />
                     ) : mbti[2] === 'F' ? (
                       <img
                         src={rocket}
                         width={45}
                         height={45}
-                        style={{
-                          position: 'absolute',
-                          bottom: 27,
-                          left: 5,
-                          zIndex: 1,
-                        }}
+                        style={
+                          isMyInfo
+                            ? {
+                                position: 'absolute',
+                                bottom: 27,
+                                left: 5,
+                                zIndex: 1,
+                              }
+                            : {
+                                position: 'absolute',
+                                bottom: 27,
+                                left: 17,
+                                zIndex: 1,
+                              }
+                        }
                       />
                     ) : (
                       <></>
