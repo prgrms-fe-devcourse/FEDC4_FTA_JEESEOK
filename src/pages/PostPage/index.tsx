@@ -12,6 +12,7 @@ import { Post } from '~/types';
 import { getAllPosts } from './getAllPosts';
 
 const TAG = 'tag';
+const ALL_TAG = 'ALL';
 const LIMIT = 15;
 
 type Tag = keyof typeof CHANNEL_ID | 'ALL' | null;
@@ -28,7 +29,7 @@ const PostPage = () => {
     const getPosts = async () => {
       setLoading(true);
 
-      if (!currentTag || currentTag === 'ALL') {
+      if (!currentTag || currentTag === ALL_TAG) {
         const allPosts = await getAllPosts(CHANNEL_ID);
         setPosts([...allPosts]);
       } else {
@@ -86,7 +87,7 @@ const PostPage = () => {
       {loading && offset === 0 ? <Loading isLoading /> : null}
       <ObserverContainer ref={observerRef}>
         {posts.length > 0 &&
-          (!currentTag || currentTag === 'ALL' ? (
+          (!currentTag || currentTag === ALL_TAG ? (
             <span>최신순으로 최대 30개까지 제공됩니다.</span>
           ) : posts.length % LIMIT === 0 ? (
             <Spinner size={30} color={'#494984'} loading />
