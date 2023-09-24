@@ -10,9 +10,28 @@ import { Post } from '~/types';
 
 const TAG = 'tag';
 const OFFSET = 0;
-const LIMIT = 10;
+const LIMIT = 15;
 
 type Tag = keyof typeof CHANNEL_ID | 'ALL' | null;
+
+const getAllPosts = async (
+  channelId: typeof CHANNEL_ID,
+  offset: number,
+  limit: number
+) => {
+  return (
+    await Promise.allSettled(
+      Object.values(channelId).map((id) => getChannelPost(id, offset, limit))
+    )
+  )
+    .filter(
+      (result): result is PromiseFulfilledResult<Post[]> =>
+        result.status === 'fulfilled'
+    )
+    .map((result) => result.value)
+    .flat()
+    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+};
 
 const PostPage = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -25,30 +44,13 @@ const PostPage = () => {
       const tag = searchParams.get(TAG)?.toUpperCase() as Tag;
 
       if (!tag || tag === 'ALL') {
-        const allPosts = (
-          await Promise.allSettled(
-            Object.values(CHANNEL_ID).map((id) =>
-              getChannelPost(id, OFFSET, LIMIT)
-            )
-          )
-        )
-          .filter(
-            (result): result is PromiseFulfilledResult<Post[]> =>
-              result.status === 'fulfilled'
-          )
-          .map((result) => result.value)
-          .flat()
-          .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-
-        setPosts(allPosts);
-        setLoading(false);
-
-        return;
+        const allPosts = await getAllPosts(CHANNEL_ID, OFFSET, LIMIT);
+        setPosts([...allPosts]);
+      } else {
+        const posts = await getChannelPost(CHANNEL_ID[tag], OFFSET, LIMIT);
+        setPosts([...posts]);
       }
 
-      const posts = await getChannelPost(CHANNEL_ID[tag], OFFSET, LIMIT);
-
-      if (posts) setPosts(posts);
       setLoading(false);
     };
 
@@ -61,11 +63,11 @@ const PostPage = () => {
   };
 
   return (
-    <div>
+    <>
       <Header isSearch />
-      {loading ? <Loading isLoading /> : <TagList onClick={handleTagClick} />}
-      <PostCardList posts={posts} />
-    </div>
+      <TagList onClick={handleTagClick} />
+      {loading ? <Loading isLoading /> : <PostCardList posts={posts} />}
+    </>
   );
 };
 
