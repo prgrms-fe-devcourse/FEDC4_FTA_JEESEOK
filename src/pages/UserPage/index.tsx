@@ -60,6 +60,10 @@ const UserPage = () => {
   const { userId } = useParams();
 
   useEffect(() => {
+    setIsMyInfo(false);
+  }, [userId]);
+
+  useEffect(() => {
     const storedUserInfo = localStorage.getItem('AUTH_TOKEN');
 
     if (storedUserInfo) {
