@@ -4,11 +4,11 @@ export const TagListContainer = styled.div`
   display: flex;
   gap: 5px;
   position: fixed;
-  margin: 9px 10px 5px 10px;
+  padding: 9px 10px 10px 10px;
   z-index: 777;
   overflow-x: auto;
   width: 100%;
-  padding-bottom: 3px;
+  background-color: #e6efff;
   ::-webkit-scrollbar {
     height: 5px;
   }
