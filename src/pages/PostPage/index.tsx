@@ -86,7 +86,8 @@ const PostPage = () => {
       <PostCardList posts={posts} />
       {loading && offset === 0 ? <Loading isLoading /> : null}
       <ObserverContainer ref={observerRef}>
-        {posts.length > 0 &&
+        {!loading &&
+          posts.length > 0 &&
           (!currentTag || currentTag === ALL_TAG ? (
             <span>최신순으로 최대 30개까지 제공됩니다.</span>
           ) : posts.length % LIMIT === 0 ? (
