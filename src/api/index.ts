@@ -3,15 +3,36 @@ import axios from 'axios';
 const request = axios.create({
   baseURL: import.meta.env.VITE_API_ENDPOINT,
   headers: {
-    'Content-Type': 'application/json',
     Accept: '*/*',
   },
 });
 
-const AUTH_TOKEN = localStorage.getItem('AUTH_TOKEN');
+request.interceptors.request.use(
+  (config) => {
+    const storage = localStorage.getItem('AUTH_TOKEN');
+    if (storage) {
+      const AUTH = JSON.parse(storage);
+      if (AUTH['token']) {
+        config.headers.Authorization = `bearer ${AUTH['token']}`;
+      }
+    }
 
-if (AUTH_TOKEN) {
-  request.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-}
+    return config;
+  },
+  (error) => {
+    console.error(error);
+    return Promise.reject(error);
+  }
+);
+
+request.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  (error) => {
+    console.error(error);
+    return Promise.reject(error);
+  }
+);
 
 export default request;

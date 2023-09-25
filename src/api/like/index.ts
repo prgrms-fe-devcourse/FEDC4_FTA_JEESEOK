@@ -16,26 +16,23 @@ interface likeResponse {
   updatedAt: string;
 }
 
-export const postLike = async (
-  postId: postLikeRequest
-): Promise<likeResponse | undefined> => {
-  try {
-    const result = await request.post<likeResponse>('/likes/create', postId);
-    return result.data;
-  } catch (e: unknown) {
-    return undefined;
-  }
+interface PostLike {
+  (postId: postLikeRequest): Promise<likeResponse | never>;
+}
+
+export const postLike: PostLike = async (postId) => {
+  const res = await request.post<likeResponse>('/likes/create', postId);
+  return res.data;
 };
 
-export const deleteLike = async (
-  postId: deleteLikeRequest
-): Promise<likeResponse | undefined> => {
-  try {
-    const result = await request.delete<likeResponse>('/likes/delete', {
-      data: postId,
-    });
-    return result.data;
-  } catch (e: unknown) {
-    return undefined;
-  }
+interface DeleteLike {
+  (id: deleteLikeRequest): Promise<likeResponse | never>;
+}
+
+export const deleteLike: DeleteLike = async ({ likeId }) => {
+  const res = await request.delete<likeResponse>('/likes/delete', {
+    data: { id: likeId },
+  });
+
+  return res.data;
 };
