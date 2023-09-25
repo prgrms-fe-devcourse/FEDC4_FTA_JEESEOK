@@ -14,31 +14,33 @@ export const MainContainer = styled.main`
   font-family: 'GangwonEdu_OTFBoldA';
 `;
 
-export const UserInfoContainer = styled.div`
+export const UserInfoContainer = styled.div<{ isMyInfo: boolean }>`
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
+  height: ${(props) => (props.isMyInfo ? '' : '100%')};
 `;
 
 export const UserInfo = styled.div<{ isMyInfo: boolean }>`
   margin-top: 10px;
   display: flex;
   flex-direction: ${(props) => (props.isMyInfo ? 'row' : 'column')};
-  justify-content: center;
+  justify-content: ${(props) => (props.isMyInfo ? 'center' : '')};
   align-items: center;
-  gap: 20px;
+  gap: ${(props) => (props.isMyInfo ? '20px' : '0')};
   width: 95%;
   height: 170px;
-  height: ${(props) => (props.isMyInfo ? '' : '60vh')};
+  height: ${(props) => (props.isMyInfo ? '' : '65vh')};
   background-color: #f5f9ff;
   border-radius: 20px;
-  padding: ${(props) => (props.isMyInfo ? '15px' : '15px')};
+  padding: 15px;
   box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0.2, 0.2, 1.5, 0.2);
 `;
 
-export const Info = styled.div`
+export const Info = styled.div<{ isMyInfo: boolean }>`
+  margin-top: ${(props) => (props.isMyInfo ? '' : '20px')};
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -134,7 +136,6 @@ export const PostCardContainer = styled.div`
   align-items: center;
   max-width: 425px;
   min-width: 375px;
-  height: 300px;
   box-sizing: border-box;
 `;
 
@@ -155,16 +156,17 @@ export const IntroduceAreaContainer = styled.div<{ isMyInfo: boolean }>`
   justify-content: center;
   align-items: center;
   background-color: #f5f9ff;
-  height: ${(props) => (props.isMyInfo ? '80%' : '100%')};
+  height: ${(props) => (props.isMyInfo ? '350px' : '100%')};
   border-radius: 25px;
   box-shadow: 0 2px 4px rgba(0.2, 0.2, 1.5, 0.2);
 `;
 
 export const IntroduceArea = styled.div<{ isMyInfo: boolean }>`
   width: ${(props) => (props.isMyInfo ? '95%' : '100%')};
-  height: ${(props) => (props.isMyInfo ? '93%' : '300px')};
+  height: ${(props) => (props.isMyInfo ? '95%' : '100%')};
+  margin-top: ${(props) => (props.isMyInfo ? '' : '40px')};
   border-radius: 20px;
-  padding: 20px 20px;
+  padding: 20px;
   box-sizing: border-box;
   background-color: #e4ecfe;
   text-align: center;

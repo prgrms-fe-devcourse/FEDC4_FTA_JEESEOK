@@ -60,6 +60,10 @@ const UserPage = () => {
   const { userId } = useParams();
 
   useEffect(() => {
+    setIsMyInfo(false);
+  }, [userId]);
+
+  useEffect(() => {
     const storedUserInfo = localStorage.getItem('AUTH_TOKEN');
 
     if (storedUserInfo) {
@@ -114,9 +118,9 @@ const UserPage = () => {
     <UserPageContainer>
       {isMyInfo ? <Header isLogout /> : <Header isLogo={false} />}
       <MainContainer>
-        <UserInfoContainer>
+        <UserInfoContainer isMyInfo={isMyInfo}>
           <UserInfo isMyInfo={isMyInfo}>
-            <Info>
+            <Info isMyInfo={isMyInfo}>
               <ImageNickNameContainer>
                 <ImageContainer>
                   <Image
@@ -139,24 +143,42 @@ const UserPage = () => {
                         src={spaceShip}
                         width={35}
                         height={35}
-                        style={{
-                          position: 'absolute',
-                          bottom: 35,
-                          left: 10,
-                          zIndex: 1,
-                        }}
+                        style={
+                          isMyInfo
+                            ? {
+                                position: 'absolute',
+                                bottom: 35,
+                                left: 10,
+                                zIndex: 1,
+                              }
+                            : {
+                                position: 'absolute',
+                                bottom: 35,
+                                left: 20,
+                                zIndex: 1,
+                              }
+                        }
                       />
                     ) : mbti[2] === 'F' ? (
                       <img
                         src={rocket}
                         width={45}
                         height={45}
-                        style={{
-                          position: 'absolute',
-                          bottom: 27,
-                          left: 5,
-                          zIndex: 1,
-                        }}
+                        style={
+                          isMyInfo
+                            ? {
+                                position: 'absolute',
+                                bottom: 27,
+                                left: 5,
+                                zIndex: 1,
+                              }
+                            : {
+                                position: 'absolute',
+                                bottom: 27,
+                                left: 17,
+                                zIndex: 1,
+                              }
+                        }
                       />
                     ) : (
                       <></>
