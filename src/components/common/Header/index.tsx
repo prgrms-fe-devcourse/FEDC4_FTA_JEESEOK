@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postLogoutApi } from '~/api/authorization';
 import { deletePost } from '~/api/post';
@@ -18,6 +19,7 @@ import {
   SearchIcon,
   Separator,
 } from '~/components/common/Header/headerStyle.ts';
+import Modal from '../Modal';
 import backButtonImg from './back.svg';
 import search from './search.svg';
 
@@ -41,6 +43,7 @@ const Header = ({
   handleSaveButtonClick,
 }: Partial<HeaderProps>) => {
   const navigate = useNavigate();
+  const [modalState, setModalState] = useState(false);
 
   const handleLogoClick = () => {
     navigate('/');
@@ -70,12 +73,8 @@ const Header = ({
     const urlParams = new URL(location.href);
     const postId = urlParams.pathname.split('/')[2];
 
-    const confirmation = window.confirm('정말로 이 게시물을 삭제하시겠습니까?');
-
-    if (confirmation) {
-      deletePost(postId);
-      navigate(-1);
-    }
+    deletePost(postId);
+    navigate(-1);
   };
 
   return (
@@ -107,11 +106,21 @@ const Header = ({
               수정
             </CorrectButton>
             <Separator />
-            <DeleteButton onClick={handleDeleteButtonClick}>삭제</DeleteButton>
+            <DeleteButton onClick={() => setModalState(true)}>
+              삭제
+            </DeleteButton>
           </EditWrapper>
         </HeaderContainer>
       </HeaderBackground>
       <div style={{ height: '60px' }} />
+      {modalState && (
+        <Modal
+          handleConfirmButtonClick={handleDeleteButtonClick}
+          handleCloseButtonClick={() => setModalState(false)}
+        >
+          정말로 이 게시물을 삭제하시겠습니까?
+        </Modal>
+      )}
     </>
   );
 };
