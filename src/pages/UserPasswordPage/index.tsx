@@ -3,6 +3,7 @@ import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuthorizationCheckApi } from '~/api/authorization';
 import { putPassword } from '~/api/settings';
+import passwordSeeIcon from '~/assets/passwordSeeIcon.svg';
 import Header from '~/components/common/Header';
 import Loading from '~/components/common/Loading';
 import Modal from '~/components/common/Modal';
@@ -129,7 +130,7 @@ const UserPasswordPage = () => {
                           setShowPassword(false);
                         }}
                       >
-                        <UserPasswordPageSeeIcon src="/src/assets/passwordSeeIcon.svg" />
+                        <UserPasswordPageSeeIcon src={passwordSeeIcon} />
                       </UserPasswordPageSeeIconWrapper>
                     )}
                   </UserPasswordPageInputGroupContainer>
@@ -168,7 +169,7 @@ const UserPasswordPage = () => {
                           setShowPasswordCheck(false);
                         }}
                       >
-                        <UserPasswordPageSeeIcon src="/src/assets/passwordSeeIcon.svg" />
+                        <UserPasswordPageSeeIcon src={passwordSeeIcon} />
                       </UserPasswordPageSeeIconWrapper>
                     )}
                   </UserPasswordPageInputGroupContainer>
