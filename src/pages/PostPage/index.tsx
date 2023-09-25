@@ -83,7 +83,7 @@ const PostPage = () => {
   return (
     <>
       <Header isSearch />
-      <TagList onClick={handleTagClick} />
+      <TagList activeTag={currentTag || undefined} onClick={handleTagClick} />
       <PostCardList posts={posts} />
       {loading && offset === 0 ? <Loading isLoading /> : null}
       <ObserverContainer ref={observerRef}>
