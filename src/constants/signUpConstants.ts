@@ -29,49 +29,49 @@ export const MBTI_TITLE = 'MBTI 고르기';
 
 export const INIT_MBTI_STYLE = {
   E: {
-    default: 'linear-gradient(50deg, #E6D1F7 22.09%, #DDDAF6 92.75%)',
+    default: '#E6EFFF',
     isSelect: false,
-    select: '#E6EFFF',
+    select: 'linear-gradient(50deg, #E6D1F7 22.09%, #DDDAF6 92.75%)',
   },
   N: {
-    default:
-      'linear-gradient(50deg, #E0DBF7 22.09%, #D6DAF7 74.48%, #D2DAF8 92.75%)',
+    default: '#E6EFFF',
     isSelect: false,
-    select: '#E6EFFF',
+    select:
+      'linear-gradient(50deg, #E0DBF7 22.09%, #D6DAF7 74.48%, #D2DAF8 92.75%)',
   },
   F: {
-    default:
-      'linear-gradient(50deg, #D7DBF8 22.09%, #CDDAF8 65.52%, #C5DAF9 92.75%)',
+    default: '#E6EFFF',
     isSelect: false,
-    select: '#E6EFFF',
+    select:
+      'linear-gradient(50deg, #D7DBF8 22.09%, #CDDAF8 65.52%, #C5DAF9 92.75%)',
   },
   P: {
-    default:
-      'linear-gradient(50deg, #CCDCF9 22.09%, #C2DCF9 69.51%, #BCDCFA 92.75%)',
+    default: '#E6EFFF',
     isSelect: false,
-    select: '#E6EFFF',
+    select:
+      'linear-gradient(50deg, #CCDCF9 22.09%, #C2DCF9 69.51%, #BCDCFA 92.75%)',
   },
   I: {
-    default: 'linear-gradient(50deg, #E6D1F7 22.09%, #DDDAF6 92.75%)',
+    default: '#E6EFFF',
     isSelect: false,
-    select: '#E6EFFF',
+    select: 'linear-gradient(50deg, #E6D1F7 22.09%, #DDDAF6 92.75%)',
   },
   S: {
-    default:
-      'linear-gradient(50deg, #E0DBF7 22.09%, #D6DAF7 74.48%, #D2DAF8 92.75%)',
+    default: '#E6EFFF',
     isSelect: false,
-    select: '#E6EFFF',
+    select:
+      'linear-gradient(50deg, #E0DBF7 22.09%, #D6DAF7 74.48%, #D2DAF8 92.75%)',
   },
   T: {
-    default:
-      'linear-gradient(50deg, #D7DBF8 22.09%, #CDDAF8 65.52%, #C5DAF9 92.75%)',
+    default: '#E6EFFF',
     isSelect: false,
-    select: '#E6EFFF',
+    select:
+      'linear-gradient(50deg, #D7DBF8 22.09%, #CDDAF8 65.52%, #C5DAF9 92.75%)',
   },
   J: {
-    default:
-      'linear-gradient(50deg, #CCDCF9 22.09%, #C2DCF9 69.51%, #BCDCFA 92.75%);',
+    default: '#E6EFFF',
     isSelect: false,
-    select: '#E6EFFF',
+    select:
+      'linear-gradient(50deg, #CCDCF9 22.09%, #C2DCF9 69.51%, #BCDCFA 92.75%);',
   },
 };
