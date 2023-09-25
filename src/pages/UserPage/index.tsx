@@ -164,21 +164,12 @@ const UserPage = () => {
                         src={rocket}
                         width={45}
                         height={45}
-                        style={
-                          isMyInfo
-                            ? {
-                                position: 'absolute',
-                                bottom: 27,
-                                left: 5,
-                                zIndex: 1,
-                              }
-                            : {
-                                position: 'absolute',
-                                bottom: 27,
-                                left: 17,
-                                zIndex: 1,
-                              }
-                        }
+                        style={{
+                          position: 'absolute',
+                          bottom: 27,
+                          left: 5,
+                          zIndex: 1,
+                        }}
                       />
                     ) : (
                       <></>
