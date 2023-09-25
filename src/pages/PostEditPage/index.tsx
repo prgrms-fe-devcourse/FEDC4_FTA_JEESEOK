@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MouseEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -22,8 +22,8 @@ import {
 const PostEditPage = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
-  const [title, setTitle] = useState('');
-  const [text, setText] = useState('');
+  const refTitle = useRef('');
+  const refText = useRef('');
   const [active, setActive] = useState('');
   const [selectedChannel, setSelectedChannel] = useState('');
   const [modalState, setModalState] = useState(false);
@@ -44,7 +44,7 @@ const PostEditPage = () => {
       }
 
       if (postId === 'create') {
-        setTitle('');
+        refTitle.current = '';
         setLoading(false);
         return;
       }
@@ -53,8 +53,8 @@ const PostEditPage = () => {
         const postData = await readPost(postId);
         if (postData && postData.author.email === isAuth.email) {
           const postInformation = JSON.parse(postData.title);
-          setTitle(postInformation.title);
-          setText(postInformation.body);
+          refTitle.current = postInformation.title;
+          refText.current = postInformation.body;
           setLoading(false);
           return;
         }
@@ -72,15 +72,15 @@ const PostEditPage = () => {
   };
 
   function handleSubmit() {
-    if (title === '') {
+    if (refTitle.current === '') {
       invokeModal('제목을 적어주세요.');
     } else if (selectedChannel === '') {
       invokeModal('태그를 선택해주세요.');
-    } else if (text === '') {
+    } else if (refText.current === '') {
       invokeModal('본문을 적어주세요.');
     } else if (postId === 'create') {
       writePost(
-        JSON.stringify({ title: title, body: text }),
+        JSON.stringify({ title: refTitle.current, body: refText.current }),
         null,
         selectedChannel
       );
@@ -88,7 +88,10 @@ const PostEditPage = () => {
     } else if (typeof postId === 'string') {
       editPost({
         postId,
-        title: JSON.stringify({ title: title, body: text }),
+        title: JSON.stringify({
+          title: refTitle.current,
+          body: refText.current,
+        }),
         channelId: selectedChannel,
       });
       navigate('/');
@@ -141,10 +144,10 @@ const PostEditPage = () => {
           <PostEditPageMainWrapper>
             <PostEditPageHeading marginBottom={'6px'}>제목</PostEditPageHeading>
             <PostEditPageInput
-              value={title}
+              defaultValue={refTitle.current}
               placeholder={'제목을 작성해 주세요'}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setTitle((e.target as HTMLInputElement).value);
+                refTitle.current = (e.target as HTMLInputElement).value;
               }}
             />
             <PostEditPageHorizontalLine
@@ -183,13 +186,13 @@ const PostEditPage = () => {
             <PostEditPageHeading marginBottom={'6px'}>본문</PostEditPageHeading>
             <PostEditPageTextarea
               {...TextareaProps}
-              value={text}
+              defaultValue={refText.current}
               overFlow={'scroll'}
-              onChange={(e: MouseEvent<HTMLTextAreaElement>) =>
-                setText((e.target as HTMLTextAreaElement).value)
-              }
               placeholder="내용을 작성해주세요"
               backgroundColor={'#e4ecfe'}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                refText.current = (e.target as HTMLTextAreaElement).value;
+              }}
             ></PostEditPageTextarea>
           </PostEditPageMainWrapper>
           {modalState && (
