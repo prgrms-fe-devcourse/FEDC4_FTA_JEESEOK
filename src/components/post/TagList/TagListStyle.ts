@@ -7,6 +7,7 @@ export const TagListContainer = styled.div`
   padding: 9px 10px 10px 10px;
   z-index: 777;
   overflow-x: auto;
+  max-width: 405px;
   width: 100%;
   background-color: #e6efff;
   ::-webkit-scrollbar {
