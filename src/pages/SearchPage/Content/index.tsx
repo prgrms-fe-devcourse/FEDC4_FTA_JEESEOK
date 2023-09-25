@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { searchAll } from '~/api/search';
+import defaultProfile from '~/assets/default_profile.svg';
 import Loading from '~/components/common/Loading';
 import TopNavBtn from '~/components/common/TopNavBtn';
 import PostCard from '~/components/post/PostCard';
@@ -111,9 +112,7 @@ const Content = ({
               <UserCardGroup imageSize={35} gap={5}>
                 {userArr.map((user) => (
                   <UserCard
-                    src={
-                      user.image ? user.image : 'src/assets/default_profile.svg'
-                    }
+                    src={user.image ? user.image : defaultProfile}
                     nickname={user.username}
                     mbti={JSON.parse(user.fullName).mbti}
                     key={user._id}
