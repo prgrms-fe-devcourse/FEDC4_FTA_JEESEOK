@@ -7,6 +7,7 @@ export const MbtiContainer = styled.div`
   justify-items: center;
   width: 85%;
   height: 133px;
+  margin-bottom: 30px;
 `;
 
 export const MbtiTitle = styled.span`
