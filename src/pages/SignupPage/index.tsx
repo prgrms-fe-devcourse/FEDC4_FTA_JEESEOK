@@ -22,6 +22,8 @@ const LogoImg = styled.img`
   width: 150px;
   height: 65px;
   margin-bottom: 20px;
+  margin-top: 34px;
+  margin-right: 5px;
 `;
 
 const SignUpBody = styled.div`
@@ -30,7 +32,7 @@ const SignUpBody = styled.div`
   justify-content: center;
   align-items: center;
   width: 341px;
-  height: 514px;
+  height: 100%;
   margin: 20px;
   background: #f5f9ff;
   border-radius: 25px;
