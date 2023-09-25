@@ -10,25 +10,34 @@ const tags = [
 ] as const;
 
 interface TagListProps {
+  activeTag: string | undefined;
   onClick: (arg: string) => void;
 }
 
-const TagList = ({ onClick }: TagListProps) => {
+const TagList = ({ activeTag, onClick }: TagListProps) => {
+  const transformTag = (tag: string | undefined) => {
+    if (!tag) return 'all';
+    return tag.toLowerCase();
+  };
+
   return (
     <>
       <TagListContainer>
         {tags.map(([key, value]) => (
           <Tag
             key={key}
+            className={transformTag(activeTag) === key ? 'active' : ''}
             fontColor={'#F8FBFF'}
+            backgroundColor={'#D9E4FB'}
+            activeBackgroundColor={
+              'linear-gradient(45deg,#FCCBF3, #E8CBF4, #B6CCF9, #72CDFF)'
+            }
             borderRadius={'15px'}
             fontSize={'14px'}
             onClick={() => onClick(key)}
             style={{
               border: 'none',
               padding: '5px 15px',
-              background:
-                'linear-gradient(45deg,#FCCBF3, #E8CBF4, #B6CCF9, #72CDFF)',
               fontFamily: 'ONE-Mobile-Title',
             }}
           >
